@@ -1,6 +1,3 @@
-"ui";
-"use strict";
-
 /*
 	Sky Auto Player (Auto.js script)
 	Copyright © 2020 StageGuard
@@ -56,7 +53,6 @@ scope.dp = context.getResources().getDisplayMetrics().density;
 const error = function(text) {
 	console.show();
 	console.error("SkyAutoPlayer发生了一个错误，请酷安私信@StageGuard或在github中的StageGuard/SkyAutoPlayerScript新建Issue来反馈这个BUG！\n详细信息：" + text);
-	java.lang.System.exit(0);
 };
 
 //Asynchronous load script
@@ -212,7 +208,7 @@ config = {
 	},
 	
 	fetchResources: function(listener) {
-		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/";
+		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
 		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png"];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/";
 		var downloadQueue = [];
@@ -1831,7 +1827,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			callback: function(id) {},
 		});
 	}
-}, false, false);
+}, false, true);
 
 
 /*gui.dialogs.showOperateDialog([{
