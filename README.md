@@ -18,7 +18,7 @@ emitter.on('evaluate', function(s){
 ```
 
 在Auto.js版本`4.1.1 Alpha2 (461)`中测试通过，不保证其他版本的兼容性(取决于其他版本相对于此版本的API是否有`breaking changes`)
-Auto.js`4.1.1 Alpha2 (461)`版本下载: [`Ericwyn/Auto.js/releases@V4.1.1.Alpha2`](https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2)
+</br>Auto.js`4.1.1 Alpha2 (461)`版本下载: [`Ericwyn/Auto.js/releases@V4.1.1.Alpha2`](https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2)
 
 ### 清除数据
 SkyAutoPlayer在使用过程中会产生本地数据存储，若想全部删除，请使用Auto.js执行以下代码
