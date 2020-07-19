@@ -18,6 +18,13 @@ emitter.on('evaluate', function(s){
 
 在Auto.js版本`4.1.1 Alpha2 (461)`中测试通过，不保证其他版本的兼容性(取决于其他版本相对于此版本的API是否有`breaking changes`)
 
+### 清除数据
+SkyAutoPlayer在使用过程中会产生本地数据存储，若想全部删除，请使用Auto.js执行以下代码
+```
+storages.remove("StageGuard:SkyAutoPlayer:Config");
+files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
+```
+
 ## 注意
 ### 请仔细阅读以下使用须知！
 
