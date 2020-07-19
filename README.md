@@ -18,6 +18,7 @@ emitter.on('evaluate', function(s){
 ```
 
 在Auto.js版本`4.1.1 Alpha2 (461)`中测试通过，不保证其他版本的兼容性(取决于其他版本相对于此版本的API是否有`breaking changes`)
+Auto.js`4.1.1 Alpha2 (461)`版本下载: [`Ericwyn/Auto.js/releases@V4.1.1.Alpha2`](https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2)
 
 ### 清除数据
 SkyAutoPlayer在使用过程中会产生本地数据存储，若想全部删除，请使用Auto.js执行以下代码
@@ -34,16 +35,17 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 3. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。
 4. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。
 5. 本脚本只是一个"弹奏机"，并不内置曲谱，请在GooglePlay下载[SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio)编谱。
+
 ## 贡献
 欢迎任何人贡献本项目，包括但不限于Pull Request，Issue，New feature request
 
 ## 图标来源
 [Iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/)
 
-# 鸣谢
+## 鸣谢
 [projectXero](https://gitee.com/projectXero)
 
-# 许可证协议
+## 许可证协议
 ```
 	SkyAutoPlayer (Auto.js script)
 	Copyright © 2020 StageGuard
