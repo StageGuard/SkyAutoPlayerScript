@@ -56,6 +56,7 @@ scope.dp = context.getResources().getDisplayMetrics().density;
 const error = function(text) {
 	console.show();
 	console.error("SkyAutoPlayer发生了一个错误，请酷安私信@StageGuard或在github中的StageGuard/SkyAutoPlayerScript新建Issue来反馈这个BUG！\n详细信息：" + text);
+	java.lang.System.exit(0);
 };
 
 //Asynchronous load script
