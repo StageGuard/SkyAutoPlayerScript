@@ -6,6 +6,6 @@
     "desc": "这是Vicetone的<Nevada SkyStudio钢琴版>。\n内包含比较复杂的和弦，不适合手弹(笑\n你可以在SkyStudio的练习模式试试[狗头]",
     "bpm" : 497,
     "suggested_instrument": 1,
-    "suggested_scene": "雨林低河/墓土破庙"
+    "pitchLevel": 3
   }],
 }
