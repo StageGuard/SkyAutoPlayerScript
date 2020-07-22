@@ -1,3 +1,5 @@
+"ui";
+"use strict";
 /*
 	Sky Auto Player (Auto.js script)
 	Copyright © 2020 StageGuard
@@ -100,29 +102,35 @@ sheetmgr = {
 };
 
 sheetplayer = {
-
+	
 	notes: [],
 	bpm: [],
 	noteCount: 0,
 	name: "",
 	pitch: 0,
+	mode: 1,
 	
 	currentNote: 0,
 	playing: false,
 	nextInterval: 0,
 	
+	rootAutomator: null,
 	
 	thread: null,
 	
 	play: function(listener) {
 		if(this.playing == true) return;
 		this.playing = true;
-		this.thread = threads.start(function(){
+		this.thread = threads.start(function() {
 			do {
 				sheetplayer.nextInterval = sheetplayer.notes[(sheetplayer.currentNote + 1 == sheetplayer.noteCount) ? sheetplayer.currentNote : (sheetplayer.currentNote + 1)].time - sheetplayer.notes[sheetplayer.currentNote].time;
-				sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {threads.start(function(){
-					click(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]);
-				})});
+				sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {threads.start(function() {
+					if(sheetplayer.mode == 1) {
+						click(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]);
+					} else if(sheetplayer.mode == 2){
+						sheetplayer.rootAutomator.press(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1], 75);
+					}
+				});});
 				if(listener != null) listener();
 				java.lang.Thread.sleep(sheetplayer.nextInterval);
 				sheetplayer.currentNote ++;
@@ -137,13 +145,19 @@ sheetplayer = {
 		this.playing = false;
 		this.currentNote = 0;
 		this.thread = null;
+		if(this.mode == 2 && this.rootAutomator != null) {
+			threads.start(function(){
+				this.rootAutomator.exit();
+				this.rootAutomator = null;
+			});
+		}
 	},
 	pause: function() {
 		this.playing = false;
 	},
 	
 	setProgress: function(p) {
-		if(this.playing) this.currentNote = p;
+		this.currentNote = p;
 	},
 	
 	setSheet: function(j) {
@@ -154,7 +168,8 @@ sheetplayer = {
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
 		this.noteCount = j.songNotes.length;
-		
+		this.mode = config.values.play_mode;
+		if(this.mode == 2) threads.start(function(){sheetplayer.rootAutomator = new RootAutomator();});
 	},
 	
 	
@@ -169,7 +184,8 @@ config = {
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOnlineUploadSkip: false,
-		currentVersion: 1,
+		currentVersion: 2,
+		play_mode: 1, //1 = Accessbility, 2 = RootAutomator
 		gitVersion: "",
 	},
 	
@@ -181,6 +197,7 @@ config = {
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
 		this.values.skipOnlineUploadSkip = this._global_storage.get("skip_online_upload_skip", this.values.skipOnlineUploadSkip);
+		this.values.play_mode = this._global_storage.get("play_mode", this.values.play_mode);
 	},
 	
 	save: function(key, value) {
@@ -780,8 +797,7 @@ gui = {
 							list.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 								onItemClick: function(parent, view, pos, id) {
 									try {
-										var e = s[pos];
-										if (callback && !callback(pos)) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.LinearInterpolator(), function(anim) {
+										if (callback && !callback(pos, s[pos])) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.LinearInterpolator(), function(anim) {
 											dialog.setAlpha(anim.getAnimatedValue());
 											if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
 										});
@@ -1161,13 +1177,13 @@ gui = {
 		})},
 		__internal_dismiss: function() { gui.run(function(){
 			if (gui.main.isShowing) {
+				gui.main.isShowing = false;
 				gui.main._global_close.setEnabled(false);
 				gui.main._global_close.setClickable(false);
 				gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
 					gui.main._global_base.setAlpha(anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
 						gui.winMgr.removeView(gui.main._global_base);
-						gui.main.isShowing = false;
 					}
 				});
 			}
@@ -1208,8 +1224,7 @@ gui = {
 								onTouchFunction.offsetY = s.y - event.getRawY();
 							break;
 							case event.ACTION_UP: 
-								
-								if(Math.abs(gui.suspension.previousx - event.getRawX()) <= gui.suspension.width * dp / 2 && Math.abs(gui.suspension.previousy - event.getRawY()) <= gui.suspension.height * dp / 2) {
+								if((Math.abs(gui.suspension.previousx - event.getRawX()) <= gui.suspension.width * dp / 2 && Math.abs(gui.suspension.previousy - event.getRawY()) <= gui.suspension.height * dp / 2) && gui.suspension.isShowing) {
 									gui.suspension.dismiss();
 									gui.main.show(0);
 									return false;
@@ -1237,11 +1252,11 @@ gui = {
 		})},
 		dismiss: function() { gui.run(function(){
 			if (gui.suspension.isShowing) {
+				gui.suspension.isShowing = false;
 				gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
 					gui.suspension._global_base.setAlpha(anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
 						gui.winMgr.removeView(gui.suspension._global_base);
-						gui.suspension.isShowing = false;
 					}
 				});
 			}
@@ -1427,9 +1442,11 @@ gui = {
 				s.close.setTextColor(gui.config.colors.text);
 				s.close.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
-						sheetplayer.stop();
-						gui.player_panel.__internal_dismiss();
-						gui.main.show(0);
+						if(gui.player_panel.isShowing) {
+							gui.player_panel.__internal_dismiss();
+							sheetplayer.stop();
+							gui.main.show(0);
+						}
 					}
 				}));
 				gui.player_panel._global_base.addView(s.close);
@@ -1532,11 +1549,11 @@ gui = {
 		})},
 		__internal_dismiss: function() { gui.run(function(){
 			if (gui.player_panel.isShowing) {
+				gui.player_panel.isShowing = false;
 				gui.utils.value_animation("Float", 1, 0, 200 , new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.player_panel._global_base.setAlpha(anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
 						gui.winMgr.removeView(gui.player_panel._global_base);
-						gui.player_panel.isShowing = false;
 					}
 				});
 			}
@@ -1638,7 +1655,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_listView.setAdapter(s.ns0_listAdapterController.self);
 			s.ns0_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 				onItemClick: function(parent, view, pos, id) {
-					if(config.values.key_coordinates.length == 15) {
+					if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
 						sheetplayer.setSheet(s.ns0_listAdapterController.get(pos));
 						gui.main.__internal_dismiss();
 						gui.player_panel.__internal_showPanel();
@@ -1738,7 +1755,22 @@ gui.dialogs.showProgressDialog(function(o) {
 					gui.main.__internal_dismiss();
 					gui.key_coordinate_navigation.show();
 				}
-			}, {
+			}, /*{
+				type: "default",
+				name: "设置按压模式", 
+				onClick: function(v) {
+					gui.dialogs.showOperateDialog([{
+						text: "无障碍服务",
+						description: "使用Android提供的无障碍服务和Auto.js的无障碍服务操作封装函数click实现按压屏幕。\n优：不需要Root权限。\n缺：和弦可能会出现按压缺失的情况和延迟。", 
+					}, {
+						text: "RootAutomator",
+						description: "使用Auto.js提供的RootAutomator实现按压屏幕。\n优：无延迟，按压不会出现缺失。\n缺：需要Root权限。", 
+					}], function(position, item) {
+						config.save("play_mode", position + 1)
+						toast("按压方式已设置为 " + item.text + " 模式");
+					}, true);
+				},
+			},*/ {
 				type: "default",
 				name: "查看使用须知", 
 				onClick: function(v) {
