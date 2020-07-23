@@ -1674,15 +1674,27 @@ gui = {
 
 gui.run(function(){
 	ui.setContentView((function(){
+		var layout = new android.widget.LinearLayout(ctx);
+		layout.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -1));
+		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+		layout.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
+		layout.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
+		var prompt = new android.widget.TextView(ctx);
+		prompt.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+		prompt.getLayoutParams().setMargins(dp * 15, dp * 5, dp * 15, dp * 15);
+		prompt.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
+		prompt.setText(android.text.Html.fromHtml("当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b>"));
+		layout.addView(prompt);
 		var btn = new android.widget.Button(ctx);
 		btn.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-		btn.setText("EXIT!!!");
+		btn.setText("强制退出");
 		btn.setOnClickListener(new android.view.View.OnClickListener({
 			onClick: function() {
 				java.lang.System.exit(0);
 			}
 		}));
-		return btn;
+		layout.addView(btn);
+		return layout;
 	}()));
 });
 
@@ -2262,22 +2274,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					gui.main.__internal_dismiss();
 					gui.key_coordinate_navigation.show();
 				}
-			}, /*{
-				type: "default",
-				name: "设置按压模式", 
-				onClick: function(v) {
-					gui.dialogs.showOperateDialog([{
-						text: "无障碍服务",
-						description: "使用Android提供的无障碍服务和Auto.js的无障碍服务操作封装函数click实现按压屏幕。\n优：不需要Root权限。\n缺：和弦可能会出现按压缺失的情况和延迟。", 
-					}, {
-						text: "RootAutomator",
-						description: "使用Auto.js提供的RootAutomator实现按压屏幕。\n优：无延迟，按压不会出现缺失。\n缺：需要Root权限。", 
-					}], function(position, item) {
-						config.save("play_mode", position + 1)
-						toast("按压方式已设置为 " + item.text + " 模式");
-					}, true);
-				},
-			}, */{
+			}, {
 				type: "default",
 				name: "查看使用须知", 
 				onClick: function(v) {
@@ -2367,27 +2364,5 @@ gui.dialogs.showProgressDialog(function(o) {
 		});
 	}
 }, false, false);
-
-/*sheetmgr.downloadAndLoad("Nevada.txt", function(r) {
-	switch(r.status) {
-		case 1: toast("Downloading");break;
-		case 2: toast("Parsing");break;
-		case 3: toast("Parsed");break;
-		case -1: toast("Error: " + r.msg);break;
-	}
-});*/
-
-
-/*gui.dialogs.showOperateDialog([{
-	text: "Accessbility",
-	description: "Use android accessbility permission with function \"click(x, y)\"", 
-}, {
-	text: "Root Automator",
-	description: "Use root permission with function \"RootAutomator.tap(x, y)\"", 
-}], function(id) {
-	toast("Clicked " + id);
-}, false);*/
-
-
 
 });
