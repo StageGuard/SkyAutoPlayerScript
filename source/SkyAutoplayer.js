@@ -1683,12 +1683,11 @@ gui.run(function(){
 		prompt.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
 		prompt.getLayoutParams().setMargins(dp * 15, dp * 5, dp * 15, dp * 15);
 		prompt.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-		prompt.setText(android.text.Html.fromHtml("当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br>" + (function(){
-			try {
-				requiresAutojsVersion(461);
+		prompt.setText(android.text.Html.fromHtml("当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br>" + (function() {
+			if(app.autojs.versionCode == 461) {
 				return "Auto.js版本为 <b>4.1.1 Alpha2</b>"
-			} catch(e) {
-				return "<font color=red>Auto.js版本不为 <b>4.1.1 Alpha2</b>，不保证稳定性！</font><br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>"
+			} else {
+				return "<font color=red>Auto.js版本为 <b>" + app.autojs.versionName + "</b>，不保证稳定性！</font><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>"
 			}
 		}())));
 		layout.addView(prompt);
