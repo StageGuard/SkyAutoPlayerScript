@@ -64,41 +64,122 @@ sheetmgr = {
 	rootDir: android.os.Environment.getExternalStorageDirectory() + "/Android/data/com.Maple.SkyStudio/files/Sheet/",
 	encoding: "utf-16le",
 	
-	cachedSheetList: [],
+	cachedLocalSheetList: [],
+	cachedOnlineSharedSheetInfoList: [],
 	
-	getSheetList: function(forceRefresh, listener) {
-		if(this.cachedSheetList.length == 0 || forceRefresh) {
+	getLocalSheetList: function(forceRefresh, listener) {
+		if(this.cachedLocalSheetList.length == 0 || forceRefresh) {
 			this.__internal_fetchLocalSheets(listener);
 		}
-		return this.cachedSheetList;
+		return this.cachedLocalSheetList;
+	},
+	getOnlineSharedSheetInfoList: function(forceRefresh) {
+		if(this.cachedOnlineSharedSheetInfoList.length == 0 || forceRefresh) {
+			this.__internal_fetchOnlineSharedSheets();
+		}
+		return this.cachedOnlineSharedSheetInfoList;
+	},
+	
+	downloadAndLoad: function(file, listener) {
+		listener({status:1});
+		var remoteHost = "https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/shared_sheets/" + file;
+		var resp = http.get(remoteHost);
+		if(resp.statusCode >= 200 && resp.statusCode < 300) {
+			var sheet = files.join(this.rootDir, files.getNameWithoutExtension(file) + (function(length) {
+				var string = "0123456789abcde";
+				var stringBuffer = new java.lang.StringBuffer();
+				for (var i = 0; i < length; i++) {
+					stringBuffer.append(string.charAt(Math.round(Math.random() * (string.length - 1))));
+				}
+				return stringBuffer.toString();
+			} (7)) + ".txt");
+			files.create(sheet);
+			files.writeBytes(sheet, resp.body.bytes());
+			listener({status:2});
+			var readable = files.open(sheet, "r", this.encoding);
+			var parsed = eval(readable.read())[0];
+			readable.close();
+			parsed.songNotes = this.parseSongNote(parsed.songNotes);
+			this.cachedLocalSheetList.push(parsed);
+			listener({status:3});
+		} else {
+			listener({status:-1, msg: "获取 " + remoteHost + " 失败，原因：" + resp.statusMessage});
+		}
 	},
 	
 	__internal_fetchLocalSheets: function(listener) {
 		var sheets = files.listDir(this.rootDir, function(name){return name.endsWith(".txt");});
-		this.cachedSheetList.length = 0;
+		this.cachedLocalSheetList.length = 0;
 		for(var i in sheets) {
 			if(listener != null) listener(i);
 			var readable = files.open(files.join(this.rootDir, sheets[i]), "r", this.encoding);
 			var parsed = eval(readable.read())[0];
 			readable.close();
-			parsed.songNotes = (function(raw){
-				var r = [];
-				var t_time = 0;
-				var t_sets = [];
-				for(var i in raw) {
-					var key = Number(raw[i].key.replace(/^(\d)Key(\d{1,})$/, "$2"));
-					if(raw[i].time != t_time) {
-					r.push({time: t_time, keys: t_sets});
-						t_sets = [];
-						t_time = raw[i].time;
-					}
-					if(t_sets.indexOf(key) == -1) t_sets.push(key);
-				}
-				return r;
-			}(parsed.songNotes));
-			this.cachedSheetList.push(parsed);
+			parsed.songNotes = this.parseSongNote(parsed.songNotes);
+			parsed.fileName = sheets[i];
+			this.cachedLocalSheetList.push(parsed);
 		}
 	},
+	__internal_fetchOnlineSharedSheets: function() {
+		var remoteHost = "https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/shared_sheets.json";
+		var data = http.get(remoteHost).body.json();
+		this.cachedOnlineSharedSheetInfoList = data.sheets;
+	},
+	
+	parseSongNote: function(raw) {
+		var r = [];
+		var t_time = 0;
+		var t_sets = [];
+		for(var i in raw) {
+			var key = Number(raw[i].key.replace(/^(\d)Key(\d{1,})$/, "$2"));
+			if(raw[i].time != t_time) {
+			r.push({time: t_time, keys: t_sets});
+				t_sets = [];
+				t_time = raw[i].time;
+			}
+			if(t_sets.indexOf(key) == -1) t_sets.push(key);
+		}
+		return r;
+	},
+	
+	pitch_suggestion: [{
+		name: "C",
+		places: ["境遇", "墓土四龙图", "雨林终点神庙音乐结束后" ]
+	}, {
+		name: "D♭",
+		places: ["云野八人升降梯", "雨林鱼骨图水母升起前" ]
+	}, {
+		name: "D",
+		places: ["云野球形洞(通过云洞)", "雨林起点(不飞下去)",
+				"霞谷终点(一堆蜡烛)", "墓土远古战场"]
+	}, {
+		name: "E♭",
+		places: ["雨林第一个门后右边的拱形洞内", "墓土破旧神庙" ]
+	}, {
+		name: "E",
+		places: ["重生之路", "暴风眼起始位置" ]
+	}, {
+		name: "F",
+		places: ["雨林右隐藏图", "霞谷霞光城", "禁阁一楼"]
+	}, {
+		name: "G♭",
+		places: ["雨林鱼骨图释放被困海蜇或鳐后"]
+	}, {
+		name: "G",
+		places: ["雨林鱼骨图水母升起后"]
+	}, {
+		name: "A♭",
+		places: ["霞谷终点观众席"]
+	}, {
+		name: "A",
+		places: ["禁阁四楼"]
+	}, {
+		name: "B♭",
+		places: ["雨林起点(不飞下去)右边空地"]
+	}, {
+		name: "B",
+		places: ["雨林鱼骨图水母升起后", "霞谷任意赛道中", "禁阁二楼"]
+	}],
 };
 
 sheetplayer = {
@@ -128,6 +209,7 @@ sheetplayer = {
 					if(sheetplayer.mode == 1) {
 						click(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]);
 					} else if(sheetplayer.mode == 2){
+						//Tap(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]);
 						sheetplayer.rootAutomator.press(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1], 75);
 					}
 				});});
@@ -184,7 +266,7 @@ config = {
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOnlineUploadSkip: false,
-		currentVersion: 2,
+		currentVersion: 3,
 		play_mode: 1, //1 = Accessbility, 2 = RootAutomator
 		gitVersion: "",
 	},
@@ -206,6 +288,7 @@ config = {
 	
 	checkVersion: function() {
 		this.values.gitVersion = http.get("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/gitVersion").body.string();
+		//this.values.gitVersion = "b8b694aa74de3bccfb2e0f432b49a16e9c8846bc";
 		var periodVersion = this._global_storage.get("version", this.values.currentVersion);
 		var currentVersion = this.values.currentVersion;
 		if(periodVersion < currentVersion) {
@@ -226,7 +309,7 @@ config = {
 	
 	fetchResources: function(listener) {
 		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
-		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png"];
+		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png"];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/";
 		var downloadQueue = [];
 		var tryCount = 1;
@@ -506,7 +589,6 @@ gui = {
 	config: {
 		colors: {
 			background: android.graphics.Color.parseColor("#212121"),
-			primary: android.graphics.Color.parseColor("#009688"),
 			text: android.graphics.Color.WHITE,
 			dark_text: android.graphics.Color.BLACK,
 			sec_text: android.graphics.Color.parseColor("#7B7B7B"),
@@ -855,6 +937,15 @@ gui = {
 			}
 			if(j instanceof Object) gui.main.views.push(j);
 		},
+		
+		getPage: function(index) {
+			for(var i in gui.main.views) {
+				if(gui.main.views[i].index == index) {
+					return gui.main.views[i];
+				}
+			}
+		},
+		
 		removePage: function(index) {
 			for(var i in gui.main.views) {
 				if(gui.main.views[i].index == index) {
@@ -898,7 +989,7 @@ gui = {
 				
 				s.statusBar = new android.widget.RelativeLayout(ctx);
 				s.statusBar.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * gui.main.status_bar_height));
-				s.statusBar.setBackgroundColor(gui.config.colors.primary);
+				s.statusBar.setBackgroundColor(gui.config.colors.background);
 				s.statusBar.setElevation(10 * dp);
 				
 				gui.main._global_title = new android.widget.TextView(ctx);
@@ -1640,13 +1731,56 @@ gui.dialogs.showProgressDialog(function(o) {
 				self.relative.addView(self.author);
 				
 				self.play = new android.widget.ImageView(ctx);
+				self.play.setId(12);
 				self.play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				self.play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 22, dp * 22));
-				self.play.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
+				self.play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+				self.play.getLayoutParams().setMargins(dp * 7, dp * 15, dp * 15, dp * 15);
 				self.play.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
 				self.play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				self.play.setImageBitmap(config.bitmaps.play );
+				self.play.setImageBitmap(config.bitmaps.play);
+				self.play.measure(0, 0);
+				self.play.setBackgroundDrawable(gui.utils.ripple_drawable(self.play.getMeasuredWidth(), self.play.getMeasuredHeight(), "rect"));
+				self.play.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() {
+						if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
+							sheetplayer.setSheet(element);
+							gui.main.__internal_dismiss();
+							gui.player_panel.__internal_showPanel();
+						} else {
+							toast("未设置键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+						}
+					}
+				}));
+				
+				self.delete = new android.widget.ImageView(ctx);
+				self.delete.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				self.delete.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+				self.delete.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 7, dp * 15);
+				self.delete.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 12);
+				self.delete.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				self.delete.setImageBitmap(config.bitmaps.bin);
+				self.delete.measure(0, 0);
+				self.delete.setBackgroundDrawable(gui.utils.ripple_drawable(self.delete.getMeasuredWidth(), self.delete.getMeasuredHeight(), "rect"));
+				self.delete.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() {
+						var path = files.join(sheetmgr.rootDir, element.fileName);
+						gui.dialogs.showConfirmDialog({
+							title: "删除文件",
+							text: "确认要删除 " + path + " 吗？\n该操作不可恢复！",
+							canExit: true,
+							buttons: ["确认", "取消"],
+							callback: function(id) {
+								if(id == 0) {
+									files.remove(path);
+									gui.main.getPage(0).getSheetList(s, true);
+								}
+							},
+						});
+					}
+				}));
+				
 				self.relative.addView(self.play);
+				self.relative.addView(self.delete);
 				
 				return self.relative;
 			}));
@@ -1655,13 +1789,71 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_listView.setAdapter(s.ns0_listAdapterController.self);
 			s.ns0_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 				onItemClick: function(parent, view, pos, id) {
-					if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
-						sheetplayer.setSheet(s.ns0_listAdapterController.get(pos));
-						gui.main.__internal_dismiss();
-						gui.player_panel.__internal_showPanel();
-					} else {
-						toast("未设置键位坐标或坐标数据错误，请前往设置页设置键位坐标");
-					}
+					var item = s.ns0_listAdapterController.get(pos);
+					gui.dialogs.showDialog((function () {
+						var scr = new android.widget.ScrollView(ctx);
+						scr.setBackgroundColor(gui.config.colors.background);
+						var layout = new android.widget.LinearLayout(ctx);
+						layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
+						layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+						layout.setPadding(15 * dp, 15 * dp, 15 * dp, 5 * dp);
+						var title = new android.widget.TextView(ctx);
+						title.setText(item.name);
+						title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+						title.setPadding(0, 0, 0, 10 * dp);
+						title.setTextColor(gui.config.colors.text);
+						title.setTextSize(16);
+						layout.addView(title);
+						var text = new android.widget.TextView(ctx);
+						text.setText(android.text.Html.fromHtml(
+							"<font color=#FFFFFF>作者: " + (item.author.length == 0 ? "</font><font color=#7B7B7B>Not Provided</font><font color=#FFFFFF>" : item.author) + "</font><br>" + 
+							"<font color=#FFFFFF>BPM: " + item.bpm + "</font><br>" + 
+							"<font color=#FFFFFF>时长: " + (function(){
+								var time_ms = item.songNotes[item.songNotes.length - 1].time;
+								var second_s = Math.floor(time_ms / 1000);
+								
+								var millis = time_ms - second_s * 1000;
+								var minute = Math.floor(second_s / 60);
+								var second = second_s - minute * 60;
+								
+								return minute + ":" + second + "." + millis;
+							}()) + "</font><br>" + 
+							"<br>" + 
+							"<font color=#FFFFFF>音高: " + (function(){
+								var r = "</font><font color=";
+								switch(item.pitchLevel) {
+									case 0: r += "#FF6100";break;
+									case 1: r += "#FF9200";break;
+									case 2: r += "#FFC600";break;
+									case 3: r += "#FFFF00";break;
+									case 4: r += "#8CC619";break;
+									case 5: r += "#00815A";break;
+									case 6: r += "#0096B5";break;
+									case 7: r += "#2971B5";break;
+									case 8: r += "#424DA4";break;
+									case 9: r += "#6B3594";break;
+									case 10: r += "#C5047B";break;
+									case 11: r += "#FF0000";break;
+								}
+								r += ">" + sheetmgr.pitch_suggestion[item.pitchLevel].name
+								return r;
+							}()) + "</font><br>" + 
+							"<font color=#FFFFFF>建议弹奏地点: " + (function(){
+								var r = "</font>";
+								sheetmgr.pitch_suggestion[item.pitchLevel].places.map(function(e, i) {
+									r += "<br><font color=#FFFFFF> * </font><font color=#7B7B7B>" + e + "</font>"
+								}); 
+								return r;
+							}())
+						));
+						text.setPadding(0, 0, 0, 10 * dp);
+						text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+						text.setTextColor(gui.config.colors.sec_text);
+						text.setTextSize(14);
+						layout.addView(text);
+						scr.addView(layout)
+						return scr;
+					}()), -2, -2, null, true);
 				}
 			}));
 			s.ns0_rl.addView(s.ns0_listView);
@@ -1672,7 +1864,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_progress.setPadding(0, 0, 0, 0);
 			s.ns0_progress.getLayoutParams().setMargins(0, 0, 0, 0);
 			s.ns0_progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
-			s.ns0_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.primary));
+			s.ns0_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
 			s.ns0_progress.setIndeterminate(true);
 			s.ns0_progress.setAlpha(0);
 			
@@ -1697,7 +1889,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						s.ns0_listAdapterController.notifyChange();
 						s.ns0_listView.setAlpha(1);
 						threads.start(function() {
-							sheetmgr.getSheetList(isForce, function(i) {
+							sheetmgr.getLocalSheetList(isForce, function(i) {
 								gui.run(function(){
 									gui.main._global_title.setText("加载中: 共" + i + "首乐谱");
 									s.ns0_listAdapterController.notifyChange();
@@ -1726,16 +1918,293 @@ gui.dialogs.showProgressDialog(function(o) {
 		title: "共享乐谱",
 		navigation_title: "共享乐谱", 
 		navigation_icon: config.bitmaps.online,
+		func: function(s) {
+			this.getOnlineSheetList(s, true);
+		},
+		func_icon: android.graphics.Bitmap.createBitmap(config.bitmaps.refresh),
 		view: function(s) {
-			s.ns
-			var text = new android.widget.TextView(ctx);
-			text.setText("Still working on it...\nNot avaliable now :)");
-			text.setTextSize(18);
-			text.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-			text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
-			text.setTextColor(gui.config.colors.sec_text);
-			return text;
-		}, 
+			s.ns1_rl = new android.widget.RelativeLayout(ctx);
+			s.ns1_rl.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
+			
+			s.ns1_listView = new android.widget.ListView(ctx);
+			s.ns1_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
+			s.ns1_listView.setAdapter(s.ns1_listAdapter = new RhinoListAdapter([], function self(element) {
+				
+				self.relative = new android.widget.RelativeLayout(ctx);
+				self.relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+				
+				if(element.type == -1) {
+					self.upload = new android.widget.TextView(ctx);
+					self.upload.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+					self.upload.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+					self.upload.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
+					self.upload.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+					self.upload.setTextSize(13);
+					self.upload.setTextColor(gui.config.colors.sec_text);
+					self.upload.setText("上传乐谱");
+					self.relative.addView(self.upload);
+					return self.relative;
+				}
+				
+				self.title = new android.widget.TextView(ctx);
+				self.title.setId(10);
+				self.title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				self.title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				self.title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
+				self.title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				self.title.setTextSize(16);
+				self.title.setTextColor(gui.config.colors.text);
+				self.title.setText(element.name);
+				self.relative.addView(self.title);
+				
+				self.info = new android.widget.TextView(ctx);
+				self.info.setId(11);
+				self.info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				self.info.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 2);
+				self.info.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
+				self.info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				self.info.setTextSize(15);
+				self.info.setTextColor(gui.config.colors.text);
+				self.info.setText(element.author);
+				self.relative.addView(self.info);
+				
+				self.desc = new android.widget.TextView(ctx);
+				self.desc.setId(12);
+				self.desc.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
+				self.desc.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 11);
+				self.desc.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				self.desc.setTextSize(13);
+				self.desc.setTextColor(gui.config.colors.sec_text);
+				self.desc.setText(android.text.Html.fromHtml(element.desc.replace(new RegExp("\x0a", "gi"), "<br>")));
+				self.relative.addView(self.desc);
+				
+				self.download = new android.widget.ImageView(ctx);
+				self.download.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				self.download.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+				self.download.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
+				self.download.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+				self.download.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				self.download.setImageBitmap(config.bitmaps.download);
+				self.download.measure(0, 0);
+				self.download.setBackgroundDrawable(gui.utils.ripple_drawable(self.download.getMeasuredWidth(), self.download.getMeasuredHeight(), "rect"));
+				self.download.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() { threads.start(function() {
+						sheetmgr.downloadAndLoad(element.file, function(r) {
+							switch(r.status) {
+								case 1: {
+									gui.run(function() {
+										self.status.setText("下载中...");
+										self.relative.addView(self.status);
+										self.relative.addView(self.progress);
+										self.progress.setIndeterminate(true);
+										self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 1);
+										gui.utils.value_animation("Float", 0, 1.0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
+											self.progress.setAlpha(anim.getAnimatedValue());
+											self.status.setAlpha(anim.getAnimatedValue());
+										});
+									});
+									break;
+								}
+								case 2: {
+									if(gui.main.isShowing) gui.run(function() {
+										self.status.setText("解析中...");
+									});
+									break;
+								}
+								case 3: {
+									if(gui.main.isShowing) { gui.run(function() { 
+										toast("下载完成: " + element.name + "\n请在本地曲谱页面刷新");
+										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
+											self.progress.setAlpha(anim.getAnimatedValue());
+											self.status.setAlpha(anim.getAnimatedValue());
+											if(anim.getAnimatedValue() == 0) {
+												self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
+												self.relative.removeView(self.status);
+												self.relative.removeView(self.progress);
+											}
+										});
+									});}
+									break;
+								}
+								case -1: {
+									if(gui.main.isShowing) { gui.run(function() {
+										self.status.setText("下载失败: " + r.msg);
+										self.progress.setIndeterminate(false);
+									});}
+									break;
+								}
+							}
+						});
+					}); }
+				}));
+				self.relative.addView(self.download);
+				
+				self.status = new android.widget.TextView(ctx);
+				self.status.setId(13);
+				self.status.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				self.status.getLayoutParams().setMargins(dp * 15, 0, dp * 15, 0);
+				self.status.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 12);
+				self.status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				self.status.setTextSize(13);
+				self.status.setAlpha(0);
+				self.status.setTextColor(gui.config.colors.text);
+				
+				//self.relative.addView(self.status);
+				
+				self.progress = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+				self.progress.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * 15));
+				self.progress.setPadding(0, 0, 0, 0);
+				self.progress.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
+				self.progress.getLayoutParams().setMargins(dp * 15, 0, dp * 15, dp * 5);
+				self.progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
+				self.progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
+				self.progress.setIndeterminate(false);
+				self.progress.setAlpha(0);
+				
+				//self.relative.addView(self.progress);
+				
+				return self.relative;
+			}));
+			s.ns1_listAdapterController = RhinoListAdapter.getController(s.ns1_listAdapter);
+			
+			s.ns1_listView.setAdapter(s.ns1_listAdapterController.self);
+			s.ns1_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+				onItemClick: function(parent, view, pos, id) {
+					var item = s.ns1_listAdapterController.get(pos);
+					if(item.type == -1 || pos == 0) {
+						gui.dialogs.showConfirmDialog({
+							title: "如何上传乐谱",
+							text: "共有两种方式可以上传乐谱：\n\n" + 
+								"①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
+								"②在github fork StageGuard/SkyAutoplayerScript，在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n\n" + 
+								"注：若是转载转载请注明原作者同意\n\n" + 
+								"如果所有人都白嫖，那么这个列表将永远也不会扩充",
+							canExit: true,
+							buttons: ["打开酷安", "打开Github", "取消"],
+							callback: function(id) {
+								if(id == 0) {
+									if(!app.launch("com.coolapk.market")) toast("应用 酷安 不存在！");
+								} else if(id == 1) {
+									app.openUrl("https://github.com/StageGuard/SkyAutoplayerScript/");
+								}
+							},
+						});
+						return true;
+					}
+					gui.dialogs.showDialog((function () {
+						var scr = new android.widget.ScrollView(ctx);
+						scr.setBackgroundColor(gui.config.colors.background);
+						var layout = new android.widget.LinearLayout(ctx);
+						layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
+						layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+						layout.setPadding(15 * dp, 15 * dp, 15 * dp, 5 * dp);
+						var title = new android.widget.TextView(ctx);
+						title.setText(item.name);
+						title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+						title.setPadding(0, 0, 0, 10 * dp);
+						title.setTextColor(gui.config.colors.text);
+						title.setTextSize(16);
+						layout.addView(title);
+						var text = new android.widget.TextView(ctx);
+						text.setText(android.text.Html.fromHtml(
+							"<font color=#FFFFFF>作者: " + (item.author.length == 0 ? "</font><font color=#7B7B7B>Not Provided</font><font color=#FFFFFF>" : item.author) + "</font><br>" + 
+							"<font color=#FFFFFF>BPM: " + item.bpm + "</font><br>" + 
+							"<br>" + 
+							"<font color=#FFFFFF>音高: " + (function(){
+								var r = "</font><font color=";
+								switch(item.pitchLevel) {
+									case 0: r += "#FF6100";break;
+									case 1: r += "#FF9200";break;
+									case 2: r += "#FFC600";break;
+									case 3: r += "#FFFF00";break;
+									case 4: r += "#8CC619";break;
+									case 5: r += "#00815A";break;
+									case 6: r += "#0096B5";break;
+									case 7: r += "#2971B5";break;
+									case 8: r += "#424DA4";break;
+									case 9: r += "#6B3594";break;
+									case 10: r += "#C5047B";break;
+									case 11: r += "#FF0000";break;
+								}
+								r += ">" + sheetmgr.pitch_suggestion[item.pitchLevel].name
+								return r;
+							}()) + "</font><br>" + 
+							"<font color=#FFFFFF>建议弹奏地点: " + (function(){
+								var r = "</font>";
+								sheetmgr.pitch_suggestion[item.pitchLevel].places.map(function(e, i) {
+									r += "<br><font color=#FFFFFF> * </font><font color=#7B7B7B>" + e + "</font>"
+								}); 
+								return r;
+							}()) + 
+							"<br><br>" + 
+							"<font color=#FFFFFF>简介: </font><br><font color=#7B7B7B>" + 
+							item.desc.replace(new RegExp("\x0a", "gi"), "<br>")
+								
+							+ "</font>"
+						));
+						text.setPadding(0, 0, 0, 10 * dp);
+						text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+						text.setTextColor(gui.config.colors.sec_text);
+						text.setTextSize(14);
+						layout.addView(text);
+						scr.addView(layout)
+						return scr;
+					}()), -2, -2, null, true);
+				}
+			}));
+			s.ns1_rl.addView(s.ns1_listView);
+			
+			s.ns1_progress = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+			s.ns1_progress.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * 15));
+			s.ns1_progress.setTranslationY(dp * 5);
+			s.ns1_progress.setPadding(0, 0, 0, 0);
+			s.ns1_progress.getLayoutParams().setMargins(0, 0, 0, 0);
+			s.ns1_progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
+			s.ns1_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
+			s.ns1_progress.setIndeterminate(true);
+			s.ns1_progress.setAlpha(0);
+			
+			s.ns1_rl.addView(s.ns1_progress);
+			return s.ns1_rl;
+		},
+		update: function(s) {
+			if(s.initial) this.getOnlineSheetList(s, false);
+		},
+		getOnlineSheetList: function(s, isForce) {
+			gui.run(function() {
+				s.ns1_progress.setIndeterminate(true);
+				s.ns1_listAdapterController.removeAll();
+				s.ns1_listAdapterController.add({type: -1});
+				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+					gui.main._global_title.setAlpha(anim.getAnimatedValue());
+				});
+				gui.utils.value_animation("Float", 1.0, 0, 100, new android.view.animation.DecelerateInterpolator(), function(anim) {
+					s.ns1_listView.setAlpha(anim.getAnimatedValue());
+					s.ns1_progress.setAlpha(1 - anim.getAnimatedValue());
+					if(anim.getAnimatedValue() == 0) {
+						s.ns1_listAdapterController.notifyChange();
+						s.ns1_listView.setAlpha(1);
+						gui.main._global_title.setText("获取列表中...");
+						threads.start(function() {
+							sheetmgr.getOnlineSharedSheetInfoList(isForce).map(function(e, i) {
+								s.ns1_listAdapterController.add(e);
+							});
+							gui.run(function() {
+								s.ns1_listAdapterController.notifyChange();
+								gui.main._global_title.setText(gui.main.getPageInfo(s.index).title);
+								gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
+									gui.main._global_title.setAlpha(anim.getAnimatedValue());
+									s.ns1_listView.setAlpha(anim.getAnimatedValue());
+									s.ns1_progress.setAlpha(1 - anim.getAnimatedValue());
+									if(anim.getAnimatedValue() == 1.0) s.ns1_progress.setIndeterminate(false);
+								});
+							});
+						});
+					}
+				});
+			});
+		}
 	});
 	gui.main.addPage({
 		index: 2, 
@@ -1770,7 +2239,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						toast("按压方式已设置为 " + item.text + " 模式");
 					}, true);
 				},
-			},*/ {
+			}, */{
 				type: "default",
 				name: "查看使用须知", 
 				onClick: function(v) {
@@ -1859,7 +2328,16 @@ gui.dialogs.showProgressDialog(function(o) {
 			callback: function(id) {},
 		});
 	}
-}, false, true);
+}, false, false);
+
+/*sheetmgr.downloadAndLoad("Nevada.txt", function(r) {
+	switch(r.status) {
+		case 1: toast("Downloading");break;
+		case 2: toast("Parsing");break;
+		case 3: toast("Parsed");break;
+		case -1: toast("Error: " + r.msg);break;
+	}
+});*/
 
 
 /*gui.dialogs.showOperateDialog([{
