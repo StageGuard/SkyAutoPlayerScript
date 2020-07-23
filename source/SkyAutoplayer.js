@@ -189,13 +189,10 @@ sheetplayer = {
 	noteCount: 0,
 	name: "",
 	pitch: 0,
-	mode: 1,
 	
 	currentNote: 0,
 	playing: false,
 	nextInterval: 0,
-	
-	rootAutomator: null,
 	
 	thread: null,
 	
@@ -203,22 +200,31 @@ sheetplayer = {
 		if(this.playing == true) return;
 		this.playing = true;
 		this.thread = threads.start(function() {
-			do {
-				sheetplayer.nextInterval = sheetplayer.notes[(sheetplayer.currentNote + 1 == sheetplayer.noteCount) ? sheetplayer.currentNote : (sheetplayer.currentNote + 1)].time - sheetplayer.notes[sheetplayer.currentNote].time;
-				sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {threads.start(function() {
-					if(sheetplayer.mode == 1) {
-						click(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]);
-					} else if(sheetplayer.mode == 2){
-						//Tap(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]);
-						sheetplayer.rootAutomator.press(config.values.key_coordinates[e][0], config.values.key_coordinates[e][1], 75);
-					}
-				});});
+			while(
+				sheetplayer.playing && sheetplayer.currentNote < sheetplayer.noteCount
+			) {
+				
+				if((sheetplayer.currentNote + 1) == sheetplayer.noteCount) {
+					sheetplayer.nextInterval = sheetplayer.notes[sheetplayer.currentNote].time - sheetplayer.notes[sheetplayer.currentNote - 1].time;
+				} else {
+					sheetplayer.nextInterval = sheetplayer.notes[sheetplayer.currentNote + 1].time - sheetplayer.notes[sheetplayer.currentNote].time;
+				}
+				threads.start(function() {
+					var gestureMap = [];
+					sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {
+						gestureMap.push([
+							0, 25, 
+							[config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]], 
+							[config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]]
+						]);
+					});
+					gestureMap = sheetplayer.toSource(gestureMap);
+					eval("gestures(" + gestureMap.slice(1, gestureMap.length - 1) + ");");
+				});
 				if(listener != null) listener();
 				java.lang.Thread.sleep(sheetplayer.nextInterval);
 				sheetplayer.currentNote ++;
-			} while(
-				sheetplayer.playing && sheetplayer.currentNote < sheetplayer.noteCount
-			);
+			}
 		});
 		
 	},
@@ -227,12 +233,6 @@ sheetplayer = {
 		this.playing = false;
 		this.currentNote = 0;
 		this.thread = null;
-		if(this.mode == 2 && this.rootAutomator != null) {
-			threads.start(function(){
-				this.rootAutomator.exit();
-				this.rootAutomator = null;
-			});
-		}
 	},
 	pause: function() {
 		this.playing = false;
@@ -250,11 +250,24 @@ sheetplayer = {
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
 		this.noteCount = j.songNotes.length;
-		this.mode = config.values.play_mode;
-		if(this.mode == 2) threads.start(function(){sheetplayer.rootAutomator = new RootAutomator();});
 	},
 	
-	
+	toSource: function(obj) {
+		var _toJSON = function toJSON(x, lev) {
+			var p = "", r, i;
+			if (typeof x == "string") {
+				return x;
+			} else if (Array.isArray(x)) {
+				r = new Array();
+				for (i = 0; i < x.length; i++) r.push(toJSON(x[i], lev - 1));
+				p = "[" + r.join(",") + "]";
+			}  else {
+				p = String(x);
+			}
+			return p;
+		}
+		return _toJSON(obj, 32);
+	},
 }
 
 config = {
@@ -266,7 +279,7 @@ config = {
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOnlineUploadSkip: false,
-		currentVersion: 3,
+		currentVersion: 4,
 		play_mode: 1, //1 = Accessbility, 2 = RootAutomator
 		gitVersion: "",
 	},
@@ -279,7 +292,6 @@ config = {
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
 		this.values.skipOnlineUploadSkip = this._global_storage.get("skip_online_upload_skip", this.values.skipOnlineUploadSkip);
-		this.values.play_mode = this._global_storage.get("play_mode", this.values.play_mode);
 	},
 	
 	save: function(key, value) {
@@ -1631,13 +1643,13 @@ gui = {
 				gui.player_panel._global_text.setText(sheetplayer.name);
 				gui.player_panel.refreshStatus();
 			}
-		})},
+		});},
 		refreshStatus: function() { gui.run(function(){
 			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (sheetplayer.currentNote + "/" + sheetplayer.noteCount) : (sheetplayer.thread == null ? "Idle" : "Paused")));
 			gui.player_panel._global_cnote.setText(String(sheetplayer.playing ? (sheetplayer.notes[sheetplayer.currentNote < sheetplayer.noteCount ? sheetplayer.currentNote : sheetplayer.noteCount - 1].keys) : "-"));
 			gui.player_panel._global_seek.setProgress(sheetplayer.currentNote);
 			
-		})},
+		});},
 		__internal_dismiss: function() { gui.run(function(){
 			if (gui.player_panel.isShowing) {
 				gui.player_panel.isShowing = false;
