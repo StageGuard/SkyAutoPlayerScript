@@ -2175,7 +2175,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			gui.run(function() {
 				s.ns1_progress.setIndeterminate(true);
 				s.ns1_listAdapterController.removeAll();
-				s.ns1_listAdapterController.add({type: -1});
+				s.ns1_listAdapterController.notifyChange();
 				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
 					gui.main._global_title.setAlpha(anim.getAnimatedValue());
 				});
@@ -2183,6 +2183,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					s.ns1_listView.setAlpha(anim.getAnimatedValue());
 					s.ns1_progress.setAlpha(1 - anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
+						s.ns1_listAdapterController.add({type: -1});
 						s.ns1_listAdapterController.notifyChange();
 						s.ns1_listView.setAlpha(1);
 						gui.main._global_title.setText("获取列表中...");
@@ -2212,9 +2213,9 @@ gui.dialogs.showProgressDialog(function(o) {
 		navigation_title: "设置",
 		navigation_icon: config.bitmaps.settings,
 		view: function(s) {
-			s.ns1_listView = new android.widget.ListView(ctx);
-			s.ns1_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
-			s.ns1_listView.setAdapter(s.ns1_listAdapter = new RhinoListAdapter([{
+			s.ns2_listView = new android.widget.ListView(ctx);
+			s.ns2_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
+			s.ns2_listView.setAdapter(s.ns2_listAdapter = new RhinoListAdapter([{
 				type: "tag",
 				name: "基本设置", 
 			}, {
@@ -2299,19 +2300,19 @@ gui.dialogs.showProgressDialog(function(o) {
 				return self.relative;
 				
 			}));
-			s.ns1_listAdapterController = RhinoListAdapter.getController(s.ns1_listAdapter);
-			s.ns1_listView.setDividerHeight(0);
-			s.ns1_listView.setAdapter(s.ns1_listAdapterController.self);
-			s.ns1_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+			s.ns2_listAdapterController = RhinoListAdapter.getController(s.ns2_listAdapter);
+			s.ns2_listView.setDividerHeight(0);
+			s.ns2_listView.setAdapter(s.ns2_listAdapterController.self);
+			s.ns2_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 				onItemClick: function(parent, view, pos, id) {
-					var item = s.ns1_listAdapterController.get(pos);
+					var item = s.ns2_listAdapterController.get(pos);
 					switch(item.type) {
 						case "default":
 							item.onClick(view);
 					}
 				}
 			}));
-			return s.ns1_listView;
+			return s.ns2_listView;
 		},
 	});
 	gui.suspension.show();
