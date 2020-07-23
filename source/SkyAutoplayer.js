@@ -1935,6 +1935,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		},
 		func_icon: android.graphics.Bitmap.createBitmap(config.bitmaps.refresh),
 		view: function(s) {
+			
 			s.ns1_rl = new android.widget.RelativeLayout(ctx);
 			s.ns1_rl.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
 			
@@ -1945,15 +1946,28 @@ gui.dialogs.showProgressDialog(function(o) {
 				self.relative = new android.widget.RelativeLayout(ctx);
 				self.relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
+				self.downloading = false;
+				
 				if(element.type == -1) {
+					self.info = new android.widget.ImageView(ctx);
+					self.info.setId(10);
+					self.info.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+					self.info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+					self.info.getLayoutParams().setMargins(dp * 15, dp * 10, dp * 5, dp * 10);
+					self.info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+					self.info.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					self.info.setImageBitmap(config.bitmaps.info);
+					self.relative.addView(self.info);
+					
 					self.upload = new android.widget.TextView(ctx);
 					self.upload.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 					self.upload.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-					self.upload.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
-					self.upload.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+					self.upload.getLayoutParams().setMargins(dp * 7, dp * 5, dp * 15, dp * 10);
+					self.upload.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					self.upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
 					self.upload.setTextSize(13);
 					self.upload.setTextColor(gui.config.colors.sec_text);
-					self.upload.setText("上传乐谱");
+					self.upload.setText("如何上传乐谱");
 					self.relative.addView(self.upload);
 					return self.relative;
 				}
@@ -2002,13 +2016,14 @@ gui.dialogs.showProgressDialog(function(o) {
 				self.download.setBackgroundDrawable(gui.utils.ripple_drawable(self.download.getMeasuredWidth(), self.download.getMeasuredHeight(), "rect"));
 				self.download.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() { threads.start(function() {
-						sheetmgr.downloadAndLoad(element.file, function(r) {
+						if(!self.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, function(r) {
 							switch(r.status) {
 								case 1: {
 									gui.run(function() {
 										self.status.setText("下载中...");
 										self.relative.addView(self.status);
 										self.relative.addView(self.progress);
+										self.isShowingStatusBar = true;
 										self.progress.setIndeterminate(true);
 										self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 1);
 										gui.utils.value_animation("Float", 0, 1.0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
@@ -2034,15 +2049,25 @@ gui.dialogs.showProgressDialog(function(o) {
 												self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
 												self.relative.removeView(self.status);
 												self.relative.removeView(self.progress);
+												self.isShowingStatusBar = false;
 											}
 										});
 									});}
 									break;
 								}
 								case -1: {
-									if(gui.main.isShowing) { gui.run(function() {
-										self.status.setText("下载失败: " + r.msg);
-										self.progress.setIndeterminate(false);
+									if(gui.main.isShowing) { gui.run(function() { 
+										toast("下载" + element.name + "失败: " + r.msg);
+										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
+											self.progress.setAlpha(anim.getAnimatedValue());
+											self.status.setAlpha(anim.getAnimatedValue());
+											if(anim.getAnimatedValue() == 0) {
+												self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
+												self.relative.removeView(self.status);
+												self.relative.removeView(self.progress);
+												self.isShowingStatusBar = false;
+											}
+										});
 									});}
 									break;
 								}
