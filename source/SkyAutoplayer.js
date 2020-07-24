@@ -83,7 +83,7 @@ sheetmgr = {
 	downloadAndLoad: function(file, listener) {
 		listener({status:1});
 		var remoteHost = "https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/shared_sheets/" + file;
-		var resp = http.get(remoteHost);
+		var resp = http.get(encodeURI(remoteHost));
 		if(resp.statusCode >= 200 && resp.statusCode < 300) {
 			var sheet = files.join(this.rootDir, files.getNameWithoutExtension(file) + (function(length) {
 				var string = "0123456789abcde";

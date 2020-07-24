@@ -7,5 +7,77 @@
     "bpm" : 497,
     "suggested_instrument": 1,
     "pitchLevel": 3
-  }],
+  }, {
+    "name": "大悲咒",
+    "file": "大悲咒.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 大悲咒",
+    "bpm" : 151,
+    "suggested_instrument": 1,
+    "pitchLevel": 3
+  }, {
+    "name": "坏苹果",
+    "file": "坏苹果.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 坏苹果",
+    "bpm" : 720,
+    "suggested_instrument": 1,
+    "pitchLevel": 6
+  }, {
+    "name": "三葉",
+    "file": "三葉.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 三葉",
+    "bpm" : 318,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "亡灵序曲选节",
+    "file": "亡灵序曲选节.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 亡灵序曲选节",
+    "bpm" : 240,
+    "suggested_instrument": 1,
+    "pitchLevel": 6
+  }, {
+    "name": "天空之城",
+    "file": "天空之城.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 天空之城",
+    "bpm" : 240,
+    "suggested_instrument": 1,
+    "pitchLevel": 3
+  }, {
+    "name": "幻昼",
+    "file": "幻昼.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 幻昼",
+    "bpm" : 281,
+    "suggested_instrument": 1,
+    "pitchLevel": 10
+  }, {
+    "name": "烟花易冷",
+    "file": "烟花易冷.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 烟花易冷",
+    "bpm" : 132,
+    "suggested_instrument": 1,
+    "pitchLevel": 4
+  }, {
+    "name": "菊次郎的夏天",
+    "file": "菊次郎的夏天.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 菊次郎的夏天",
+    "bpm" : 349,
+    "suggested_instrument": 1,
+    "pitchLevel": 2
+  }, {
+    "name": "起风了",
+    "file": "起风了.txt",
+    "author": "酷安@Aex技术总监",
+    "desc": "酷安酷友@Aex分享乐谱 起风了",
+    "bpm" : 236,
+    "suggested_instrument": 1,
+    "pitchLevel": 6
+  }]
 }
