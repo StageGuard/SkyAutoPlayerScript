@@ -1579,7 +1579,7 @@ gui = {
 				s.control_panel.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
 				
 				gui.player_panel._global_status = new android.widget.TextView(ctx);
-				gui.player_panel._global_status.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 88, dp * 22));
+				gui.player_panel._global_status.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 110, dp * 22));
 				s.control_panel.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 				gui.player_panel._global_status.setTextColor(gui.config.colors.sec_text);
 				gui.player_panel._global_status.setTextSize(12);
@@ -1615,8 +1615,8 @@ gui = {
 				s.control_panel.addView(s.pause);
 				
 				gui.player_panel._global_cnote = new android.widget.TextView(ctx);
-				gui.player_panel._global_cnote.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 88, dp * 22));
-				s.control_panel.setGravity(android.view.Gravity.RIGHT | android.view.Gravity.CENTER);
+				gui.player_panel._global_cnote.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 110, dp * 22));
+				s.control_panel.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
 				gui.player_panel._global_cnote.setTextColor(gui.config.colors.sec_text);
 				gui.player_panel._global_cnote.setTextSize(12);
 				//gui.player_panel._global_cnote.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
@@ -1645,7 +1645,7 @@ gui = {
 			}
 		});},
 		refreshStatus: function() { gui.run(function(){
-			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (sheetplayer.currentNote + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval) : (sheetplayer.thread == null ? "Idle" : "Paused")));
+			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (Number(sheetplayer.currentNote + 1) + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval + "ms") : (sheetplayer.thread == null ? "Idle" : "Paused")));
 			gui.player_panel._global_cnote.setText(String(sheetplayer.playing ? (sheetplayer.notes[sheetplayer.currentNote < sheetplayer.noteCount ? sheetplayer.currentNote : sheetplayer.noteCount - 1].keys) : "-"));
 			gui.player_panel._global_seek.setProgress(sheetplayer.currentNote);
 			
