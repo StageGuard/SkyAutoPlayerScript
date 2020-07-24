@@ -133,12 +133,13 @@ sheetmgr = {
 		for(var i in raw) {
 			var key = Number(raw[i].key.replace(/^(\d)Key(\d{1,})$/, "$2"));
 			if(raw[i].time != t_time) {
-			r.push({time: t_time, keys: t_sets});
+				r.push({time: t_time, keys: t_sets});
 				t_sets = [];
 				t_time = raw[i].time;
 			}
 			if(t_sets.indexOf(key) == -1) t_sets.push(key);
 		}
+		r.push({time: t_time, keys: t_sets});
 		return r;
 	},
 	
@@ -250,6 +251,7 @@ sheetplayer = {
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
 		this.noteCount = j.songNotes.length;
+		toast(this.notes[this.noteCount - 1].keys)
 	},
 	
 	toSource: function(obj) {
@@ -279,8 +281,7 @@ config = {
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOnlineUploadSkip: false,
-		currentVersion: 4,
-		play_mode: 1, //1 = Accessbility, 2 = RootAutomator
+		currentVersion: 5,
 		gitVersion: "",
 	},
 	
@@ -1645,7 +1646,7 @@ gui = {
 			}
 		});},
 		refreshStatus: function() { gui.run(function(){
-			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (sheetplayer.currentNote + "/" + sheetplayer.noteCount) : (sheetplayer.thread == null ? "Idle" : "Paused")));
+			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (sheetplayer.currentNote + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval) : (sheetplayer.thread == null ? "Idle" : "Paused")));
 			gui.player_panel._global_cnote.setText(String(sheetplayer.playing ? (sheetplayer.notes[sheetplayer.currentNote < sheetplayer.noteCount ? sheetplayer.currentNote : sheetplayer.noteCount - 1].keys) : "-"));
 			gui.player_panel._global_seek.setProgress(sheetplayer.currentNote);
 			
