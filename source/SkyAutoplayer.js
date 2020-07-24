@@ -251,7 +251,6 @@ sheetplayer = {
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
 		this.noteCount = j.songNotes.length;
-		toast(this.notes[this.noteCount - 1].keys)
 	},
 	
 	toSource: function(obj) {
