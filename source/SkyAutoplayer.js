@@ -1735,42 +1735,42 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_listView = new android.widget.ListView(ctx);
 			s.ns0_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
 			s.ns0_listView.setAdapter(s.ns0_listAdapter = new RhinoListAdapter([], function self(element) {
-				self.relative = new android.widget.RelativeLayout(ctx);
-				self.relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+				element.v_relative = new android.widget.RelativeLayout(ctx);
+				element.v_relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
-				self.title = new android.widget.TextView(ctx);
-				self.title.setId(10);
-				self.title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-				self.title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				self.title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
-				self.title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				self.title.setTextSize(16);
-				self.title.setTextColor(gui.config.colors.text);
-				self.title.setText(element.name);
-				self.relative.addView(self.title);
+				element.v_title = new android.widget.TextView(ctx);
+				element.v_title.setId(10);
+				element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				element.v_title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
+				element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				element.v_title.setTextSize(16);
+				element.v_title.setTextColor(gui.config.colors.text);
+				element.v_title.setText(element.name);
+				element.v_relative.addView(element.v_title);
 				
-				self.author = new android.widget.TextView(ctx);
-				self.author.setId(11);
-				self.author.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				self.author.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 15);
-				self.author.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
-				self.author.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				self.author.setTextSize(14);
-				self.author.setTextColor(gui.config.colors.sec_text);
-				self.author.setText("键数: " + element.songNotes.length + " - BPM: " + element.bpm);
-				self.relative.addView(self.author);
+				element.v_author = new android.widget.TextView(ctx);
+				element.v_author.setId(11);
+				element.v_author.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				element.v_author.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 15);
+				element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
+				element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				element.v_author.setTextSize(14);
+				element.v_author.setTextColor(gui.config.colors.sec_text);
+				element.v_author.setText("键数: " + element.songNotes.length + " - BPM: " + element.bpm);
+				element.v_relative.addView(element.v_author);
 				
-				self.play = new android.widget.ImageView(ctx);
-				self.play.setId(12);
-				self.play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				self.play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-				self.play.getLayoutParams().setMargins(dp * 7, dp * 15, dp * 15, dp * 15);
-				self.play.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
-				self.play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				self.play.setImageBitmap(config.bitmaps.play);
-				self.play.measure(0, 0);
-				self.play.setBackgroundDrawable(gui.utils.ripple_drawable(self.play.getMeasuredWidth(), self.play.getMeasuredHeight(), "rect"));
-				self.play.setOnClickListener(new android.view.View.OnClickListener({
+				element.v_play = new android.widget.ImageView(ctx);
+				element.v_play.setId(12);
+				element.v_play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				element.v_play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+				element.v_play.getLayoutParams().setMargins(dp * 7, dp * 15, dp * 15, dp * 15);
+				element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+				element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				element.v_play.setImageBitmap(config.bitmaps.play);
+				element.v_play.measure(0, 0);
+				element.v_play.setBackgroundDrawable(gui.utils.ripple_drawable(element.v_play.getMeasuredWidth(), element.v_play.getMeasuredHeight(), "rect"));
+				element.v_play.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
 						if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
 							sheetplayer.setSheet(element);
@@ -1782,16 +1782,16 @@ gui.dialogs.showProgressDialog(function(o) {
 					}
 				}));
 				
-				self.delete = new android.widget.ImageView(ctx);
-				self.delete.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				self.delete.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-				self.delete.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 7, dp * 15);
-				self.delete.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 12);
-				self.delete.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				self.delete.setImageBitmap(config.bitmaps.bin);
-				self.delete.measure(0, 0);
-				self.delete.setBackgroundDrawable(gui.utils.ripple_drawable(self.delete.getMeasuredWidth(), self.delete.getMeasuredHeight(), "rect"));
-				self.delete.setOnClickListener(new android.view.View.OnClickListener({
+				element.v_delete = new android.widget.ImageView(ctx);
+				element.v_delete.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				element.v_delete.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+				element.v_delete.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 7, dp * 15);
+				element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 12);
+				element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				element.v_delete.setImageBitmap(config.bitmaps.bin);
+				element.v_delete.measure(0, 0);
+				element.v_delete.setBackgroundDrawable(gui.utils.ripple_drawable(element.v_delete.getMeasuredWidth(), element.v_delete.getMeasuredHeight(), "rect"));
+				element.v_delete.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
 						var path = files.join(sheetmgr.rootDir, element.fileName);
 						gui.dialogs.showConfirmDialog({
@@ -1809,10 +1809,10 @@ gui.dialogs.showProgressDialog(function(o) {
 					}
 				}));
 				
-				self.relative.addView(self.play);
-				self.relative.addView(self.delete);
+				element.v_relative.addView(element.v_play);
+				element.v_relative.addView(element.v_delete);
 				
-				return self.relative;
+				return element.v_relative;
 			}));
 			s.ns0_listAdapterController = RhinoListAdapter.getController(s.ns0_listAdapter);
 			
@@ -1961,99 +1961,99 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns1_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
 			s.ns1_listView.setAdapter(s.ns1_listAdapter = new RhinoListAdapter([], function self(element) {
 				
-				self.relative = new android.widget.RelativeLayout(ctx);
-				self.relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+				element.v_relative = new android.widget.RelativeLayout(ctx);
+				element.v_relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
-				self.downloading = false;
+				element.downloading = false;
 				
 				if(element.type == -1) {
-					self.info = new android.widget.ImageView(ctx);
-					self.info.setId(10);
-					self.info.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-					self.info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-					self.info.getLayoutParams().setMargins(dp * 15, dp * 10, dp * 5, dp * 10);
-					self.info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-					self.info.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-					self.info.setImageBitmap(config.bitmaps.info);
-					self.relative.addView(self.info);
+					element.v_info = new android.widget.ImageView(ctx);
+					element.v_info.setId(10);
+					element.v_info.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+					element.v_info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+					element.v_info.getLayoutParams().setMargins(dp * 15, dp * 10, dp * 5, dp * 10);
+					element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+					element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					element.v_info.setImageBitmap(config.bitmaps.info);
+					element.v_relative.addView(element.v_info);
 					
-					self.upload = new android.widget.TextView(ctx);
-					self.upload.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-					self.upload.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-					self.upload.getLayoutParams().setMargins(dp * 7, dp * 5, dp * 15, dp * 10);
-					self.upload.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-					self.upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
-					self.upload.setTextSize(13);
-					self.upload.setTextColor(gui.config.colors.sec_text);
-					self.upload.setText("如何上传乐谱");
-					self.relative.addView(self.upload);
-					return self.relative;
+					element.v_upload = new android.widget.TextView(ctx);
+					element.v_upload.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+					element.v_upload.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+					element.v_upload.getLayoutParams().setMargins(dp * 7, dp * 5, dp * 15, dp * 10);
+					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
+					element.v_upload.setTextSize(13);
+					element.v_upload.setTextColor(gui.config.colors.sec_text);
+					element.v_upload.setText("如何上传乐谱");
+					element.v_relative.addView(element.v_upload);
+					return element.v_relative;
 				}
 				
-				self.title = new android.widget.TextView(ctx);
-				self.title.setId(10);
-				self.title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-				self.title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				self.title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
-				self.title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				self.title.setTextSize(16);
-				self.title.setTextColor(gui.config.colors.text);
-				self.title.setText(element.name);
-				self.relative.addView(self.title);
+				element.v_title = new android.widget.TextView(ctx);
+				element.v_title.setId(10);
+				element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				element.v_title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
+				element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				element.v_title.setTextSize(16);
+				element.v_title.setTextColor(gui.config.colors.text);
+				element.v_title.setText(element.name);
+				element.v_relative.addView(element.v_title);
 				
-				self.info = new android.widget.TextView(ctx);
-				self.info.setId(11);
-				self.info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				self.info.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 2);
-				self.info.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
-				self.info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				self.info.setTextSize(15);
-				self.info.setTextColor(gui.config.colors.text);
-				self.info.setText(element.author);
-				self.relative.addView(self.info);
+				element.v_info = new android.widget.TextView(ctx);
+				element.v_info.setId(11);
+				element.v_info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				element.v_info.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 2);
+				element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
+				element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				element.v_info.setTextSize(15);
+				element.v_info.setTextColor(gui.config.colors.text);
+				element.v_info.setText(element.author);
+				element.v_relative.addView(element.v_info);
 				
-				self.desc = new android.widget.TextView(ctx);
-				self.desc.setId(12);
-				self.desc.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
-				self.desc.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 11);
-				self.desc.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				self.desc.setTextSize(13);
-				self.desc.setTextColor(gui.config.colors.sec_text);
-				self.desc.setText(android.text.Html.fromHtml(element.desc.replace(new RegExp("\x0a", "gi"), "<br>")));
-				self.relative.addView(self.desc);
+				element.v_desc = new android.widget.TextView(ctx);
+				element.v_desc.setId(12);
+				element.v_desc.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				element.v_desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
+				element.v_desc.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 11);
+				element.v_desc.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				element.v_desc.setTextSize(13);
+				element.v_desc.setTextColor(gui.config.colors.sec_text);
+				element.v_desc.setText(android.text.Html.fromHtml(element.desc.replace(new RegExp("\x0a", "gi"), "<br>")));
+				element.v_relative.addView(element.v_desc);
 				
-				self.download = new android.widget.ImageView(ctx);
-				self.download.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				self.download.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-				self.download.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
-				self.download.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
-				self.download.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				self.download.setImageBitmap(config.bitmaps.download);
-				self.download.measure(0, 0);
-				self.download.setBackgroundDrawable(gui.utils.ripple_drawable(self.download.getMeasuredWidth(), self.download.getMeasuredHeight(), "rect"));
-				self.download.setOnClickListener(new android.view.View.OnClickListener({
+				element.download = new android.widget.ImageView(ctx);
+				element.download.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				element.download.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+				element.download.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
+				element.download.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+				element.download.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				element.download.setImageBitmap(config.bitmaps.download);
+				element.download.measure(0, 0);
+				element.download.setBackgroundDrawable(gui.utils.ripple_drawable(element.download.getMeasuredWidth(), element.download.getMeasuredHeight(), "rect"));
+				element.download.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() { threads.start(function() {
-						if(!self.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, function(r) {
+						if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, function(r) {
 							switch(r.status) {
 								case 1: {
 									gui.run(function() {
-										self.status.setText("下载中...");
-										self.relative.addView(self.status);
-										self.relative.addView(self.progress);
-										self.isShowingStatusBar = true;
-										self.progress.setIndeterminate(true);
-										self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 1);
+										element.v_status.setText("下载中...");
+										element.v_relative.addView(element.v_status);
+										element.v_relative.addView(element.v_progress);
+										element.isShowingStatusBar = true;
+										element.v_progress.setIndeterminate(true);
+										element.v_desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 1);
 										gui.utils.value_animation("Float", 0, 1.0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
-											self.progress.setAlpha(anim.getAnimatedValue());
-											self.status.setAlpha(anim.getAnimatedValue());
+											element.v_progress.setAlpha(anim.getAnimatedValue());
+											element.v_status.setAlpha(anim.getAnimatedValue());
 										});
 									});
 									break;
 								}
 								case 2: {
 									if(gui.main.isShowing) gui.run(function() {
-										self.status.setText("解析中...");
+										element.v_status.setText("解析中...");
 									});
 									break;
 								}
@@ -2061,13 +2061,13 @@ gui.dialogs.showProgressDialog(function(o) {
 									if(gui.main.isShowing) { gui.run(function() { 
 										toast("下载完成: " + element.name + "\n请在本地曲谱页面刷新");
 										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
-											self.progress.setAlpha(anim.getAnimatedValue());
-											self.status.setAlpha(anim.getAnimatedValue());
+											element.v_progress.setAlpha(anim.getAnimatedValue());
+											element.v_status.setAlpha(anim.getAnimatedValue());
 											if(anim.getAnimatedValue() == 0) {
-												self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
-												self.relative.removeView(self.status);
-												self.relative.removeView(self.progress);
-												self.isShowingStatusBar = false;
+												element.v_desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
+												element.v_relative.removeView(element.v_status);
+												element.v_relative.removeView(element.v_progress);
+												element.isShowingStatusBar = false;
 											}
 										});
 									});}
@@ -2077,13 +2077,13 @@ gui.dialogs.showProgressDialog(function(o) {
 									if(gui.main.isShowing) { gui.run(function() { 
 										toast("下载" + element.name + "失败: " + r.msg);
 										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
-											self.progress.setAlpha(anim.getAnimatedValue());
-											self.status.setAlpha(anim.getAnimatedValue());
+											element.v_progress.setAlpha(anim.getAnimatedValue());
+											element.v_status.setAlpha(anim.getAnimatedValue());
 											if(anim.getAnimatedValue() == 0) {
-												self.desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
-												self.relative.removeView(self.status);
-												self.relative.removeView(self.progress);
-												self.isShowingStatusBar = false;
+												element.v_desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 15);
+												element.v_relative.removeView(element.v_status);
+												element.v_relative.removeView(element.v_progress);
+												element.isShowingStatusBar = false;
 											}
 										});
 									});}
@@ -2093,33 +2093,29 @@ gui.dialogs.showProgressDialog(function(o) {
 						});
 					}); }
 				}));
-				self.relative.addView(self.download);
+				element.v_relative.addView(element.download);
 				
-				self.status = new android.widget.TextView(ctx);
-				self.status.setId(13);
-				self.status.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				self.status.getLayoutParams().setMargins(dp * 15, 0, dp * 15, 0);
-				self.status.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 12);
-				self.status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				self.status.setTextSize(13);
-				self.status.setAlpha(0);
-				self.status.setTextColor(gui.config.colors.text);
+				element.v_status = new android.widget.TextView(ctx);
+				element.v_status.setId(13);
+				element.v_status.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				element.v_status.getLayoutParams().setMargins(dp * 15, 0, dp * 15, 0);
+				element.v_status.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 12);
+				element.v_status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				element.v_status.setTextSize(13);
+				element.v_status.setAlpha(0);
+				element.v_status.setTextColor(gui.config.colors.text);
 				
-				//self.relative.addView(self.status);
+				element.v_progress = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+				element.v_progress.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * 15));
+				element.v_progress.setPadding(0, 0, 0, 0);
+				element.v_progress.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
+				element.v_progress.getLayoutParams().setMargins(dp * 15, 0, dp * 15, dp * 5);
+				element.v_progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
+				element.v_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
+				element.v_progress.setIndeterminate(false);
+				element.v_progress.setAlpha(0);
 				
-				self.progress = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
-				self.progress.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * 15));
-				self.progress.setPadding(0, 0, 0, 0);
-				self.progress.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
-				self.progress.getLayoutParams().setMargins(dp * 15, 0, dp * 15, dp * 5);
-				self.progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
-				self.progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
-				self.progress.setIndeterminate(false);
-				self.progress.setAlpha(0);
-				
-				//self.relative.addView(self.progress);
-				
-				return self.relative;
+				return element.v_relative;
 			}));
 			s.ns1_listAdapterController = RhinoListAdapter.getController(s.ns1_listAdapter);
 			
@@ -2309,35 +2305,35 @@ gui.dialogs.showProgressDialog(function(o) {
 				type: "tag",
 				name: "Version: " + config.values.currentVersion + "(git@" + config.values.gitVersion + ")", 
 			}], function self(element) {
-				self.relative = new android.widget.RelativeLayout(ctx);
-				self.relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+				element.v_relative = new android.widget.RelativeLayout(ctx);
+				element.v_relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
 				switch(element.type) {
 					case "tag":
-						self.title = new android.widget.TextView(ctx);
-						self.title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-						self.title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-						self.title.getLayoutParams().setMargins(dp * 5, dp * 5, dp * 5, dp * 5);
-						self.title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-						self.title.setTextSize(12);
-						self.title.setTextColor(gui.config.colors.sec_text);
-						self.title.setText(element.name);
-						self.relative.addView(self.title);
+						element.v_title = new android.widget.TextView(ctx);
+						element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+						element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+						element.v_title.getLayoutParams().setMargins(dp * 5, dp * 5, dp * 5, dp * 5);
+						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+						element.v_title.setTextSize(12);
+						element.v_title.setTextColor(gui.config.colors.sec_text);
+						element.v_title.setText(element.name);
+						element.v_relative.addView(element.v_title);
 					break;
 					case "default":
-						self.title = new android.widget.TextView(ctx);
-						self.title.setId(10);
-						self.title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-						self.title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-						self.title.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 10, dp * 10);
-						self.title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-						self.title.setTextSize(14);
-						self.title.setTextColor(gui.config.colors.text);
-						self.title.setText(element.name);
-						self.relative.addView(self.title);
+						element.v_title = new android.widget.TextView(ctx);
+						element.v_title.setId(10);
+						element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+						element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+						element.v_title.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 10, dp * 10);
+						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+						element.v_title.setTextSize(14);
+						element.v_title.setTextColor(gui.config.colors.text);
+						element.v_title.setText(element.name);
+						element.v_relative.addView(element.v_title);
 					break;
 				}
-				return self.relative;
+				return element.v_relative;
 				
 			}));
 			s.ns2_listAdapterController = RhinoListAdapter.getController(s.ns2_listAdapter);
