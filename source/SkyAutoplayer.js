@@ -100,6 +100,7 @@ sheetmgr = {
 			var parsed = eval(readable.read())[0];
 			readable.close();
 			parsed.songNotes = this.parseSongNote(parsed.songNotes);
+			parsed.fileName = sheet;
 			this.cachedLocalSheetList.push(parsed);
 			listener({status:3});
 		} else {
