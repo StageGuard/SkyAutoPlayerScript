@@ -293,6 +293,8 @@ config = {
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
 		this.values.skipOnlineUploadSkip = this._global_storage.get("skip_online_upload_skip", this.values.skipOnlineUploadSkip);
+		
+		files.ensureDir(sheetmgr.rootDir);
 	},
 	
 	save: function(key, value) {
