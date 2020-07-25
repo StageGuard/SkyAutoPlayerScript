@@ -281,7 +281,7 @@ config = {
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOnlineUploadSkip: false,
-		currentVersion: 5,
+		currentVersion: 6,
 		gitVersion: "",
 	},
 	
