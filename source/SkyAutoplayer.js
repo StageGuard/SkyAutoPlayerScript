@@ -1964,7 +1964,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.v_relative = new android.widget.RelativeLayout(ctx);
 				element.v_relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
-				element.downloading = false;
+				element.isShowingStatusBar = false;
 				
 				if(element.type == -1) {
 					element.v_info = new android.widget.ImageView(ctx);
