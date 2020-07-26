@@ -1133,7 +1133,7 @@ gui = {
 				if(s._anim != null) s._anim();
 				if(gui.main.views[s.index].update != null) gui.main.views[s.index].update(s);
 				if(!config.values.skipOpenWindowTip) {
-					toast("拖动标题栏的标题文字开移动窗口位置。");
+					toast("拖动标题栏的标题文字来移动悬浮窗位置。");
 					config.values.skipOpenWindowTip = true;
 					config.save("skip_open_window_tip", true);
 				}
@@ -1677,7 +1677,7 @@ gui = {
 				gui.player_panel._global_text.setText(sheetplayer.name);
 				
 				if(!config.values.skipOpenPlayerPanelWindowTip) {
-					toast("拖动标题栏的标题文字开移动弹奏控制面板窗口。");
+					toast("拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。");
 					config.values.skipOpenPlayerPanelWindowTip = true;
 					config.save("skip_open_player_panel_window_tip", true);
 				}
