@@ -280,8 +280,9 @@ config = {
 		key_coordinates: [],
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
+		skipOpenPlayerPanelWindowTip: false,
 		skipOnlineUploadSkip: false,
-		currentVersion: 6,
+		currentVersion: 7,
 		gitVersion: "",
 	},
 	
@@ -292,6 +293,7 @@ config = {
 		this.values.key_coordinates = this._global_storage.get("key_coordinates", this.values.key_coordinates);
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
+		this.values.skipOpenPlayerPanelWindowTip = this._global_storage.get("skip_open_player_panel_window_tip", this.values.skipOpenPlayerPanelWindowTip);
 		this.values.skipOnlineUploadSkip = this._global_storage.get("skip_online_upload_skip", this.values.skipOnlineUploadSkip);
 		
 		files.ensureDir(sheetmgr.rootDir);
@@ -1130,6 +1132,11 @@ gui = {
 				
 				if(s._anim != null) s._anim();
 				if(gui.main.views[s.index].update != null) gui.main.views[s.index].update(s);
+				if(!config.values.skipOpenWindowTip) {
+					toast("拖动标题栏的标题文字开移动窗口位置。");
+					config.values.skipOpenWindowTip = true;
+					config.save("skip_open_window_tip", true);
+				}
 			} else { //window is showing, change content view
 				if(gui.main.current_navigation_selection == s.index) return;
 				if(content.title != null) gui.main._global_title.setText(content.title);
@@ -1516,8 +1523,8 @@ gui = {
 		
 		isShowing: false,
 		
-		cx: dp * 10,
-		cy: dp * 10,
+		cx: null,
+		cy: null,
 		
 		__internal_showPanel: function s() { gui.run(function(){
 			if(!gui.player_panel.isShowing) {
@@ -1534,6 +1541,25 @@ gui = {
 				gui.player_panel._global_text.setTextSize(14);
 				//gui.player_panel._global_text.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				gui.player_panel._global_text.getLayoutParams().setMargins(0, 0, 0, dp * 2);
+				gui.player_panel._global_text.setOnTouchListener(new android.view.View.OnTouchListener({
+					onTouch: function onTouchFunction(view, event) {
+						switch (event.getAction()) {
+							case event.ACTION_MOVE:
+								onTouchFunction.lp = gui.player_panel._global_base.getLayoutParams();
+								onTouchFunction.lp.x = gui.player_panel.cx = s.x = event.getRawX() + onTouchFunction.offsetX;
+								onTouchFunction.lp.y = gui.player_panel.cy = s.y = event.getRawY() + onTouchFunction.offsetY;
+								gui.winMgr.updateViewLayout(gui.player_panel._global_base, onTouchFunction.lp);
+							break;
+							case event.ACTION_DOWN:
+								onTouchFunction.offsetX = s.x - event.getRawX();
+								onTouchFunction.offsetY = s.y - event.getRawY();
+							break;
+							default: 
+							return false;
+						}
+						return true;
+					},
+				}));
 				gui.player_panel._global_base.addView(gui.player_panel._global_text);
 				
 				s.close = new android.widget.TextView(ctx);
@@ -1638,12 +1664,24 @@ gui = {
 				gui.winMgr.addView(gui.player_panel._global_base, s._winParams);
 				
 				s.lp = gui.player_panel._global_base.getLayoutParams();
-				s.lp.x = 0;
-				s.lp.y = context.getResources().getDisplayMetrics().heightPixels / 2 - gui.player_panel._global_base.getMeasuredHeight() - dp * 2;
+				if(gui.player_panel.cx == null) {
+					gui.player_panel.cx = 0;
+					gui.player_panel.cy = context.getResources().getDisplayMetrics().heightPixels / 2 - gui.player_panel._global_base.getMeasuredHeight() - dp * 2;
+				}
+				s.lp.x = s.x = gui.player_panel.cx;
+				s.lp.y = s.y = gui.player_panel.cy;
+				
 				gui.winMgr.updateViewLayout(gui.player_panel._global_base, s.lp);
 				gui.player_panel.isShowing = true;
 				
 				gui.player_panel._global_text.setText(sheetplayer.name);
+				
+				if(!config.values.skipOpenPlayerPanelWindowTip) {
+					toast("拖动标题栏的标题文字开移动弹奏控制面板窗口。");
+					config.values.skipOpenPlayerPanelWindowTip = true;
+					config.save("skip_open_player_panel_window_tip", true);
+				}
+				
 				gui.player_panel.refreshStatus();
 			}
 		});},
@@ -2303,6 +2341,12 @@ gui.dialogs.showProgressDialog(function(o) {
 							buttons: ["确认"],
 						});
 					});
+				},
+			}, {
+				type: "default",
+				name: "结束脚本运行", 
+				onClick: function(v) {
+					java.lang.System.exit(0);
 				},
 			}, {
 				type: "tag",
