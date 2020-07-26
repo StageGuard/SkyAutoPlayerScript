@@ -8,10 +8,18 @@
     "suggested_instrument": 1,
     "pitchLevel": 3
   }, {
+    "name": "简易茉莉花",
+    "file": "简易茉莉花.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 简易茉莉花\n建议在由洞穴效应的地方弹;最后的部分因音高问题进行了小修改",
+    "bpm" : 200,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "大悲咒",
     "file": "大悲咒.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 大悲咒",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 大悲咒",
     "bpm" : 151,
     "suggested_instrument": 1,
     "pitchLevel": 3
@@ -19,7 +27,7 @@
     "name": "坏苹果",
     "file": "坏苹果.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 坏苹果",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 坏苹果",
     "bpm" : 720,
     "suggested_instrument": 1,
     "pitchLevel": 6
@@ -27,7 +35,7 @@
     "name": "三葉",
     "file": "三葉.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 三葉",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 三葉",
     "bpm" : 318,
     "suggested_instrument": 1,
     "pitchLevel": 0
@@ -35,7 +43,7 @@
     "name": "亡灵序曲选节",
     "file": "亡灵序曲选节.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 亡灵序曲选节",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 亡灵序曲选节",
     "bpm" : 240,
     "suggested_instrument": 1,
     "pitchLevel": 6
@@ -43,7 +51,7 @@
     "name": "天空之城",
     "file": "天空之城.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 天空之城",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 天空之城",
     "bpm" : 240,
     "suggested_instrument": 1,
     "pitchLevel": 3
@@ -51,7 +59,7 @@
     "name": "幻昼",
     "file": "幻昼.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 幻昼",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 幻昼",
     "bpm" : 281,
     "suggested_instrument": 1,
     "pitchLevel": 10
@@ -59,7 +67,7 @@
     "name": "烟花易冷",
     "file": "烟花易冷.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 烟花易冷",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 烟花易冷",
     "bpm" : 132,
     "suggested_instrument": 1,
     "pitchLevel": 4
@@ -67,7 +75,7 @@
     "name": "菊次郎的夏天",
     "file": "菊次郎的夏天.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 菊次郎的夏天",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 菊次郎的夏天",
     "bpm" : 349,
     "suggested_instrument": 1,
     "pitchLevel": 2
@@ -75,7 +83,7 @@
     "name": "起风了",
     "file": "起风了.txt",
     "author": "酷安@Aex技术总监",
-    "desc": "酷安酷友@Aex分享乐谱 起风了",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 起风了",
     "bpm" : 236,
     "suggested_instrument": 1,
     "pitchLevel": 6
