@@ -8,6 +8,22 @@
     "suggested_instrument": 1,
     "pitchLevel": 3
   }, {
+    "name": "[CL]だんご大家族",
+    "file": "だんご大家族.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "<u>写作CL，译作经典，拼读人生。</u>",
+    "bpm" : 200,
+    "suggested_instrument": 1,
+    "pitchLevel": 6
+  }, {
+    "name": "いつも何度でも (「千と千尋の神隠し」主題歌)",
+    "file": "いつも何度でも.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "いつも何度でも \n(「千と千尋の神隠し」主題歌)",
+    "bpm" : 230,
+    "suggested_instrument": 1,
+    "pitchLevel": 5
+  }, {
     "name": "[钢琴曲]潮鸣り(原速)",
     "file": "潮鸣り.txt",
     "author": "酷安@夏川丶呇",
@@ -27,7 +43,7 @@
     "name": "克罗地亚狂想曲",
     "file": "克罗地亚狂想曲.txt",
     "author": "酷安@深空失忆か",
-    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 克罗地亚狂想曲.txt",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 克罗地亚狂想曲",
     "bpm" : 720,
     "suggested_instrument": 1,
     "pitchLevel": 3
