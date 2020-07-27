@@ -8,6 +8,38 @@
     "suggested_instrument": 1,
     "pitchLevel": 3
   }, {
+    "name": "[钢琴曲]潮鸣り(原速)",
+    "file": "潮鸣り.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 [钢琴曲]潮鸣り(原速)\n<b>只建议用钢琴演奏原速</b>\n如需切合其他乐器，请<u>通过Sky Studio修改更高的速度</u>",
+    "bpm" : 108,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "Lemon",
+    "file": "Lemon.txt",
+    "author": "酷安@深空失忆か",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 Lemon",
+    "bpm" : 500,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "克罗地亚狂想曲",
+    "file": "克罗地亚狂想曲.txt",
+    "author": "酷安@深空失忆か",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 克罗地亚狂想曲.txt",
+    "bpm" : 720,
+    "suggested_instrument": 1,
+    "pitchLevel": 3
+  }, {
+    "name": "斗地主",
+    "file": "斗地主.txt",
+    "author": "酷安@深空失忆か",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 斗地主",
+    "bpm" : 240,
+    "suggested_instrument": 1,
+    "pitchLevel": 10
+  }, {
     "name": "黑人抬棺Astronomia",
     "file": "Astronomia.txt",
     "author": "酷安@深空失忆か",
