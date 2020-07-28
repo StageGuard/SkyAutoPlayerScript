@@ -80,7 +80,7 @@ sheetmgr = {
 		return this.cachedOnlineSharedSheetInfoList;
 	},
 	
-	downloadAndLoad: function(file, listener) {
+	downloadAndLoad: function(file, author, listener) {
 		listener({status:1});
 		var remoteHost = "https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/shared_sheets/" + file;
 		var resp = http.get(encodeURI(remoteHost));
@@ -94,8 +94,12 @@ sheetmgr = {
 				return stringBuffer.toString();
 			} (7)) + ".txt");
 			files.create(sheet);
-			files.writeBytes(sheet, resp.body.bytes());
-			listener({status:2});
+			files.write(sheet, (function() {
+				var data = eval(resp.body.string())[0];
+				listener({status:2});
+				data.author = author;
+				return "[" + JSON.stringify(data) + "]";
+			}()), this.encoding);
 			var readable = files.open(sheet, "r", this.encoding);
 			var parsed = eval(readable.read())[0];
 			readable.close();
@@ -2075,7 +2079,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.download.setBackgroundDrawable(gui.utils.ripple_drawable(element.download.getMeasuredWidth(), element.download.getMeasuredHeight(), "rect"));
 				element.download.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() { threads.start(function() {
-						if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, function(r) {
+						if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, element.author, function(r) {
 							switch(r.status) {
 								case 1: {
 									gui.run(function() {
