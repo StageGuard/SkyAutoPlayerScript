@@ -1,5 +1,13 @@
 {
   "sheets": [{
+    "name": "千本桜",
+    "file": "千本桜.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 千本桜",
+    "bpm" : 614,
+    "suggested_instrument": 1,
+    "pitchLevel": 5
+  }, {
     "name": "神々が恋した幻想郷",
     "file": "神々が恋した幻想郷.txt",
     "author": "酷安@夏川丶呇",
