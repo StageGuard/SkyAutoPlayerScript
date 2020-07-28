@@ -285,7 +285,8 @@ config = {
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOpenPlayerPanelWindowTip: false,
-		skipOnlineUploadSkip: false,
+		skipOnlineUploadTip: false,
+		skipOnlineSharedSheetCTip: false,
 		currentVersion: 7,
 		gitVersion: "",
 	},
@@ -298,13 +299,16 @@ config = {
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
 		this.values.skipOpenPlayerPanelWindowTip = this._global_storage.get("skip_open_player_panel_window_tip", this.values.skipOpenPlayerPanelWindowTip);
-		this.values.skipOnlineUploadSkip = this._global_storage.get("skip_online_upload_skip", this.values.skipOnlineUploadSkip);
+		this.values.skipOnlineUploadTip = this._global_storage.get("skip_online_upload_tip", this.values.skipOnlineUploadTip);
+		this.values.skipOnlineSharedSheetCTip = this._global_storage.get("skip_shared_sheet_c_tip", this.values.skipOnlineSharedSheetCTip);
 		
 		files.ensureDir(sheetmgr.rootDir);
 	},
 	
 	save: function(key, value) {
-		this._global_storage.put(key, value == null ? this.values[key] : this.values[key] = value);
+		var v = value == null ? this.values[key] : this.values[key] = value;
+		this._global_storage.put(key, v);
+		return v;
 	},
 	
 	checkVersion: function() {
@@ -1138,8 +1142,7 @@ gui = {
 				if(gui.main.views[s.index].update != null) gui.main.views[s.index].update(s);
 				if(!config.values.skipOpenWindowTip) {
 					toast("拖动标题栏的标题文字来移动悬浮窗位置。");
-					config.values.skipOpenWindowTip = true;
-					config.save("skip_open_window_tip", true);
+					config.values.skipOpenWindowTip = config.save("skip_open_window_tip", true);
 				}
 			} else { //window is showing, change content view
 				if(gui.main.current_navigation_selection == s.index) return;
@@ -1682,8 +1685,7 @@ gui = {
 				
 				if(!config.values.skipOpenPlayerPanelWindowTip) {
 					toast("拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。");
-					config.values.skipOpenPlayerPanelWindowTip = true;
-					config.save("skip_open_player_panel_window_tip", true);
+					config.values.skipOpenPlayerPanelWindowTip = config.save("skip_open_player_panel_window_tip", true);
 				}
 				
 				gui.player_panel.refreshStatus();
@@ -2030,7 +2032,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
 					element.v_upload.setTextSize(13);
 					element.v_upload.setTextColor(gui.config.colors.sec_text);
-					element.v_upload.setText("如何上传乐谱");
+					element.v_upload.setText(element.title);
 					element.v_relative.addView(element.v_upload);
 					return element.v_relative;
 				}
@@ -2168,24 +2170,54 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns1_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 				onItemClick: function(parent, view, pos, id) {
 					var item = s.ns1_listAdapterController.get(pos);
-					if(item.type == -1 || pos == 0) {
-						gui.dialogs.showConfirmDialog({
-							title: "如何上传乐谱",
-							text: "共有两种方式可以上传乐谱：\n\n" + 
-								"①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
-								"②在github fork StageGuard/SkyAutoplayerScript，在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n\n" + 
-								"注：若是转载转载请注明原作者同意\n\n" + 
-								"如果所有人都白嫖，那么这个列表将永远也不会扩充",
-							canExit: true,
-							buttons: ["打开酷安", "打开Github", "取消"],
-							callback: function(id) {
-								if(id == 0) {
-									if(!app.launch("com.coolapk.market")) toast("应用 酷安 不存在！");
-								} else if(id == 1) {
-									app.openUrl("https://github.com/StageGuard/SkyAutoplayerScript/");
-								}
-							},
-						});
+					if(item.type == -1) {
+						switch(item.index) {
+							case 0: {
+								gui.dialogs.showConfirmDialog({
+									title: "如何上传乐谱",
+									text: "共有两种方式可以上传乐谱：\n\n" + 
+										"①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
+										"②在github fork StageGuard/SkyAutoplayerScript\n" + 
+										"在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n" + 
+										"并提出 Pull Request 合并申请\n\n" + 
+										"注：若是转载转载请注明原作者同意\n\n" + 
+										"如果所有人都白嫖，那么这个列表将永远也不会扩充",
+									canExit: true,
+									skip: function(checked) {
+										config.values.skipOnlineUploadTip = config.save("skip_online_upload_tip", checked);
+										if(checked) s.ns1_listAdapterController.removeByIndex(pos, true);
+									},
+									buttons: ["打开酷安", "打开Github", "取消"],
+									callback: function(id) {
+										if(id == 0) {
+											if(!app.launch("com.coolapk.market")) toast("应用 酷安 不存在！");
+										} else if(id == 1) {
+											app.openUrl("https://github.com/StageGuard/SkyAutoplayerScript/");
+										}
+									},
+								});
+								break;
+							}
+							case 1: {
+								gui.dialogs.showConfirmDialog({
+									title: "乐谱共享声明",
+									text: android.text.Html.fromHtml(String("此列表共享的乐谱在\n<a href=https://github.com/StageGuard/SkyAutoPlayerScript>github.com/StageGuard/SkyAutoPlayerScript</a>\n均可以找到\n\n" + 
+										"用户原创乐谱<b><u>仅在SkyAutoplayerScript共享并使用</u></b>，\n" + 
+										"转载至其他平台请<b>取得作者授权</b>！\n\n" + 
+										"转载在此共享列表的乐谱均会标明\n" + 
+										"转载请</b>注明原作者授权</b>或<b>遵循原作者意愿</b>\n\n" + 
+										"此声明没有强制执行性，这是个人素质的体现\n" + 
+										"<b><u>非法利益不可取</b></u>").replace(new RegExp("\x0a", "gi"), "<br>")),
+									canExit: true,
+									skip: function(checked) {
+										config.values.skipOnlineSharedSheetCTip = config.save("skip_shared_sheet_c_tip", checked);
+										if(checked) s.ns1_listAdapterController.removeByIndex(pos, true);
+									},
+									buttons: ["我已了解"]
+								});
+								break;
+							}
+						}
 						return true;
 					}
 					gui.dialogs.showDialog((function () {
@@ -2279,7 +2311,16 @@ gui.dialogs.showProgressDialog(function(o) {
 					s.ns1_listView.setAlpha(anim.getAnimatedValue());
 					s.ns1_progress.setAlpha(1 - anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
-						s.ns1_listAdapterController.add({type: -1});
+						if(!config.values.skipOnlineUploadTip) s.ns1_listAdapterController.add({
+							type: -1,
+							title: "如何上传乐谱",
+							index: 0
+						});//上传乐谱提示
+						if(!config.values.skipOnlineSharedSheetCTip) s.ns1_listAdapterController.add({
+							type: -1,
+							title: "乐谱共享声明",
+							index: 1
+						});//乐谱共享问题提示
 						s.ns1_listAdapterController.notifyChange();
 						s.ns1_listView.setAlpha(1);
 						gui.main._global_title.setText("获取列表中...");
