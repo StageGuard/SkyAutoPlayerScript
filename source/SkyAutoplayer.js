@@ -1133,6 +1133,7 @@ gui = {
 				
 				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
 					gui.main._global_base.setAlpha(anim.getAnimatedValue());
+					if(gui.main.views[s.index].update != null && anim.getAnimatedValue() == 1.0) gui.main.views[s.index].update(s);
 				});
 				gui.utils.value_animation("Float", 0, 1.0, 400 , new android.view.animation.LinearInterpolator(), function(anim) {
 					gui.main._global_content_container.setAlpha(anim.getAnimatedValue());
@@ -1140,7 +1141,6 @@ gui = {
 				});
 				
 				if(s._anim != null) s._anim();
-				if(gui.main.views[s.index].update != null) gui.main.views[s.index].update(s);
 				if(!config.values.skipOpenWindowTip) {
 					toast("拖动标题栏的标题文字来移动悬浮窗位置。");
 					config.values.skipOpenWindowTip = config.save("skip_open_window_tip", true);
@@ -1177,6 +1177,7 @@ gui = {
 						gui.main._global_content_container.findViewById(tid).setEnabled(true);
 						gui.main._global_content_container.findViewById(tid).setClickable(true);
 						gui.main._global_content_container.findViewById(tid).setZ(1); //回来
+						if(gui.main.views[tid].update != null && anim.getAnimatedValue() == 1.0) gui.main.views[tid].update(s);
 					}
 				});
 				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
@@ -1185,7 +1186,6 @@ gui = {
 				
 				
 				gui.main.__internal_changeNavigationStatus(s.index);
-				if(gui.main.views[tid].update != null) gui.main.views[tid].update(s);
 			}
 			if(gui.main.views[s.index].func == null) {
 				if(gui.main.func_showing) {
