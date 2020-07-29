@@ -93,16 +93,16 @@ sheetmgr = {
 				}
 				return stringBuffer.toString();
 			} (7)) + ".txt");
-			files.create(sheet);
-			files.write(sheet, (function() {
+			var writable = files.open(sheet, "w", this.encoding);
+			var parsed;
+			writable.write(parsed = (function() {
 				var data = eval(resp.body.string())[0];
 				listener({status:2});
 				data.author = author;
 				return "[" + JSON.stringify(data) + "]";
-			}()), this.encoding);
-			var readable = files.open(sheet, "r", this.encoding);
-			var parsed = eval(readable.read())[0];
-			readable.close();
+			}()));
+			writable.close();
+			parsed = eval(parsed)[0];
 			parsed.songNotes = this.parseSongNote(parsed.songNotes);
 			parsed.fileName = sheet;
 			this.cachedLocalSheetList.push(parsed);
@@ -944,6 +944,7 @@ gui = {
 		isShowing: false,
 		current_navigation_selection: NaN,
 		func_showing: false,
+		current: 0,
 		
 		cx: dp * 10,
 		cy: dp * 10,
@@ -1003,7 +1004,7 @@ gui = {
 		
 		//internal methods
 		__internal_show: function s(content) { gui.run(function(){
-			s.index = content.index;
+			s.index = gui.main.current = content.index;
 			s.initial = false;
 			if(!gui.main.isShowing) { //create a new window and show content view
 				gui.main._global_base = new android.widget.LinearLayout(ctx);
@@ -1316,20 +1317,20 @@ gui = {
 		
 		isShowing: false,
 		
-		cx: dp * 10,
-		cy: dp * 10,
+		cx: 0,
+		cy: 0,
 		
-		width: dp * 10,
-		height: dp * 10,
-		
-		previousx: 0,
-		previousy: 0,
+		width: dp * 35,
+		height: dp * 35,
 		
 		show: function s() { gui.run(function(){
 			if(!gui.suspension.isShowing) {
-				gui.suspension._global_base = new android.view.View(ctx);
-				gui.suspension._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * gui.suspension.width, dp * gui.suspension.height));
-				gui.suspension._global_base.setBackgroundColor(gui.config.colors.background);
+				gui.suspension._global_base = new android.widget.TextView(ctx);
+				gui.suspension._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(gui.suspension.width, gui.suspension.height));
+				gui.suspension._global_base.setText("\u27e1");
+				gui.suspension._global_base.setTextColor(android.graphics.Color.parseColor("#FFFFD1"));
+				gui.suspension._global_base.setShadowLayer(dp * 3, 0, 0, android.graphics.Color.parseColor("#390c1a"));
+				gui.suspension._global_base.setTextSize(30);
 				gui.suspension._global_base.setOnTouchListener(new android.view.View.OnTouchListener({
 					onTouch: function onTouchFunction(view, event) {
 						switch (event.getAction()) {
@@ -1343,26 +1344,22 @@ gui = {
 								onTouchFunction.offsetX = s.x - event.getRawX();
 								onTouchFunction.offsetY = s.y - event.getRawY();
 							break;
-							case event.ACTION_UP: 
-								if((Math.abs(gui.suspension.previousx - event.getRawX()) <= gui.suspension.width * dp / 2 && Math.abs(gui.suspension.previousy - event.getRawY()) <= gui.suspension.height * dp / 2) && gui.suspension.isShowing) {
-									gui.suspension.dismiss();
-									gui.main.show(0);
-									return false;
-								}
-								gui.suspension.previousx = event.getRawX();
-								gui.suspension.previousy = event.getRawY();
-							default: 
-							return false;
 						}
-						return true;
+						return false;
 					},
+				}));
+				gui.suspension._global_base.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() {
+						gui.suspension.dismiss();
+						gui.main.show(gui.main.current);
+					}
 				}));
 				s._winParams = new android.view.WindowManager.LayoutParams();
 				s._winParams.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
 				s._winParams.flags = android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 				s._winParams.format = android.graphics.PixelFormat.TRANSLUCENT;
-				s._winParams.width = gui.suspension.width * dp;
-				s._winParams.height = gui.suspension.width * dp;
+				s._winParams.width = gui.suspension.width;
+				s._winParams.height = gui.suspension.height;
 				s._winParams.x = s.x = gui.suspension.cx;
 				s._winParams.y = s.y = gui.suspension.cy;
 				gui.winMgr.addView(gui.suspension._global_base, s._winParams);
@@ -1405,7 +1402,7 @@ gui = {
 				gui.key_coordinate_navigation._global_base = new android.widget.TextView(ctx);
 				gui.key_coordinate_navigation._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 				gui.key_coordinate_navigation._global_base.setTextColor(android.graphics.Color.GREEN);
-				gui.key_coordinate_navigation._global_base.setText("⛒");
+				gui.key_coordinate_navigation._global_base.setText("\u26d2");
 				gui.key_coordinate_navigation._global_base.setTextSize(25);
 				gui.key_coordinate_navigation._global_base.setOnTouchListener(new android.view.View.OnTouchListener({
 					onTouch: function onTouchFunction(view, event) {
@@ -1464,7 +1461,7 @@ gui = {
 					gui.key_coordinate_navigation._global_base.setAlpha(anim.getAnimatedValue());
 					gui.key_coordinate_navigation._global_text.setAlpha(anim.getAnimatedValue());
 				});
-				gui.key_coordinate_navigation._global_text.setText("移动\"⛒\"至目标位置来设置第" + (gui.key_coordinate_navigation.current_index + 1) + "个键坐标");
+				gui.key_coordinate_navigation._global_text.setText("移动\"\u26d2\"至目标位置来设置第" + (gui.key_coordinate_navigation.current_index + 1) + "个键坐标");
 				gui.key_coordinate_navigation.isShowing = true;
 			}
 		})},
