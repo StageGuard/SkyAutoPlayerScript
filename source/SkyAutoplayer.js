@@ -287,7 +287,7 @@ config = {
 		skipOpenPlayerPanelWindowTip: false,
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
-		currentVersion: 7,
+		currentVersion: 8,
 		gitVersion: "",
 	},
 	
