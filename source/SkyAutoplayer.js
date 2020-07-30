@@ -82,10 +82,8 @@ sheetmgr = {
 	
 	downloadAndLoad: function(file, author, listener) {
 		listener({status:1});
-		var remoteHost = "https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/shared_sheets/" + file;
-		var resp = http.get(encodeURI(remoteHost));
-		if(resp.statusCode >= 200 && resp.statusCode < 300) {
-			var sheet = files.join(this.rootDir, files.getNameWithoutExtension(file) + (function(length) {
+		config.fetchRepoFile("shared_sheets/" + file, null, function(body) {
+			var sheet = files.join(sheetmgr.rootDir, files.getNameWithoutExtension(file) + (function(length) {
 				var string = "0123456789abcde";
 				var stringBuffer = new java.lang.StringBuffer();
 				for (var i = 0; i < length; i++) {
@@ -93,23 +91,23 @@ sheetmgr = {
 				}
 				return stringBuffer.toString();
 			} (7)) + ".txt");
-			var writable = files.open(sheet, "w", this.encoding);
+			var writable = files.open(sheet, "w", sheetmgr.encoding);
 			var parsed;
 			writable.write(parsed = (function() {
-				var data = eval(resp.body.string())[0];
+				var data = eval(body.string())[0];
 				listener({status:2});
 				data.author = author;
 				return "[" + JSON.stringify(data) + "]";
 			}()));
 			writable.close();
 			parsed = eval(parsed)[0];
-			parsed.songNotes = this.parseSongNote(parsed.songNotes);
+			parsed.songNotes = sheetmgr.parseSongNote(parsed.songNotes);
 			parsed.fileName = sheet;
-			this.cachedLocalSheetList.push(parsed);
+			sheetmgr.cachedLocalSheetList.push(parsed);
 			listener({status:3});
-		} else {
+		}, function (msg) {
 			listener({status:-1, msg: "获取 " + remoteHost + " 失败，原因：" + resp.statusMessage});
-		}
+		});
 	},
 	
 	__internal_fetchLocalSheets: function(listener) {
@@ -126,9 +124,9 @@ sheetmgr = {
 		}
 	},
 	__internal_fetchOnlineSharedSheets: function() {
-		var remoteHost = "https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/shared_sheets.json";
-		var data = http.get(remoteHost).body.json();
-		this.cachedOnlineSharedSheetInfoList = data.sheets;
+		config.fetchRepoFile("shared_sheets.json", config.values.gitVersion, function(body) {
+			sheetmgr.cachedOnlineSharedSheetInfoList = body.json().sheets;
+		})
 	},
 	
 	parseSongNote: function(raw) {
@@ -287,7 +285,7 @@ config = {
 		skipOpenPlayerPanelWindowTip: false,
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
-		currentVersion: 8,
+		currentVersion: 9,
 		gitVersion: "",
 	},
 	
@@ -313,21 +311,19 @@ config = {
 	
 	checkVersion: function() {
 		this.values.gitVersion = http.get("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/gitVersion").body.string();
-		//this.values.gitVersion = "b8b694aa74de3bccfb2e0f432b49a16e9c8846bc";
 		var periodVersion = this._global_storage.get("version", this.values.currentVersion);
 		var currentVersion = this.values.currentVersion;
 		if(periodVersion < currentVersion) {
-			try {
-				var updateInfo = http.get("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/update_log.txt");
+			config.fetchRepoFile("update_log.txt", this.values.gitVersion, function(body) {
 				gui.dialogs.showConfirmDialog({
 					title: "SkyAutoPlayer已更新",
-					text: "当前版本: " + currentVersion + " ← " + periodVersion + "\n\n更新日志: \n" + updateInfo.body.string(),
+					text: "当前版本: " + currentVersion + " ← " + periodVersion + "\n\n更新日志: \n" + body.string(),
 					canExit: false,
 					buttons: ["确认"]
 				});
-			} catch(e) {
-				error("获取版本信息失败！详细信息：" + e);
-			}
+			}, function(msg) {
+				toast("版本检查失败，无法获取更新信息");
+			});
 		}
 		this.save("version", currentVersion);
 	},
@@ -358,30 +354,29 @@ config = {
 			});
 			if(downloadQueue.length == 0) {
 				listener("资源加载完成");
-				java.lang.Thread.sleep(1000); //为了方便看清
+				java.lang.Thread.sleep(500); //为了方便看清
 				return;
 			}
-			
 			while (downloadQueue.length != 0 && tryCount <= 5) {
 				listener("第" + tryCount + "次尝试下载资源，共需下载" + downloadQueue.length + "项资源");
-				java.lang.Thread.sleep(1500); //为了方便看清
+				java.lang.Thread.sleep(750); //为了方便看清
 				var tmpQueue = [];
 				for(var i in downloadQueue) tmpQueue.push(downloadQueue[i]);
 				var iterator = 0;
 				tmpQueue.map(function(element, i) {
-					try {
-						listener("下载资源中: " + element);
+					listener("下载资源中: " + element);
+					config.fetchRepoFile("resources/" + element, config.values.gitVersion, function(body) {
 						var absolutePath = files.join(localRootDir, element);
-						var resp = http.get(remoteHost + element);
 						files.create(absolutePath);
-						files.writeBytes(absolutePath, resp.body.bytes());
+						files.writeBytes(absolutePath, body.bytes());
 						config.bitmaps[files.getNameWithoutExtension(absolutePath)] = android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeFile(absolutePath));
 						downloadQueue.splice(iterator, 1);
-					} catch(e) {
+					}, function(msg) {
 						iterator++;
 						listener("资源" + element + "下载/加载失败: " + e);
-						java.lang.Thread.sleep(1000); //为了方便看清
-					}
+						java.lang.Thread.sleep(500); //为了方便看清
+					});
+					
 				});
 				tryCount ++;
 			}
@@ -396,6 +391,33 @@ config = {
 			listener(new Error("资源下载时发生了问题" + error));
 		}
 		
+	},
+	//jsdelivr cdn需要指定repo版本, gitee和github则不用
+	//fetch顺序为 gitee raw content → jsdelivr cdn → github raw content
+	fetchRepoFile: function(path, gitVersion, successCbk, failCbk) {
+		//就用最蠢的if来判断吧
+		var resp = http.get(encodeURI("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path));
+		if(resp.statusCode >= 200 && resp.statusCode < 300) {
+			successCbk(resp.body);
+			return;
+		} else {
+			var errorCollector = resp.statusCode + ": " + resp.statusMessage + "\n";
+			resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (version == null ? "" : ("@" + gitVersion)) + "/" + path));
+			if(resp.statusCode >= 200 && resp.statusCode < 300) {
+				successCbk(resp.body);
+				return;
+			} else {
+				errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
+				resp = http.get(encodeURI("https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path));
+				if(resp.statusCode >= 200 && resp.statusCode < 300) {
+					successCbk(resp.body);
+					return;
+				} else {
+					errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
+					if(failCbk != null) failCbk(errorCollector);
+				}
+			}
+		}
 	},
 	
 }
@@ -1350,10 +1372,14 @@ gui = {
 				}));
 				gui.suspension._global_base.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
+						gui.suspension._global_base.setEnabled(false);
+						gui.suspension._global_base.setClickable(false);
 						gui.suspension.dismiss();
 						gui.main.show(gui.main.current);
 					}
 				}));
+				gui.suspension._global_base.setEnabled(true);
+				gui.suspension._global_base.setClickable(true);
 				s._winParams = new android.view.WindowManager.LayoutParams();
 				s._winParams.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
 				s._winParams.flags = android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
@@ -2375,12 +2401,13 @@ gui.dialogs.showProgressDialog(function(o) {
 				name: "查看LICENSE", 
 				onClick: function(v) {
 					threads.start(function() {
-						var license = http.get("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript/LICENSE").body.string();
-						gui.dialogs.showConfirmDialog({
-							title: "GNU GENERAL PUBLIC LICENSE",
-							text: license,
-							canExit: true,
-							buttons: ["确认"],
+						config.fetchRepoFile("LICENSE", null, function(body) {
+							gui.dialogs.showConfirmDialog({
+								title: "GNU GENERAL PUBLIC LICENSE",
+								text: body.string(),
+								canExit: true,
+								buttons: ["确认"],
+							});
 						});
 					});
 				},
