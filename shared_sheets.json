@@ -1,5 +1,21 @@
 {
   "sheets": [{
+    "name": "MIUI铃声(循环)",
+    "file": "MIUI铃声.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 MIUI铃声(循环)",
+    "bpm" : 280,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "美丽拍档",
+    "file": "美丽拍档(朱一旦枯燥曲).txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 \n美丽拍档(朱一旦枯燥曲)",
+    "bpm" : 266,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "Flower Dance",
     "file": "Flower_Dance.txt",
     "author": "酷安@夏川丶呇",
