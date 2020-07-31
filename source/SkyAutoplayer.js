@@ -285,6 +285,7 @@ config = {
 		skipOpenPlayerPanelWindowTip: false,
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
+		skipImportLocalSheetTip: false,
 		currentVersion: 9,
 		gitVersion: "",
 	},
@@ -299,6 +300,7 @@ config = {
 		this.values.skipOpenPlayerPanelWindowTip = this._global_storage.get("skip_open_player_panel_window_tip", this.values.skipOpenPlayerPanelWindowTip);
 		this.values.skipOnlineUploadTip = this._global_storage.get("skip_online_upload_tip", this.values.skipOnlineUploadTip);
 		this.values.skipOnlineSharedSheetCTip = this._global_storage.get("skip_shared_sheet_c_tip", this.values.skipOnlineSharedSheetCTip);
+		this.values.skipImportLocalSheetTip = this._global_storage.get("skip_import_local_sheet_tip", this.values.skipImportLocalSheetTip);
 		
 		files.ensureDir(sheetmgr.rootDir);
 	},
@@ -1808,6 +1810,30 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.v_relative = new android.widget.RelativeLayout(ctx);
 				element.v_relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
+				if(element.type == -1) {
+					element.v_info = new android.widget.ImageView(ctx);
+					element.v_info.setId(10);
+					element.v_info.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+					element.v_info.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
+					element.v_info.getLayoutParams().setMargins(dp * 15, dp * 10, dp * 5, dp * 10);
+					element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+					element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					element.v_info.setImageBitmap(config.bitmaps.info);
+					element.v_relative.addView(element.v_info);
+					
+					element.v_upload = new android.widget.TextView(ctx);
+					element.v_upload.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+					element.v_upload.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+					element.v_upload.getLayoutParams().setMargins(dp * 7, dp * 5, dp * 15, dp * 10);
+					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
+					element.v_upload.setTextSize(13);
+					element.v_upload.setTextColor(gui.config.colors.sec_text);
+					element.v_upload.setText(element.title);
+					element.v_relative.addView(element.v_upload);
+					return element.v_relative;
+				}
+				
 				element.v_title = new android.widget.TextView(ctx);
 				element.v_title.setId(10);
 				element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
@@ -1889,7 +1915,29 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_listView.setAdapter(s.ns0_listAdapterController.self);
 			s.ns0_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 				onItemClick: function(parent, view, pos, id) {
-					var item = s.ns0_listAdapterController.get(pos);
+					var item = s.ns0_listAdapterController.get(pos);if(item.type == -1) {
+						switch(item.index) {
+							case 0: {
+								gui.dialogs.showConfirmDialog({
+									title: "如何导入本地乐谱",
+									text: android.text.Html.fromHtml(String("本地乐谱文件夹在<b>SkyStudio</b>的乐谱存储位置\n" + 
+										"<u><b>" + sheetmgr.rootDir + "</u></b>\n" + 
+										"将外部乐谱复制进这个文件夹即可\n\n" + 
+										"注意：\n" + 
+										"SkyStudio对乐谱的存储/读取使用<u><b>" + sheetmgr.encoding.toUpperCase() + "</u></b>编码\n" + 
+										"请确保外部乐谱的编码与SkyStudio使用的编码一致\n").replace(new RegExp("\x0a", "gi"), "<br>")),
+									canExit: true,
+									skip: function(checked) {
+										config.values.skipImportLocalSheetTip = config.save("skip_import_local_sheet_tip", checked);
+										if(checked) s.ns0_listAdapterController.removeByIndex(pos, true);
+									},
+									buttons: ["确认"]
+								});
+								break;
+							}
+						}
+						return true;
+					}
 					gui.dialogs.showDialog((function () {
 						var scr = new android.widget.ScrollView(ctx);
 						scr.setBackgroundColor(gui.config.colors.background);
@@ -1986,13 +2034,17 @@ gui.dialogs.showProgressDialog(function(o) {
 					s.ns0_listView.setAlpha(anim.getAnimatedValue());
 					s.ns0_progress.setAlpha(1 - anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
-						s.ns0_listAdapterController.notifyChange();
 						s.ns0_listView.setAlpha(1);
+						if(!config.values.skipImportLocalSheetTip) s.ns0_listAdapterController.add({
+							type: -1,
+							title: "如何导入本地乐谱",
+							index: 0
+						});//上传乐谱提示
+						s.ns0_listAdapterController.notifyChange();
 						threads.start(function() {
 							sheetmgr.getLocalSheetList(isForce, function(i) {
 								gui.run(function(){
 									gui.main._global_title.setText("加载中: 共" + i + "首乐谱");
-									s.ns0_listAdapterController.notifyChange();
 								});
 							}).map(function(e, i) {
 								s.ns0_listAdapterController.add(e);
