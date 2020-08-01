@@ -1,5 +1,13 @@
 {
   "sheets": [{
+    "name": "夜的钢琴曲(五)",
+    "file": "夜的钢琴曲(五).txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 夜的钢琴曲(五)\n<u>应尽量避免洞穴效应</u>",
+    "bpm" : 400,
+    "suggested_instrument": 1,
+    "pitchLevel": 3
+  }, {
     "name": "雨的印记（Kiss the Rain)",
     "file": "Kiss_the_Rain.txt",
     "author": "酷安@你们很有趣呢",
