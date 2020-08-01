@@ -1,5 +1,29 @@
 {
   "sheets": [{
+    "name": "神々が恋した幻想郷(修改版)",
+    "file": "神々が恋した幻想郷(修改版).txt",
+    "author": "StageGuard",
+    "desc": "源谱来自酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>\n稍作修改使节奏更接近原曲\n(过一段时间出完整版)",
+    "bpm" : 512,
+    "suggested_instrument": 1,
+    "pitchLevel": 5
+  }, {
+    "name": "猪八戒背媳妇(简易单指)",
+    "file": "猪八戒背媳妇(简易单指)",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 猪八戒背媳妇(简易单指)\n背 背 友 尽 曲 ",
+    "bpm" : 440,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "猪八戒背媳妇",
+    "file": "猪八戒背媳妇",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 猪八戒背媳妇\n背 背 友 尽 曲 ",
+    "bpm" : 440,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "夜的钢琴曲(五)",
     "file": "夜的钢琴曲(五).txt",
     "author": "酷安@夏川丶呇",
