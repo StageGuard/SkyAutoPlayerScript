@@ -101,7 +101,7 @@ sheetmgr = {
 			}()));
 			writable.close();
 			parsed = eval(parsed)[0];
-			parsed.songNotes = sheetmgr.parseSongNote(parsed.songNotes);
+			//parsed.songNotes = sheetmgr.parseSongNote(parsed.songNotes);
 			parsed.fileName = sheet;
 			sheetmgr.cachedLocalSheetList.push(parsed);
 			listener({status:3});
@@ -114,21 +114,21 @@ sheetmgr = {
 		var sheets = files.listDir(this.rootDir, function(name){return name.endsWith(".txt");});
 		this.cachedLocalSheetList.length = 0;
 		for(var i in sheets) {
-			if(listener != null) listener(i);
 			var readable = files.open(files.join(this.rootDir, sheets[i]), "r", this.encoding);
 			var parsed = eval(readable.read())[0];
 			readable.close();
-			parsed.songNotes = this.parseSongNote(parsed.songNotes);
+			//parsed.songNotes = this.parseSongNote(parsed.songNotes);
 			parsed.fileName = sheets[i];
 			this.cachedLocalSheetList.push(parsed);
+			if(listener != null) listener(i);
 		}
 	},
 	__internal_fetchOnlineSharedSheets: function() {
 		config.fetchRepoFile("shared_sheets.json", config.values.gitVersion, function(body) {
 			sheetmgr.cachedOnlineSharedSheetInfoList = body.json().sheets;
-		})
+		});
 	},
-	
+	//解析乐谱是耗时操作
 	parseSongNote: function(raw) {
 		var r = [];
 		var t_time = 0;
@@ -250,7 +250,7 @@ sheetplayer = {
 		if(this.thread != null) this.stop();
 		this.thread = null;
 		this.name = j.name;
-		this.notes = j.songNotes;
+		this.notes = sheetmgr.parseSongNote(j.songNotes);
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
 		this.noteCount = j.songNotes.length;
@@ -286,7 +286,7 @@ config = {
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
 		skipImportLocalSheetTip: false,
-		currentVersion: 9,
+		currentVersion: 10,
 		gitVersion: "",
 	},
 	
@@ -687,7 +687,7 @@ gui = {
 								if (e.getAction() == e.ACTION_DOWN && canExit) {
 									frame.setEnabled(false);
 									frame.setClickable(false);
-									gui.utils.value_animation("Float", 1.0, 0, 75, new android.view.animation.LinearInterpolator(), function(anim) {
+									gui.utils.value_animation("Float", 1.0, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
 										frame.setAlpha(anim.getAnimatedValue());
 										if(anim.getAnimatedValue() == 0) {
 											if(onDismiss != null) onDismiss(frame);
@@ -705,7 +705,7 @@ gui = {
 					layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(width, height, android.view.Gravity.CENTER));
 					layout.getLayoutParams().setMargins(20 * dp, 20 * dp, 20 * dp, 20 * dp);
 					frame.addView(layout);
-					gui.utils.value_animation("Float", 0, 1, 75, new android.view.animation.LinearInterpolator(), function(anim) {
+					gui.utils.value_animation("Float", 0, 1, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
 						frame.setAlpha(anim.getAnimatedValue());
 					});
 					layout.setElevation(16 * dp);
@@ -788,7 +788,7 @@ gui = {
 							var o = this;
 							gui.run(function() {
 								try {
-									gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.LinearInterpolator(), function(anim) {
+									gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
 										o.popup.setAlpha(anim.getAnimatedValue());
 										if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(o.popup);
 									});
@@ -928,7 +928,7 @@ gui = {
 							list.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 								onItemClick: function(parent, view, pos, id) {
 									try {
-										if (callback && !callback(pos, s[pos])) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.LinearInterpolator(), function(anim) {
+										if (callback && !callback(pos, s[pos])) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
 											dialog.setAlpha(anim.getAnimatedValue());
 											if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
 										});
@@ -964,6 +964,7 @@ gui = {
 		_global_title: null,
 		_global_navigation_bar: null,
 		_global_close: null,
+		_glonal_func: null,
 		
 		isShowing: false,
 		current_navigation_selection: NaN,
@@ -985,7 +986,10 @@ gui = {
 					return;
 				}
 			}
-			if(j instanceof Object) gui.main.views.push(j);
+			if(j instanceof Object) {
+				j.func_clickable = true;
+				gui.main.views.push(j);
+			}
 		},
 		
 		getPage: function(index) {
@@ -1022,6 +1026,18 @@ gui = {
 			for(var i in gui.main.views) {
 				if(gui.main.views[i].index == index) {
 					return gui.main.views[i];
+				}
+			}
+		},
+		
+		setFuncClickable: function(index, clickable) {
+			for(var i in gui.main.views) {
+				if(gui.main.views[i].index == index) {
+					gui.main.views[i].func_clickable = clickable;
+					if(gui.main.current == index && gui.main.isShowing) {
+						gui.main._glonal_func.setEnabled(clickable);
+						gui.main._glonal_func.setClickable(clickable);
+					}
 				}
 			}
 		},
@@ -1088,14 +1104,14 @@ gui = {
 						gui.suspension.show();
 					}
 				}));
-				s.func = new android.widget.ImageView(ctx);
-				s.func.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * gui.main.status_bar_height, dp * gui.main.status_bar_height));
-				s.func.setPadding(dp * 1, dp * 1, dp * 1, dp * 1);
-				s.func.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 23);
-				s.func.measure(0, 0);
-				s.func.setBackgroundDrawable(gui.utils.ripple_drawable(s.func.getMeasuredWidth(), s.func.getMeasuredHeight(), "rect"));
-				s.func.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
-				s.statusBar.addView(s.func);
+				gui.main._glonal_func = new android.widget.ImageView(ctx);
+				gui.main._glonal_func.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * gui.main.status_bar_height, dp * gui.main.status_bar_height));
+				gui.main._glonal_func.setPadding(dp * 1, dp * 1, dp * 1, dp * 1);
+				gui.main._glonal_func.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 23);
+				gui.main._glonal_func.measure(0, 0);
+				gui.main._glonal_func.setBackgroundDrawable(gui.utils.ripple_drawable(gui.main._glonal_func.getMeasuredWidth(), gui.main._glonal_func.getMeasuredHeight(), "rect"));
+				gui.main._glonal_func.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+				s.statusBar.addView(gui.main._glonal_func);
 				s.statusBar.addView(gui.main._global_close);
 				
 				gui.main._global_base.addView(s.statusBar);
@@ -1155,11 +1171,11 @@ gui = {
 				
 				gui.main.isShowing = true;
 				
-				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_base.setAlpha(anim.getAnimatedValue());
 					if(gui.main.views[s.index].update != null && anim.getAnimatedValue() == 1.0) gui.main.views[s.index].update(s);
 				});
-				gui.utils.value_animation("Float", 0, 1.0, 400 , new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.utils.value_animation("Float", 0, 1.0, 400 , new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_content_container.setAlpha(anim.getAnimatedValue());
 					gui.main._global_title.setAlpha(anim.getAnimatedValue());
 				});
@@ -1204,7 +1220,7 @@ gui = {
 						if(gui.main.views[tid].update != null && anim.getAnimatedValue() == 1.0) gui.main.views[tid].update(s);
 					}
 				});
-				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_title.setAlpha(anim.getAnimatedValue());
 				});
 				
@@ -1215,42 +1231,44 @@ gui = {
 				if(gui.main.func_showing) {
 					gui.main.func_showing = false;
 					gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.DecelerateInterpolator(), function(anim) {
-						s.func.setTranslationX(anim.getAnimatedValue() * s.func.getMeasuredWidth());
-						s.func.setAlpha(1 - anim.getAnimatedValue());
+						gui.main._glonal_func.setTranslationX(anim.getAnimatedValue() * gui.main._glonal_func.getMeasuredWidth());
+						gui.main._glonal_func.setAlpha(1 - anim.getAnimatedValue());
 						if(anim.getAnimatedValue() == 1.0) {
-							s.func.setClickable(false);
-							s.func.setEnabled(false);
-							s.func.setOnClickListener(new android.view.View.OnClickListener({
+							gui.main._glonal_func.setClickable(false);
+							gui.main._glonal_func.setEnabled(false);
+							gui.main._glonal_func.setOnClickListener(new android.view.View.OnClickListener({
 								onClick: function() {}
 							}));
-							s.func.setImageBitmap(android.graphics.Bitmap.createBitmap(1, 1, android.graphics.Bitmap.Config.ARGB_8888));
+							gui.main._glonal_func.setImageBitmap(android.graphics.Bitmap.createBitmap(1, 1, android.graphics.Bitmap.Config.ARGB_8888));
 						}
 					});
 				}
 			} else {
 				if(gui.main.func_showing) {
-					s.func.setOnClickListener(new android.view.View.OnClickListener({
+					gui.main._glonal_func.setOnClickListener(new android.view.View.OnClickListener({
 						onClick: function() {gui.main.views[s.index].func(s)}
 					}));
-					s.func.setImageBitmap(gui.main.views[s.index].func_icon);
+					gui.main._glonal_func.setImageBitmap(gui.main.views[s.index].func_icon);
 					gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.DecelerateInterpolator(), function(anim) {
-						s.func.setAlpha(anim.getAnimatedValue());
+						gui.main._glonal_func.setAlpha(anim.getAnimatedValue());
 					});
 				} else {
 					gui.main.func_showing = true;
-					s.func.setClickable(true);
-					s.func.setEnabled(true);
-					s.func.setOnClickListener(new android.view.View.OnClickListener({
+					gui.main._glonal_func.setClickable(true);
+					gui.main._glonal_func.setEnabled(true);
+					gui.main._glonal_func.setOnClickListener(new android.view.View.OnClickListener({
 						onClick: function() {gui.main.views[s.index].func(s)}
 					}));
-					s.func.setImageBitmap(gui.main.views[s.index].func_icon);
+					gui.main._glonal_func.setImageBitmap(gui.main.views[s.index].func_icon);
 					gui.utils.value_animation("Float", 1, 0, 300 , new android.view.animation.DecelerateInterpolator(), function(anim) {
-						s.func.setTranslationX(anim.getAnimatedValue() * s.func.getMeasuredWidth());
-						s.func.setAlpha(1 - anim.getAnimatedValue());
+						gui.main._glonal_func.setTranslationX(anim.getAnimatedValue() * gui.main._glonal_func.getMeasuredWidth());
+						gui.main._glonal_func.setAlpha(1 - anim.getAnimatedValue());
 					});
 				}
 			}
 			gui.main.current_navigation_selection = s.index;
+			gui.main._glonal_func.setClickable(content.func_clickable);
+			gui.main._glonal_func.setEnabled(content.func_clickable);
 		})},
 		__internal_genNavigationList: function(s) { gui.run(function(){
 			if(gui.main._global_navigation_bar == null) return;
@@ -1325,7 +1343,7 @@ gui = {
 				gui.main.isShowing = false;
 				gui.main._global_close.setEnabled(false);
 				gui.main._global_close.setClickable(false);
-				gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_base.setAlpha(anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
 						gui.winMgr.removeView(gui.main._global_base);
@@ -1398,7 +1416,7 @@ gui = {
 		dismiss: function() { gui.run(function(){
 			if (gui.suspension.isShowing) {
 				gui.suspension.isShowing = false;
-				gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.suspension._global_base.setAlpha(anim.getAnimatedValue());
 					if(anim.getAnimatedValue() == 0) {
 						gui.winMgr.removeView(gui.suspension._global_base);
@@ -1422,8 +1440,6 @@ gui = {
 		total: 15,
 		
 		current_index: 0,
-		
-		handler: new android.os.Handler(),
 		
 		__internal_showTargetDots: function s() { gui.run(function(){
 			if(!gui.key_coordinate_navigation.isShowing) {
@@ -1558,7 +1574,7 @@ gui = {
 		cx: null,
 		cy: null,
 		
-		__internal_showPanel: function s() { gui.run(function(){
+		__internal_showPanel: function s(sheet) { gui.run(function(){
 			if(!gui.player_panel.isShowing) {
 				gui.player_panel._global_base = new android.widget.RelativeLayout(ctx);
 				gui.player_panel._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
@@ -1571,6 +1587,7 @@ gui = {
 				gui.player_panel._global_text.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
 				gui.player_panel._global_text.setTextColor(gui.config.colors.text);
 				gui.player_panel._global_text.setTextSize(14);
+				gui.player_panel._global_text.setText("解析中...");
 				//gui.player_panel._global_text.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				gui.player_panel._global_text.getLayoutParams().setMargins(0, 0, 0, dp * 2);
 				gui.player_panel._global_text.setOnTouchListener(new android.view.View.OnTouchListener({
@@ -1618,8 +1635,6 @@ gui = {
 				
 				gui.player_panel._global_seek = new android.widget.SeekBar(ctx);
 				gui.player_panel._global_seek.setId(13);
-				gui.player_panel._global_seek.setMax(sheetplayer.noteCount);
-				gui.player_panel._global_seek.setMin(0);
 				gui.player_panel._global_seek.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, -2));
 				gui.player_panel._global_seek.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 12);
 				gui.player_panel._global_seek.getLayoutParams().setMargins(0, dp * 2, 0, dp * 2);
@@ -1630,6 +1645,8 @@ gui = {
 						sheetplayer.setProgress(sb.getProgress());
 					},
 				}));
+				gui.player_panel._global_seek.setEnabled(false);
+				gui.player_panel._global_seek.setClickable(false);
 				gui.player_panel._global_base.addView(gui.player_panel._global_seek);
 				
 				
@@ -1659,6 +1676,8 @@ gui = {
 						sheetplayer.play(gui.player_panel.refreshStatus);
 					}
 				}));
+				s.play.setEnabled(false);
+				s.play.setClickable(false);
 				s.control_panel.addView(s.play);
 				
 				s.pause = new android.widget.ImageView(ctx);
@@ -1673,6 +1692,8 @@ gui = {
 						sheetplayer.pause();
 					}
 				}));
+				s.pause.setEnabled(false);
+				s.pause.setClickable(false);
 				s.control_panel.addView(s.pause);
 				
 				gui.player_panel._global_cnote = new android.widget.TextView(ctx);
@@ -1706,14 +1727,45 @@ gui = {
 				gui.winMgr.updateViewLayout(gui.player_panel._global_base, s.lp);
 				gui.player_panel.isShowing = true;
 				
-				gui.player_panel._global_text.setText(sheetplayer.name);
+				gui.player_panel.refreshStatus();
 				
 				if(!config.values.skipOpenPlayerPanelWindowTip) {
 					toast("拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。");
 					config.values.skipOpenPlayerPanelWindowTip = config.save("skip_open_player_panel_window_tip", true);
 				}
 				
-				gui.player_panel.refreshStatus();
+				threads.start(function() {
+					sheetplayer.setSheet(sheet);
+					gui.run(function() {
+						gui.player_panel._global_text.setText(sheetplayer.name);
+						gui.player_panel._global_seek.setMax(sheetplayer.noteCount);
+						gui.player_panel._global_seek.setMin(0);
+						s.play.setEnabled(true);
+						s.play.setClickable(true);
+						s.pause.setEnabled(true);
+						s.pause.setClickable(true);
+						gui.player_panel._global_seek.setEnabled(true);
+						gui.player_panel._global_seek.setClickable(true);
+						gui.player_panel.refreshStatus();
+						//一点都不优雅
+						var h = new android.os.Handler();
+						h.postDelayed(function() {
+							gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.LinearInterpolator(), function(anim) {
+								gui.player_panel._global_text.setAlpha(anim.getAnimatedValue());
+							});
+						}, 0);
+						h.postDelayed(function() {
+							gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.LinearInterpolator(), function(anim) {
+								gui.player_panel._global_seek.setAlpha(anim.getAnimatedValue());
+							});
+						}, 20);
+						h.postDelayed(function() {
+							gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.LinearInterpolator(), function(anim) {
+								s.control_panel.setAlpha(anim.getAnimatedValue());
+							});
+						}, 40);
+					});
+				});
 			}
 		});},
 		refreshStatus: function() { gui.run(function(){
@@ -1869,9 +1921,8 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.v_play.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
 						if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
-							sheetplayer.setSheet(element);
 							gui.main.__internal_dismiss();
-							gui.player_panel.__internal_showPanel();
+							gui.player_panel.__internal_showPanel(element);
 						} else {
 							toast("未设置键位坐标或坐标数据错误，请前往设置页设置键位坐标");
 						}
@@ -2021,13 +2072,13 @@ gui.dialogs.showProgressDialog(function(o) {
 		},
 		update: function(s) {
 			if(s.initial) this.getSheetList(s, false);
-			
 		},
 		getSheetList: function(s, isForce) {
 			gui.run(function() {
 				s.ns0_progress.setIndeterminate(true);
 				s.ns0_listAdapterController.removeAll();
-				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.main.setFuncClickable(s.index, false);
+				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_title.setAlpha(anim.getAnimatedValue());
 				});
 				gui.utils.value_animation("Float", 1.0, 0, 100, new android.view.animation.DecelerateInterpolator(), function(anim) {
@@ -2047,9 +2098,12 @@ gui.dialogs.showProgressDialog(function(o) {
 									gui.main._global_title.setText("加载中: 共" + i + "首乐谱");
 								});
 							}).map(function(e, i) {
-								s.ns0_listAdapterController.add(e);
+								gui.run(function(){
+									s.ns0_listAdapterController.add(e);
+								});
 							});
 							gui.run(function() {
+								gui.main.setFuncClickable(s.index, true);
 								s.ns0_listAdapterController.notifyChange();
 								gui.main._global_title.setText(gui.main.getPageInfo(s.index).title);
 								gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
@@ -2166,7 +2220,7 @@ gui.dialogs.showProgressDialog(function(o) {
 										element.isShowingStatusBar = true;
 										element.v_progress.setIndeterminate(true);
 										element.v_desc.getLayoutParams().setMargins(dp * 15, dp * 2, dp * 15, dp * 1);
-										gui.utils.value_animation("Float", 0, 1.0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
+										gui.utils.value_animation("Float", 0, 1.0, 150, new android.view.animation.DecelerateInterpolator(), function(anim) {
 											element.v_progress.setAlpha(anim.getAnimatedValue());
 											element.v_status.setAlpha(anim.getAnimatedValue());
 										});
@@ -2182,7 +2236,7 @@ gui.dialogs.showProgressDialog(function(o) {
 								case 3: {
 									if(gui.main.isShowing) { gui.run(function() { 
 										toast("下载完成: " + element.name + "\n请在本地曲谱页面刷新");
-										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
+										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.DecelerateInterpolator(), function(anim) {
 											element.v_progress.setAlpha(anim.getAnimatedValue());
 											element.v_status.setAlpha(anim.getAnimatedValue());
 											if(anim.getAnimatedValue() == 0) {
@@ -2198,7 +2252,7 @@ gui.dialogs.showProgressDialog(function(o) {
 								case -1: {
 									if(gui.main.isShowing) { gui.run(function() { 
 										toast("下载" + element.name + "失败: " + r.msg);
-										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.LinearInterpolator(), function(anim) {
+										gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.DecelerateInterpolator(), function(anim) {
 											element.v_progress.setAlpha(anim.getAnimatedValue());
 											element.v_status.setAlpha(anim.getAnimatedValue());
 											if(anim.getAnimatedValue() == 0) {
@@ -2343,7 +2397,6 @@ gui.dialogs.showProgressDialog(function(o) {
 							"<br><br>" + 
 							"<font color=#FFFFFF>简介: </font><br><font color=#7B7B7B>" + 
 							item.desc.replace(new RegExp("\x0a", "gi"), "<br>")
-								
 							+ "</font>"
 						));
 						text.setPadding(0, 0, 0, 10 * dp);
@@ -2376,10 +2429,11 @@ gui.dialogs.showProgressDialog(function(o) {
 		},
 		getOnlineSheetList: function(s, isForce) {
 			gui.run(function() {
+				gui.main.setFuncClickable(s.index, false);
 				s.ns1_progress.setIndeterminate(true);
 				s.ns1_listAdapterController.removeAll();
 				s.ns1_listAdapterController.notifyChange();
-				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_title.setAlpha(anim.getAnimatedValue());
 				});
 				gui.utils.value_animation("Float", 1.0, 0, 100, new android.view.animation.DecelerateInterpolator(), function(anim) {
@@ -2401,9 +2455,10 @@ gui.dialogs.showProgressDialog(function(o) {
 						gui.main._global_title.setText("获取列表中...");
 						threads.start(function() {
 							sheetmgr.getOnlineSharedSheetInfoList(isForce).map(function(e, i) {
-								s.ns1_listAdapterController.add(e);
+								gui.run(function() { s.ns1_listAdapterController.add(e); });
 							});
 							gui.run(function() {
+								gui.main.setFuncClickable(s.index, true);
 								s.ns1_listAdapterController.notifyChange();
 								gui.main._global_title.setText(gui.main.getPageInfo(s.index).title);
 								gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
