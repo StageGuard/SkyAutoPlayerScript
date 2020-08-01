@@ -253,7 +253,7 @@ sheetplayer = {
 		this.notes = sheetmgr.parseSongNote(j.songNotes);
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
-		this.noteCount = j.songNotes.length;
+		this.noteCount = this.notes;
 	},
 	
 	toSource: function(obj) {
