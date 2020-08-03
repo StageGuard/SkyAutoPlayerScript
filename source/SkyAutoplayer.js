@@ -1833,6 +1833,17 @@ gui = {
 						s.speedr.setClickable(true);
 						gui.player_panel._global_seek.setEnabled(true);
 						gui.player_panel._global_seek.setClickable(true);
+						
+						gui.player_panel._global_text.setAlpha(0);
+						gui.player_panel._global_seek.setAlpha(0);
+						gui.player_panel._global_status.setAlpha(0);
+						gui.player_panel._global_cnote.setAlpha(0);
+						s.close.setAlpha(0);
+						s.pause.setAlpha(0);
+						s.speedr.setAlpha(0);
+						s.play.setAlpha(0);
+						s.speedl.setAlpha(0);
+						
 						gui.player_panel.refreshStatus();
 						//一点都不优雅
 						var h = new android.os.Handler();
