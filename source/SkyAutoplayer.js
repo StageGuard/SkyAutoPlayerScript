@@ -319,7 +319,7 @@ config = {
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
 		skipImportLocalSheetTip: false,
-		currentVersion: 10,
+		currentVersion: 11,
 		gitVersion: "",
 	},
 	
