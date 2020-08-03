@@ -198,6 +198,27 @@ sheetplayer = {
 	playing: false,
 	nextInterval: 0,
 	
+	speed: 1,
+	current_speed_index: 6,
+	speed_list: [
+		0.1, 
+		0.2, 
+		0.4, 
+		0.5, 
+		0.6, 
+		0.8,
+		1, 
+		1.2, 
+		1.4, 
+		1.5, 
+		1.6,
+		1.8, 
+		2,
+		3,
+		4, 
+		5
+	],
+	
 	thread: null,
 	
 	play: function(listener) {
@@ -226,7 +247,7 @@ sheetplayer = {
 					eval("gestures(" + gestureMap.slice(1, gestureMap.length - 1) + ");");
 				});
 				if(listener != null) listener();
-				java.lang.Thread.sleep(sheetplayer.nextInterval);
+				java.lang.Thread.sleep(sheetplayer.nextInterval = Math.round(sheetplayer.nextInterval *  sheetplayer.speed));
 				sheetplayer.currentNote ++;
 			}
 		});
@@ -240,6 +261,18 @@ sheetplayer = {
 	},
 	pause: function() {
 		this.playing = false;
+	},
+	
+	speed_up: function() {
+		if((this.current_speed_index + 1) < this.speed_list.length) {
+			this.speed = 1 / this.speed_list[++ this.current_speed_index];
+		}
+	},
+	
+	slow_down: function() {
+		if((this.current_speed_index - 1) >= 0) {
+			this.speed = 1 / this.speed_list[-- this.current_speed_index];
+		}
 	},
 	
 	setProgress: function(p) {
@@ -332,7 +365,7 @@ config = {
 	
 	fetchResources: function(listener) {
 		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
-		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png"];
+		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png"];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/";
 		var downloadQueue = [];
 		var tryCount = 1;
@@ -404,7 +437,7 @@ config = {
 			return;
 		} else {
 			var errorCollector = resp.statusCode + ": " + resp.statusMessage + "\n";
-			resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (version == null ? "" : ("@" + gitVersion)) + "/" + path));
+			resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (gitVersion == null ? "" : ("@" + gitVersion)) + "/" + path));
 			if(resp.statusCode >= 200 && resp.statusCode < 300) {
 				successCbk(resp.body);
 				return;
@@ -1320,7 +1353,6 @@ gui = {
 			if(gui.main._global_navigation_bar == null) return;
 			if(!/^android/.test(String(gui.main._global_navigation_bar.findViewById(index)))) return;
 			if(gui.main.current_navigation_selection == index) return;
-			var argbE = new android.animation.ArgbEvaluator();
 			var colorAnim = android.animation.ObjectAnimator.ofInt(gui.main._global_navigation_bar.findViewById(index).findViewById(12), "textColor", gui.config.colors.sec_text, gui.config.colors.text);
 			colorAnim.setDuration(300);
 			colorAnim.setEvaluator(new android.animation.ArgbEvaluator());
@@ -1588,6 +1620,8 @@ gui = {
 				gui.player_panel._global_text.setTextColor(gui.config.colors.text);
 				gui.player_panel._global_text.setTextSize(14);
 				gui.player_panel._global_text.setText("解析中...");
+				gui.player_panel._global_text.setSingleLine(true);
+				gui.player_panel._global_text.setEllipsize(android.text.TextUtils.TruncateAt.END);
 				//gui.player_panel._global_text.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				gui.player_panel._global_text.getLayoutParams().setMargins(0, 0, 0, dp * 2);
 				gui.player_panel._global_text.setOnTouchListener(new android.view.View.OnTouchListener({
@@ -1632,7 +1666,6 @@ gui = {
 				}));
 				gui.player_panel._global_base.addView(s.close);
 				
-				
 				gui.player_panel._global_seek = new android.widget.SeekBar(ctx);
 				gui.player_panel._global_seek.setId(13);
 				gui.player_panel._global_seek.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, -2));
@@ -1649,28 +1682,83 @@ gui = {
 				gui.player_panel._global_seek.setClickable(false);
 				gui.player_panel._global_base.addView(gui.player_panel._global_seek);
 				
-				
-				s.control_panel = new android.widget.LinearLayout(ctx);
-				s.control_panel.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-				s.control_panel.setOrientation(android.widget.LinearLayout.HORIZONTAL);
-				s.control_panel.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+				s.control_panel = new android.widget.RelativeLayout(ctx);
+				s.control_panel.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, -2));
 				s.control_panel.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
 				
 				gui.player_panel._global_status = new android.widget.TextView(ctx);
-				gui.player_panel._global_status.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 110, dp * 22));
-				s.control_panel.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				gui.player_panel._global_status.setId(14);
+				gui.player_panel._global_status.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 275, -2));
+				gui.player_panel._global_status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				gui.player_panel._global_status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP);
+				gui.player_panel._global_status.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				gui.player_panel._global_status.getLayoutParams().setMargins(0, 0, 0, dp * 1);
 				gui.player_panel._global_status.setTextColor(gui.config.colors.sec_text);
 				gui.player_panel._global_status.setTextSize(12);
 				//gui.player_panel._global_status.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				s.control_panel.addView(gui.player_panel._global_status);
 				
+				gui.player_panel._global_cnote = new android.widget.TextView(ctx);
+				gui.player_panel._global_cnote.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 275, -2));
+				gui.player_panel._global_cnote.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				gui.player_panel._global_cnote.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 14);
+				gui.player_panel._global_cnote.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				gui.player_panel._global_cnote.getLayoutParams().setMargins(0, dp * 1, 0, 0);
+				gui.player_panel._global_cnote.setTextColor(gui.config.colors.sec_text);
+				gui.player_panel._global_cnote.setTextSize(12);
+				//gui.player_panel._global_cnote.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+				s.control_panel.addView(gui.player_panel._global_cnote);
+				
+				s.speedr = new android.widget.ImageView(ctx);
+				s.speedr.setId(15);
+				s.speedr.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				s.speedr.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 17, dp * 17));
+				s.speedr.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+				s.speedr.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				s.speedr.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.speedr.setImageBitmap(config.bitmaps.speedup);
+				s.speedr.measure(0, 0);
+				s.speedr.setBackgroundDrawable(gui.utils.ripple_drawable(s.speedr.getMeasuredWidth(), s.speedr.getMeasuredHeight(), "rect"));
+				s.speedr.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() {
+						sheetplayer.speed_up();
+						gui.player_panel.refreshStatus();
+					}
+				}));
+				s.speedr.setEnabled(false);
+				s.speedr.setClickable(false);
+				s.control_panel.addView(s.speedr);
+				
+				s.pause = new android.widget.ImageView(ctx);
+				s.pause.setId(16);
+				s.pause.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				s.pause.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 22, dp * 22));
+				s.pause.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 15);
+				s.pause.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				s.pause.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.pause.setImageBitmap(config.bitmaps.pause);
+				s.pause.measure(0, 0);
+				s.pause.setBackgroundDrawable(gui.utils.ripple_drawable(s.pause.getMeasuredWidth(), s.pause.getMeasuredHeight(), "rect"));
+				s.pause.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() {
+						sheetplayer.pause();
+						gui.player_panel.refreshStatus();
+					}
+				}));
+				s.pause.setEnabled(false);
+				s.pause.setClickable(false);
+				s.control_panel.addView(s.pause);
+				
 				s.play = new android.widget.ImageView(ctx);
+				s.play.setId(17);
 				s.play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				s.play.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 22, dp * 22));
+				s.play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 22, dp * 22));
+				s.play.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 16);
+				s.play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 				s.play.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
 				s.play.setImageBitmap(config.bitmaps.play);
 				s.play.measure(0, 0);
-				s.play.setBackgroundDrawable(gui.utils.ripple_drawable(s.close.getMeasuredWidth(), s.close.getMeasuredHeight(), "rect"));
+				s.play.setBackgroundDrawable(gui.utils.ripple_drawable(s.play.getMeasuredWidth(), s.play.getMeasuredHeight(), "rect"));
 				s.play.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
 						sheetplayer.play(gui.player_panel.refreshStatus);
@@ -1680,29 +1768,25 @@ gui = {
 				s.play.setClickable(false);
 				s.control_panel.addView(s.play);
 				
-				s.pause = new android.widget.ImageView(ctx);
-				s.pause.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				s.pause.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 22, dp * 22));
-				s.pause.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
-				s.pause.setImageBitmap(config.bitmaps.pause);
-				s.pause.measure(0, 0);
-				s.pause.setBackgroundDrawable(gui.utils.ripple_drawable(s.close.getMeasuredWidth(), s.close.getMeasuredHeight(), "rect"));
-				s.pause.setOnClickListener(new android.view.View.OnClickListener({
+				s.speedl = new android.widget.ImageView(ctx);
+				s.speedl.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				s.speedl.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 17, dp * 17));
+				s.speedl.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 17);
+				s.speedl.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				s.speedl.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.speedl.setImageBitmap(config.bitmaps.speedup);
+				s.speedl.setRotation(180);
+				s.speedl.measure(0, 0);
+				s.speedl.setBackgroundDrawable(gui.utils.ripple_drawable(s.speedl.getMeasuredWidth(), s.speedl.getMeasuredHeight(), "rect"));
+				s.speedl.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
-						sheetplayer.pause();
+						sheetplayer.slow_down();
+						gui.player_panel.refreshStatus();
 					}
 				}));
-				s.pause.setEnabled(false);
-				s.pause.setClickable(false);
-				s.control_panel.addView(s.pause);
-				
-				gui.player_panel._global_cnote = new android.widget.TextView(ctx);
-				gui.player_panel._global_cnote.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 110, dp * 22));
-				s.control_panel.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-				gui.player_panel._global_cnote.setTextColor(gui.config.colors.sec_text);
-				gui.player_panel._global_cnote.setTextSize(12);
-				//gui.player_panel._global_cnote.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
-				s.control_panel.addView(gui.player_panel._global_cnote);
+				s.speedl.setEnabled(false);
+				s.speedl.setClickable(false);
+				s.control_panel.addView(s.speedl);
 				
 				gui.player_panel._global_base.addView(s.control_panel);
 				
@@ -1737,41 +1821,67 @@ gui = {
 				threads.start(function() {
 					sheetplayer.setSheet(sheet);
 					gui.run(function() {
-						gui.player_panel._global_text.setText(sheetplayer.name);
 						gui.player_panel._global_seek.setMax(sheetplayer.noteCount);
 						gui.player_panel._global_seek.setMin(0);
 						s.play.setEnabled(true);
 						s.play.setClickable(true);
 						s.pause.setEnabled(true);
 						s.pause.setClickable(true);
+						s.speedl.setEnabled(true);
+						s.speedl.setClickable(true);
+						s.speedr.setEnabled(true);
+						s.speedr.setClickable(true);
 						gui.player_panel._global_seek.setEnabled(true);
 						gui.player_panel._global_seek.setClickable(true);
 						gui.player_panel.refreshStatus();
 						//一点都不优雅
 						var h = new android.os.Handler();
 						h.postDelayed(function() {
-							gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.LinearInterpolator(), function(anim) {
+							gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.LinearInterpolator(), function(anim) {
 								gui.player_panel._global_text.setAlpha(anim.getAnimatedValue());
 							});
+							gui.player_panel._global_text.setText(sheetplayer.name);
 						}, 0);
 						h.postDelayed(function() {
-							gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.LinearInterpolator(), function(anim) {
+							gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.LinearInterpolator(), function(anim) {
 								gui.player_panel._global_seek.setAlpha(anim.getAnimatedValue());
+								s.close.setAlpha(anim.getAnimatedValue());
 							});
-						}, 20);
+						}, 30);
 						h.postDelayed(function() {
-							gui.utils.value_animation("Float", 0, 1, 200 , new android.view.animation.LinearInterpolator(), function(anim) {
-								s.control_panel.setAlpha(anim.getAnimatedValue());
+							gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.LinearInterpolator(), function(anim) {
+								gui.player_panel._global_status.setAlpha(anim.getAnimatedValue());
+								s.speedl.setAlpha(anim.getAnimatedValue());
 							});
-						}, 40);
+						}, 60);
+						h.postDelayed(function() {
+							gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.LinearInterpolator(), function(anim) {
+								gui.player_panel._global_cnote.setAlpha(anim.getAnimatedValue());
+								s.play.setAlpha(anim.getAnimatedValue());
+							});
+						}, 90);
+						h.postDelayed(function() {
+							gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.LinearInterpolator(), function(anim) {
+								s.pause.setAlpha(anim.getAnimatedValue());
+							});
+						}, 120);
+						h.postDelayed(function() {
+							gui.utils.value_animation("Float", 0, 1, 300 , new android.view.animation.LinearInterpolator(), function(anim) {
+								s.speedr.setAlpha(anim.getAnimatedValue());
+							});
+						}, 150);
 					});
 				});
 			}
 		});},
 		refreshStatus: function() { gui.run(function(){
-			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (Number(sheetplayer.currentNote + 1) + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval + "ms") : (sheetplayer.thread == null ? "Idle" : "Paused")));
+			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (sheetplayer.speed_list[sheetplayer.current_speed_index] + "x: " + Number(sheetplayer.currentNote + 1) + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval + "ms") : (sheetplayer.thread == null ? "Idle" : "Paused")));
 			gui.player_panel._global_cnote.setText(String(sheetplayer.playing ? (sheetplayer.notes[sheetplayer.currentNote < sheetplayer.noteCount ? sheetplayer.currentNote : sheetplayer.noteCount - 1].keys) : "-"));
 			gui.player_panel._global_seek.setProgress(sheetplayer.currentNote);
+			gui.utils.value_animation("Float", 0, 1, 80 , new android.view.animation.LinearInterpolator(), function(anim) {
+				gui.player_panel._global_cnote.setAlpha(anim.getAnimatedValue());
+				gui.player_panel._global_status.setAlpha(anim.getAnimatedValue());
+			});
 			
 		});},
 		__internal_dismiss: function() { gui.run(function(){
