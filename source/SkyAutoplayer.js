@@ -91,15 +91,13 @@ sheetmgr = {
 				}
 				return stringBuffer.toString();
 			} (7)) + ".txt");
-			var writable = files.open(sheet, "w", sheetmgr.encoding);
 			var parsed;
-			writable.write(parsed = (function() {
+			files.write(sheet, parsed = (function() {
 				var data = eval(body.string())[0];
 				listener({status:2});
 				data.author = author;
 				return "[" + JSON.stringify(data) + "]";
-			}()));
-			writable.close();
+			}()), sheetmgr.encoding);
 			parsed = eval(parsed)[0];
 			//parsed.songNotes = sheetmgr.parseSongNote(parsed.songNotes);
 			parsed.fileName = sheet;

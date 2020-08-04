@@ -1,5 +1,21 @@
 {
   "sheets": [{
+    "name": "Graze the Roof",
+    "file": "Graze_the_Roof.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 Graze the Roof\n游戏《植物大战僵尸》(Plants vs. Zombies Soundtrack) 屋顶关卡背景音乐",
+    "bpm" : 520,
+    "suggested_instrument": 1,
+    "pitchLevel": 8
+  }, {
+    "name": "Only My Railgun",
+    "file": "Only_my_railgun.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 Only My Railgun (TVアニメ「とある科学の超電磁砲」OP1テーマ) \n你指尖跳跃的电光，是我此生不灭的信仰",
+    "bpm" : 440,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "生命之名(いのちの名前)",
     "file": "生命之名(いのちの名前).txt",
     "author": "酷安@你们很有趣呢",
