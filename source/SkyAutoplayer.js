@@ -1710,10 +1710,10 @@ gui = {
 				s.speedr = new android.widget.ImageView(ctx);
 				s.speedr.setId(15);
 				s.speedr.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				s.speedr.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 17, dp * 17));
+				s.speedr.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 32, dp * 32));
 				s.speedr.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
 				s.speedr.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				s.speedr.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.speedr.setPadding(dp * 8, dp * 8, dp * 8, dp * 8);
 				s.speedr.setImageBitmap(config.bitmaps.speedup);
 				s.speedr.measure(0, 0);
 				s.speedr.setBackgroundDrawable(gui.utils.ripple_drawable(s.speedr.getMeasuredWidth(), s.speedr.getMeasuredHeight(), "rect"));
@@ -1730,10 +1730,10 @@ gui = {
 				s.pause = new android.widget.ImageView(ctx);
 				s.pause.setId(16);
 				s.pause.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				s.pause.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 22, dp * 22));
+				s.pause.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 32, dp * 32));
 				s.pause.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 15);
 				s.pause.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				s.pause.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.pause.setPadding(dp * 8, dp * 8, dp * 8, dp * 8);
 				s.pause.setImageBitmap(config.bitmaps.pause);
 				s.pause.measure(0, 0);
 				s.pause.setBackgroundDrawable(gui.utils.ripple_drawable(s.pause.getMeasuredWidth(), s.pause.getMeasuredHeight(), "rect"));
@@ -1750,10 +1750,10 @@ gui = {
 				s.play = new android.widget.ImageView(ctx);
 				s.play.setId(17);
 				s.play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				s.play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 22, dp * 22));
+				s.play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 32, dp * 32));
 				s.play.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 16);
 				s.play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				s.play.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.play.setPadding(dp * 8, dp * 8, dp * 8, dp * 8);
 				s.play.setImageBitmap(config.bitmaps.play);
 				s.play.measure(0, 0);
 				s.play.setBackgroundDrawable(gui.utils.ripple_drawable(s.play.getMeasuredWidth(), s.play.getMeasuredHeight(), "rect"));
@@ -1768,10 +1768,10 @@ gui = {
 				
 				s.speedl = new android.widget.ImageView(ctx);
 				s.speedl.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				s.speedl.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 17, dp * 17));
+				s.speedl.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 28, dp * 28));
 				s.speedl.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 17);
 				s.speedl.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				s.speedl.getLayoutParams().setMargins(dp * 8, dp * 8, dp * 8, dp * 8);
+				s.speedl.setPadding(dp * 8, dp * 8, dp * 8, dp * 8);
 				s.speedl.setImageBitmap(config.bitmaps.speedup);
 				s.speedl.setRotation(180);
 				s.speedl.measure(0, 0);
@@ -2030,8 +2030,9 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.v_play = new android.widget.ImageView(ctx);
 				element.v_play.setId(12);
 				element.v_play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				element.v_play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-				element.v_play.getLayoutParams().setMargins(dp * 7, dp * 15, dp * 15, dp * 15);
+				element.v_play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 39, dp * 39));
+				element.v_play.getLayoutParams().setMargins(0, dp * 15, dp * 15, dp * 15);
+				element.v_play.setPadding(dp * 7, dp * 7, dp * 7, dp * 7);
 				element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
 				element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 				element.v_play.setImageBitmap(config.bitmaps.play);
@@ -2050,8 +2051,9 @@ gui.dialogs.showProgressDialog(function(o) {
 				
 				element.v_delete = new android.widget.ImageView(ctx);
 				element.v_delete.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				element.v_delete.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-				element.v_delete.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 7, dp * 15);
+				element.v_delete.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 39, dp * 39));
+				element.v_delete.getLayoutParams().setMargins(dp * 15, dp * 15, 0, dp * 15);
+				element.v_delete.setPadding(dp * 7, dp * 7, dp * 7, dp * 7);
 				element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 12);
 				element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 				element.v_delete.setImageBitmap(config.bitmaps.bin);
@@ -2320,10 +2322,11 @@ gui.dialogs.showProgressDialog(function(o) {
 				
 				element.download = new android.widget.ImageView(ctx);
 				element.download.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				element.download.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 25, dp * 25));
-				element.download.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 15);
+				element.download.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 45, dp * 45));
+				element.download.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 5, dp * 15);
+				element.download.setPadding(dp * 10, dp * 10, dp * 10, dp * 10);
 				element.download.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
-				element.download.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+				element.download.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP);
 				element.download.setImageBitmap(config.bitmaps.download);
 				element.download.measure(0, 0);
 				element.download.setBackgroundDrawable(gui.utils.ripple_drawable(element.download.getMeasuredWidth(), element.download.getMeasuredHeight(), "rect"));
