@@ -1,5 +1,37 @@
 {
   "sheets": [{
+    "name": "大鱼(简易)",
+    "file": "大鱼(简易).txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 大鱼(简易)",
+    "bpm" : 288,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "嘿咻狂想曲",
+    "file": "嘿咻狂想曲.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 嘿咻狂想曲\n<b>I love you🎵 , I miss you🎵</b>",
+    "bpm" : 480,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "城南花已开",
+    "file": "城南花已开.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 城南花已开",
+    "bpm" : 480,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "撒野完整版",
+    "file": "撒野完整版.txt",
+    "author": "酷安@深空失忆か",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 撒野完整版",
+    "bpm" : 240,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "婚礼进行曲(整活用)",
     "file": "婚礼进行曲(整活用).txt",
     "author": "酷安@夏川丶呇",
