@@ -2652,12 +2652,6 @@ gui.dialogs.showProgressDialog(function(o) {
 				name: "结束脚本运行", 
 				onClick: function(v) {
 					gui.main.__internal_dismiss();
-					delete gui;
-					delete sheetmgr;
-					delete sheetplayer;
-					delete dp;
-					delete RhinoListAdapter;
-					delete config;
 					exit();
 				},
 			}, {
@@ -2725,6 +2719,6 @@ gui.dialogs.showProgressDialog(function(o) {
 			callback: function(id) {},
 		});
 	}
-}, false, true);
+}, false, false);
 
 });
