@@ -1,5 +1,37 @@
 {
   "sheets": [{
+    "name": "土耳其进行曲(莫扎特)",
+    "file": "土耳其进行曲(莫扎特).txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 土耳其进行曲(莫扎特)",
+    "bpm" : 528,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "Unity",
+    "file": "Unity.txt",
+    "author": "酷安@夏川丶呇",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏川丶呇<a/>分享乐谱 Unity",
+    "bpm" : 600,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "The truth that you leave\n你离开的事实",
+    "file": "The_truth_that_you_leave_你离开的事实.txt",
+    "author": "酷安@情如风雪如常",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/643670>@情如风雪如常<a/>分享乐谱 The truth that you leave",
+    "bpm" : 520,
+    "suggested_instrument": 1,
+    "pitchLevel": 11
+  }, {
+    "name": "名侦探柯南",
+    "file": "名侦探柯南.txt",
+    "author": "酷安@情如风雪如常",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/643670>@情如风雪如常<a/>分享乐谱 名侦探柯南",
+    "bpm" : 511,
+    "suggested_instrument": 1,
+    "pitchLevel": 8
+  }, {
     "name": "Unity",
     "file": "Unity.txt",
     "author": "酷安@夏川丶呇",
