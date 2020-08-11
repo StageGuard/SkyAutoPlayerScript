@@ -53,7 +53,7 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 ## 上传乐谱
 
 你可以fork本仓库，将你要上传的乐谱添加至`shared_sheets`文件夹，并按照以下要求在`shared_sheets.json`添加项目
-```json
+```javascript
 {
     //乐谱名称
     "name": "SheetName",
