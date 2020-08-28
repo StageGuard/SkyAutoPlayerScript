@@ -1,5 +1,13 @@
 {
   "sheets": [{
+    "name": "Souvevirs d'Enfance\n童年的回忆",
+    "file": "Souvevirs_d'Enfance.txt",
+    "author": "酷安@你们很有趣呢",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2416229>酷安@你们很有趣呢<a/>分享乐谱\n Souvevirs d'Enfance（童年的回忆）\n作者：理查德·克莱德曼（Richard Clayderman）又名爱的记忆\n曲子比原曲慢了一点点，建议加速播放",
+    "bpm" : 720,
+    "suggested_instrument": 1,
+    "pitchLevel": 7
+  }, {
     "name": "Canon卡农 C大调 简易版",
     "file": "Canon卡农_C大调_简易版.txt",
     "author": "酷安@夏卡卡卡",
