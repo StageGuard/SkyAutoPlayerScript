@@ -111,14 +111,29 @@ sheetmgr = {
 	__internal_fetchLocalSheets: function(listener) {
 		var sheets = files.listDir(this.rootDir, function(name){return name.endsWith(".txt");});
 		this.cachedLocalSheetList.length = 0;
+		var failed = 0;
 		for(var i in sheets) {
-			var readable = files.open(files.join(this.rootDir, sheets[i]), "r", this.encoding);
-			var parsed = eval(readable.read())[0];
-			readable.close();
-			//parsed.songNotes = this.parseSongNote(parsed.songNotes);
-			parsed.fileName = sheets[i];
-			this.cachedLocalSheetList.push(parsed);
-			if(listener != null) listener(i);
+			try {
+				var readable = files.open(files.join(this.rootDir, sheets[i]), "r", this.encoding);
+				var parsed = eval(readable.read())[0];
+				readable.close();
+				//parsed.songNotes = this.parseSongNote(parsed.songNotes);
+				
+				if(typeof(parsed.songNotes[0]) == "number" || parsed.isEncrypted) {
+					//failed type = 1 为加载了加密的JSON谱子
+					parsed = {failed: true, errtype: 1, fileName: sheets[i], reason: "It is a encrypted JSON sheet."};
+					failed ++;
+				} else {
+					parsed.fileName = sheets[i];
+				}
+				this.cachedLocalSheetList.push(parsed);
+			} catch (e) {
+				failed ++;
+				//failed type = 2 为JSON格式有误
+				//failed type = -1 为未知错误
+				this.cachedLocalSheetList.push({failed: true, errtype: /illegal character/.test(String(e)) ? -1 : (/SyntaxError/.test(String(e)) ? 2 : -1), fileName: sheets[i], reason: e});
+			}
+			if(listener != null) listener(i + 1, failed);
 		}
 	},
 	__internal_fetchOnlineSharedSheets: function() {
@@ -324,7 +339,9 @@ config = {
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
 		skipImportLocalSheetTip: false,
-		currentVersion: 11,
+		showFailedSheets: true,
+		tipOnAndroidR: true,
+		currentVersion: 12,
 		gitVersion: "",
 	},
 	
@@ -332,6 +349,7 @@ config = {
 	
 	init: function() {
 		this._global_storage = storages.create("StageGuard:SkyAutoPlayer:Config");
+
 		this.values.key_coordinates = this._global_storage.get("key_coordinates", this.values.key_coordinates);
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
@@ -339,8 +357,17 @@ config = {
 		this.values.skipOnlineUploadTip = this._global_storage.get("skip_online_upload_tip", this.values.skipOnlineUploadTip);
 		this.values.skipOnlineSharedSheetCTip = this._global_storage.get("skip_shared_sheet_c_tip", this.values.skipOnlineSharedSheetCTip);
 		this.values.skipImportLocalSheetTip = this._global_storage.get("skip_import_local_sheet_tip", this.values.skipImportLocalSheetTip);
-		
+		this.values.showFailedSheets = this._global_storage.get("show_failed_sheets", this.values.showFailedSheets);
+		this.values.tipOnAndroidR = this._global_storage.get("tip_storage_on_android_r", this.values.tipOnAndroidR);
+
+		try {
+			android.os.Build.VERSION_CODES.R
+			sheetmgr.rootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/sheets/";
+			if(this.values.tipOnAndroidR) toast("安卓11不允许外部应用读取应用私有文件夹，乐谱文件夹移至" + sheetmgr.rootDir);
+		} catch (e) {}
+
 		files.ensureDir(sheetmgr.rootDir);
+
 	},
 	
 	save: function(key, value) {
@@ -371,7 +398,7 @@ config = {
 	fetchResources: function(listener) {
 		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
 		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png"];
-		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/";
+		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/bitmaps/";
 		var downloadQueue = [];
 		var tryCount = 1;
 		try {
@@ -2016,52 +2043,63 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.v_title.setId(10);
 				element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 				element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				element.v_title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
+				element.v_title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, element.failed ? dp * 15 : dp * 1);
 				element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+				if(element.failed) element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 				element.v_title.setTextSize(16);
-				element.v_title.setTextColor(gui.config.colors.text);
-				element.v_title.setText(element.name);
+				element.v_title.setTextColor(element.failed ? gui.config.colors.sec_text : gui.config.colors.text);
+				element.v_title.setText(element.failed ? android.text.Html.fromHtml("<s>" + element.fileName + "</s>") : element.name);
 				element.v_relative.addView(element.v_title);
 				
-				element.v_author = new android.widget.TextView(ctx);
-				element.v_author.setId(11);
-				element.v_author.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				element.v_author.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 15);
-				element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
-				element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
-				element.v_author.setTextSize(14);
-				element.v_author.setTextColor(gui.config.colors.sec_text);
-				element.v_author.setText("键数: " + element.songNotes.length + " - BPM: " + element.bpm);
-				element.v_relative.addView(element.v_author);
-				
-				element.v_play = new android.widget.ImageView(ctx);
-				element.v_play.setId(12);
-				element.v_play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				element.v_play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 39, dp * 39));
-				element.v_play.getLayoutParams().setMargins(0, dp * 15, dp * 15, dp * 15);
-				element.v_play.setPadding(dp * 7, dp * 7, dp * 7, dp * 7);
-				element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
-				element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-				element.v_play.setImageBitmap(config.bitmaps.play);
-				element.v_play.measure(0, 0);
-				element.v_play.setBackgroundDrawable(gui.utils.ripple_drawable(element.v_play.getMeasuredWidth(), element.v_play.getMeasuredHeight(), "rect"));
-				element.v_play.setOnClickListener(new android.view.View.OnClickListener({
-					onClick: function() {
-						if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
-							gui.main.__internal_dismiss();
-							gui.player_panel.__internal_showPanel(element);
-						} else {
-							toast("未设置键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+				if(!element.failed) {
+					element.v_author = new android.widget.TextView(ctx);
+					element.v_author.setId(11);
+					element.v_author.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+					element.v_author.getLayoutParams().setMargins(dp * 15, dp * 1, dp * 15, dp * 15);
+					element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
+					element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+					element.v_author.setTextSize(14);
+					element.v_author.setTextColor(gui.config.colors.sec_text);
+					element.v_author.setText("键数: " + element.songNotes.length + " - BPM: " + element.bpm);
+					element.v_relative.addView(element.v_author);
+					
+					element.v_play = new android.widget.ImageView(ctx);
+					element.v_play.setId(12);
+					element.v_play.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+					element.v_play.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 39, dp * 39));
+					element.v_play.getLayoutParams().setMargins(0, dp * 15, dp * 15, dp * 15);
+					element.v_play.setPadding(dp * 7, dp * 7, dp * 7, dp * 7);
+					element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+					element.v_play.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+					element.v_play.setImageBitmap(config.bitmaps.play);
+					element.v_play.measure(0, 0);
+					element.v_play.setBackgroundDrawable(gui.utils.ripple_drawable(element.v_play.getMeasuredWidth(), element.v_play.getMeasuredHeight(), "rect"));
+					element.v_play.setOnClickListener(new android.view.View.OnClickListener({
+						onClick: function() {
+							if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
+								gui.main.__internal_dismiss();
+								gui.player_panel.__internal_showPanel(element);
+							} else {
+								toast("未设置键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+							}
+							return true;
 						}
-					}
-				}));
+					}));
 				
+					
+					
+					element.v_relative.addView(element.v_play);
+				}
 				element.v_delete = new android.widget.ImageView(ctx);
 				element.v_delete.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
 				element.v_delete.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 39, dp * 39));
-				element.v_delete.getLayoutParams().setMargins(dp * 15, dp * 15, 0, dp * 15);
+				element.v_delete.getLayoutParams().setMargins(dp * 15, dp * 15, element.failed ? dp * 15 : 0, dp * 15);
 				element.v_delete.setPadding(dp * 7, dp * 7, dp * 7, dp * 7);
-				element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 12);
+				if(element.failed) {
+					element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+				} else {
+					element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, 12);
+				}
 				element.v_delete.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 				element.v_delete.setImageBitmap(config.bitmaps.bin);
 				element.v_delete.measure(0, 0);
@@ -2081,12 +2119,10 @@ gui.dialogs.showProgressDialog(function(o) {
 								}
 							},
 						});
+						return true;
 					}
 				}));
-				
-				element.v_relative.addView(element.v_play);
-				element.v_relative.addView(element.v_delete);
-				
+				element.v_relative.addView(element.v_delete);	
 				return element.v_relative;
 			}));
 			s.ns0_listAdapterController = RhinoListAdapter.getController(s.ns0_listAdapter);
@@ -2099,7 +2135,14 @@ gui.dialogs.showProgressDialog(function(o) {
 							case 0: {
 								gui.dialogs.showConfirmDialog({
 									title: "如何导入本地乐谱",
-									text: android.text.Html.fromHtml(String("本地乐谱文件夹在<b>SkyStudio</b>的乐谱存储位置\n" + 
+									text: android.text.Html.fromHtml(String("本地乐谱文件夹在" + (function(){
+										try {
+											android.os.Build.VERSION_CODES.R
+											return "<b>Android标准文档文件夹</b>下"
+										} catch (e) {
+											return "<b>SkyStudio的乐谱存储位置</b>";
+										}
+									}()) + "\n" + 
 										"<u><b>" + sheetmgr.rootDir + "</u></b>\n" + 
 										"将外部乐谱复制进这个文件夹即可\n\n" + 
 										"注意：\n" + 
@@ -2116,6 +2159,19 @@ gui.dialogs.showProgressDialog(function(o) {
 							}
 						}
 						return true;
+					}
+					if(item.failed) {
+						gui.dialogs.showConfirmDialog({
+							title: "加载" + item.fileName + "失败",
+							text: android.text.Html.fromHtml(String("加载乐谱" + item.fileName + "失败\n\n原因：\n" + item.reason + "\n\n请检查以下内容：\n" + 
+								(item.errtype == -1 ? "<b>1. 谱子编码是否为UTF16-LE</b>\n" : "<s>1. 谱子编码是否为UTF16-LE</s>\n") + 
+								(item.errtype == 1 ? "<b>2. 谱子是否为未加密的JSON格式</b>\n" : "<s>2. 谱子是否为未加密的JSON格式</s>\n") + 
+								(item.errtype == 2 ? "<b>3. 谱子是否有JSON语法错误</b>" : "<s>3. 谱子是否有JSON语法错误</s>")
+							).replace(new RegExp("\x0a", "gi"), "<br>")), 
+							canExit: true,
+							buttons: ["确认"]
+						});
+						return;
 					}
 					gui.dialogs.showDialog((function () {
 						var scr = new android.widget.ScrollView(ctx);
@@ -2221,13 +2277,17 @@ gui.dialogs.showProgressDialog(function(o) {
 						});//上传乐谱提示
 						s.ns0_listAdapterController.notifyChange();
 						threads.start(function() {
-							sheetmgr.getLocalSheetList(isForce, function(i) {
+							sheetmgr.getLocalSheetList(isForce, function(successCount, failedCount) {
 								gui.run(function(){
-									gui.main._global_title.setText("加载中: 共" + i + "首乐谱");
+									gui.main._global_title.setText("加载中: 共" + successCount + "首乐谱(" + failedCount + "失败)");
 								});
 							}).map(function(e, i) {
 								gui.run(function(){
-									s.ns0_listAdapterController.add(e);
+									if(!e.failed) {
+										s.ns0_listAdapterController.add(e);
+									} else if(config.values.showFailedSheets){
+										s.ns0_listAdapterController.add(e);
+									}
 								});
 							});
 							gui.run(function() {
@@ -2396,7 +2456,7 @@ gui.dialogs.showProgressDialog(function(o) {
 								}
 							}
 						});
-					}); }
+					}); return true;}
 				}));
 				element.v_relative.addView(element.download);
 				
@@ -2611,53 +2671,76 @@ gui.dialogs.showProgressDialog(function(o) {
 		view: function(s) {
 			s.ns2_listView = new android.widget.ListView(ctx);
 			s.ns2_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
-			s.ns2_listView.setAdapter(s.ns2_listAdapter = new RhinoListAdapter([{
-				type: "tag",
-				name: "基本设置", 
-			}, {
-				type: "default",
-				name: "设置键位坐标", 
-				onClick: function(v) {
-					gui.main.__internal_dismiss();
-					gui.key_coordinate_navigation.show();
-				}
-			}, {
-				type: "default",
-				name: "查看使用须知", 
-				onClick: function(v) {
-					gui.dialogs.showConfirmDialog({
-						title: "使用须知",
-						text: user_agreements,
-						canExit: true,
-						buttons: ["确认"],
-					})
-				},
-			}, {
-				type: "default",
-				name: "查看LICENSE", 
-				onClick: function(v) {
-					threads.start(function() {
-						config.fetchRepoFile("LICENSE", null, function(body) {
-							gui.dialogs.showConfirmDialog({
-								title: "GNU GENERAL PUBLIC LICENSE",
-								text: body.string(),
-								canExit: true,
-								buttons: ["确认"],
+			s.ns2_listView.setAdapter(s.ns2_listAdapter = new RhinoListAdapter((function sList(){
+				sList.list = [{
+					type: "tag",
+					name: "基本设置", 
+				}, {
+					type: "default",
+					name: "设置键位坐标", 
+					onClick: function(v) {
+						gui.main.__internal_dismiss();
+						gui.key_coordinate_navigation.show();
+					}
+				}, {
+					type: "checkbox",
+					name: "显示加载失败的乐谱", 
+					check: config.values.showFailedSheets,
+					onClick: function(checked) {
+						config.values.showFailedSheets = config.save("show_failed_sheets", checked);
+					}
+				}, {
+					type: "checkbox",
+					name: "启动脚本时显示存储提示",
+					check: config.values.tipOnAndroidR,
+					onClick: function(checked) {
+						config.values.tipOnAndroidR = config.save("tip_storage_on_android_r", checked);
+					}
+				}, 
+				{
+					type: "default",
+					name: "查看使用须知", 
+					onClick: function(v) {
+						gui.dialogs.showConfirmDialog({
+							title: "使用须知",
+							text: user_agreements,
+							canExit: true,
+							buttons: ["确认"],
+						})
+					},
+				}, {
+					type: "default",
+					name: "查看LICENSE", 
+					onClick: function(v) {
+						threads.start(function() {
+							config.fetchRepoFile("LICENSE", null, function(body) {
+								gui.dialogs.showConfirmDialog({
+									title: "GNU GENERAL PUBLIC LICENSE",
+									text: body.string(),
+									canExit: true,
+									buttons: ["确认"],
+								});
 							});
 						});
-					});
-				},
-			}, {
-				type: "default",
-				name: "结束脚本运行", 
-				onClick: function(v) {
-					gui.main.__internal_dismiss();
-					exit();
-				},
-			}, {
-				type: "tag",
-				name: "Version: " + config.values.currentVersion + "(git@" + config.values.gitVersion + ")", 
-			}], function self(element) {
+					},
+				}, {
+					type: "default",
+					name: "结束脚本运行", 
+					onClick: function(v) {
+						gui.main.__internal_dismiss();
+						exit();
+					},
+				}, {
+					type: "tag",
+					name: "Version: " + config.values.currentVersion + "(git@" + config.values.gitVersion + ")", 
+				}];
+				try {
+					android.os.Build.VERSION_CODES.R
+				} catch (e) {
+					sList.list.splice(3, 1);
+				}
+				return sList.list;
+			}()), function self(element) {
 				element.v_relative = new android.widget.RelativeLayout(ctx);
 				element.v_relative.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 				
@@ -2675,7 +2758,6 @@ gui.dialogs.showProgressDialog(function(o) {
 					break;
 					case "default":
 						element.v_title = new android.widget.TextView(ctx);
-						element.v_title.setId(10);
 						element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 						element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
 						element.v_title.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 10, dp * 10);
@@ -2684,6 +2766,33 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_title.setTextColor(gui.config.colors.text);
 						element.v_title.setText(element.name);
 						element.v_relative.addView(element.v_title);
+					break;
+					case "checkbox": 
+						element.v_title = new android.widget.TextView(ctx);
+						element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+						element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+						element.v_title.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 10, dp * 10);
+						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+						element.v_title.setTextSize(14);
+						element.v_title.setTextColor(gui.config.colors.text);
+						element.v_title.setText(element.name);
+						element.v_relative.addView(element.v_title);
+
+						element.v_checkbox = new android.widget.CheckBox(ctx);
+						element.v_checkbox.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
+						element.v_checkbox.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+						element.v_checkbox.getLayoutParams().setMargins(dp * 5, dp * 5, dp * 15, dp * 5);
+						element.v_checkbox.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+						element.v_checkbox.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
+						element.v_checkbox.setFocusable(false);
+						element.v_checkbox.setChecked(element.check);
+						element.v_checkbox.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener({
+							onCheckedChanged: function(checkBox, value) {
+								element.onClick(value)
+							},
+						}));
+						element.v_relative.addView(element.v_checkbox);
 					break;
 				}
 				return element.v_relative;
@@ -2698,6 +2807,10 @@ gui.dialogs.showProgressDialog(function(o) {
 					switch(item.type) {
 						case "default":
 							item.onClick(view);
+						break;
+						case "checkbox": 
+							item.v_checkbox.performClick();
+							item.onClick(item.v_checkbox.isChecked());
 					}
 				}
 			}));
