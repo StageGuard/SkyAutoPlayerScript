@@ -133,7 +133,7 @@ sheetmgr = {
 				//failed type = -1 为未知错误
 				this.cachedLocalSheetList.push({failed: true, errtype: /illegal character/.test(String(e)) ? -1 : (/SyntaxError/.test(String(e)) ? 2 : -1), fileName: sheets[i], reason: e});
 			}
-			if(listener != null) listener(i + 1, failed);
+			if(listener != null) listener(Number(i) + 1, failed);
 		}
 	},
 	__internal_fetchOnlineSharedSheets: function() {
