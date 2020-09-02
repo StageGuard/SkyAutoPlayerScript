@@ -1918,7 +1918,7 @@ gui = {
 			}
 		});},
 		refreshStatus: function() { gui.run(function(){
-			gui.player_panel._global_status.setText(String(sheetplayer.playing ? (sheetplayer.speed_list[sheetplayer.current_speed_index] + "x: " + Number(sheetplayer.currentNote + 1) + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval + "ms") : (sheetplayer.thread == null ? "Idle" : "Paused")));
+			gui.player_panel._global_status.setText(String(sheetplayer.speed_list[sheetplayer.current_speed_index] + "x: " + (sheetplayer.playing ? (Number(sheetplayer.currentNote + 1) + "/" + sheetplayer.noteCount + " -> " + sheetplayer.nextInterval + "ms") : (sheetplayer.thread == null ? "Idle" : "Paused"))));
 			gui.player_panel._global_cnote.setText(String(sheetplayer.playing ? (sheetplayer.notes[sheetplayer.currentNote < sheetplayer.noteCount ? sheetplayer.currentNote : sheetplayer.noteCount - 1].keys) : "-"));
 			gui.player_panel._global_seek.setProgress(sheetplayer.currentNote);
 			gui.utils.value_animation("Float", 0, 1, 80 , new android.view.animation.LinearInterpolator(), function(anim) {
