@@ -45,14 +45,16 @@ emitter.on('evaluate', function(s){
 </br>Auto.js`4.1.1 Alpha2 (461)`版本下载: [`Ericwyn/Auto.js/releases@V4.1.1.Alpha2`](https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2)
 </br>手机请下载`autoJs-V4.1.1.Alpha2-common-armeabi-v7a-debug.apk`
 
-### 清除数据
+## 清除数据
 SkyAutoPlayer在使用过程中会产生本地数据存储，若想全部删除，请使用Auto.js执行以下代码
 ```
 storages.remove("StageGuard:SkyAutoPlayer:Config");
 files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 ```
 
-## 上传乐谱
+<br>
+
+# 上传乐谱
 
 你可以fork本仓库，将你要上传的乐谱添加至`shared_sheets`文件夹，并按照以下要求在`shared_sheets.json`添加项目
 ```javascript
@@ -77,8 +79,9 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 修改完成后，申请`Pull Request`，等待merge即可。
 > 请注意：在申请`Pull Request`之前请确保你的SkyAutoPlayerScript仓库已同步至最新，以免出现意外问题！
 
+<br>
 
-## 注意
+# 注意
 ### 请仔细阅读以下使用须知！
 
 1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！
@@ -87,16 +90,36 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 4. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。
 5. 本脚本只是一个"弹奏机"，并不内置曲谱，请在GooglePlay下载[SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio)编谱。
 
-## 贡献
+# 贡献
 欢迎任何人贡献本项目，包括但不限于Pull Request，Issue，New feature request
 
-## 图标来源
+## 贡献者名单(按照首次贡献时间排序)
+
+### SkyAutoPlayerScript
+无
+
+### 共享乐谱
+酷安[@Aex技术总监](http://www.coolapk.com/u/1286879)<br>
+酷安[@夏卡卡卡](http://www.coolapk.com/u/2313452)<br>
+酷安[@深空失忆か](http://www.coolapk.com/u/3005974)<br>
+抖音@子哲啊🌈(zizhe1880689503)<br>
+酷安[@你们很有趣呢](http://www.coolapk.com/u/2416229)<br>
+酷安[@情如风雪无常](http://www.coolapk.com/u/643670)<br>
+酷安[@慕疵](http://www.coolapk.com/u/3286967)<br>
+酷安[@九方辰](http://www.coolapk.com/u/)<br>
+酷安[@社区最弱萌新](http://www.coolapk.com/u/3291313)<br>
+酷安[@九方辰](http://www.coolapk.com/u/634078)<br>
+<br>
+
+# 图标来源
 [Iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/)
+<br>
 
-## 鸣谢
+# 鸣谢
 [projectXero](https://gitee.com/projectXero) (提供适用于Rhino的`ListAdapter`)
+<br>
 
-## 许可证协议
+# 许可证协议
 ```
 	SkyAutoPlayer (Auto.js script)
 	Copyright © 2020 StageGuard
