@@ -244,17 +244,11 @@ sheetplayer = {
 	play: function(listener) {
 		if(this.playing == true) return;
 		this.playing = true;
+		
 		this.thread = threads.start(function() {
-			while(
-				sheetplayer.playing && sheetplayer.currentNote < sheetplayer.noteCount
-			) {
-				
-				if((sheetplayer.currentNote + 1) == sheetplayer.noteCount) {
-					sheetplayer.nextInterval = sheetplayer.notes[sheetplayer.currentNote].time - sheetplayer.notes[sheetplayer.currentNote - 1].time;
-				} else {
-					sheetplayer.nextInterval = sheetplayer.notes[sheetplayer.currentNote + 1].time - sheetplayer.notes[sheetplayer.currentNote].time;
-				}
-				threads.start(function() {
+			var executor = java.util.concurrent.Executors.newCachedThreadPool();
+			var tragetRunnable = new java.lang.Runnable({
+				run: function() {
 					var gestureMap = [];
 					sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {
 						gestureMap.push([
@@ -265,7 +259,15 @@ sheetplayer = {
 					});
 					gestureMap = sheetplayer.toSource(gestureMap);
 					eval("gestures(" + gestureMap.slice(1, gestureMap.length - 1) + ");");
-				});
+				}
+			});
+			while(sheetplayer.playing && sheetplayer.currentNote < sheetplayer.noteCount) {
+				if((sheetplayer.currentNote + 1) == sheetplayer.noteCount) {
+					sheetplayer.nextInterval = sheetplayer.notes[sheetplayer.currentNote].time - sheetplayer.notes[sheetplayer.currentNote - 1].time;
+				} else {
+					sheetplayer.nextInterval = sheetplayer.notes[sheetplayer.currentNote + 1].time - sheetplayer.notes[sheetplayer.currentNote].time;
+				}
+				executor.execute(tragetRunnable);
 				if(listener != null) listener();
 				java.lang.Thread.sleep(sheetplayer.nextInterval = Math.round(sheetplayer.nextInterval *  sheetplayer.speed));
 				sheetplayer.currentNote ++;
@@ -341,7 +343,7 @@ config = {
 		skipImportLocalSheetTip: false,
 		showFailedSheets: true,
 		tipOnAndroidR: true,
-		currentVersion: 12,
+		currentVersion: 13,
 		gitVersion: "",
 	},
 	
