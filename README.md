@@ -106,7 +106,6 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 酷安[@你们很有趣呢](http://www.coolapk.com/u/2416229)<br>
 酷安[@情如风雪无常](http://www.coolapk.com/u/643670)<br>
 酷安[@慕疵](http://www.coolapk.com/u/3286967)<br>
-酷安[@九方辰](http://www.coolapk.com/u/)<br>
 酷安[@社区最弱萌新](http://www.coolapk.com/u/3291313)<br>
 酷安[@九方辰](http://www.coolapk.com/u/634078)<br>
 <br>
