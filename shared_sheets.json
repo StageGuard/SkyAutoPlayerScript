@@ -1,5 +1,29 @@
 {
   "sheets": [{
+    "name": "もペもぺ（mopemope）",
+    "file": "もペもぺ（mopemope）.txt",
+    "author": "酷安@夏卡卡卡",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 もペもぺ（mopemope）\n一首音游玩家熟悉的、好听的儿歌(并不)\n非完整版",
+    "bpm" : 400,
+    "suggested_instrument": 1,
+    "pitchLevel": 7
+  }, {
+    "name": "[IPhone]马林巴琴",
+    "file": "IPhone马林巴琴.txt",
+    "author": "酷安@夏卡卡卡",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 [IPhone]马林巴琴",
+    "bpm" : 660,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "穿越时空的思念",
+    "file": "穿越时空的思念.txt",
+    "author": "酷安@北极马可罗尼",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/463478>@北极马可罗尼<a/>分享乐谱 穿越时空的思念",
+    "bpm" : 160,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "不染",
     "file": "不染_enhanced.txt",
     "author": "酷安@九方辰",
