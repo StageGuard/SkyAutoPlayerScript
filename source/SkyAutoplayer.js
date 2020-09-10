@@ -2698,8 +2698,10 @@ gui.dialogs.showProgressDialog(function(o) {
 					onClick: function(checked) {
 						config.values.tipOnAndroidR = config.save("tip_storage_on_android_r", checked);
 					}
-				}, 
-				{
+				}, {
+					type: "tag",
+					name: "关于", 
+				}, {
 					type: "default",
 					name: "查看使用须知", 
 					onClick: function(v) {
