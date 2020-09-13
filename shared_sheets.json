@@ -1,5 +1,21 @@
 {
   "sheets": [{
+    "name": "Mojito",
+    "file": "Mojito.txt",
+    "author": "酷安@Syngene",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngene<a/>分享乐谱 Mojito",
+    "bpm" : 245,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "下雨天",
+    "file": "下雨天.txt",
+    "author": "酷安@UTF16",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3751911>@UTF16<a/>分享乐谱 下雨天",
+    "bpm" : 207,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "极乐净土（和弦）",
     "file": "极乐净土（和弦）.txt",
     "author": "酷安@Syngene",
