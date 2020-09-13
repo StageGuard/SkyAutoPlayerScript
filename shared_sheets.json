@@ -32,6 +32,14 @@
     "suggested_instrument": 1,
     "pitchLevel": 0
   }, {
+    "name": "童话镇",
+    "file": "童话镇.txt",
+    "author": "酷安@UTF16",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/3751911>@UTF16<a/>分享乐谱 童话镇",
+    "bpm" : 240,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "阿珍爱上了阿强",
     "file": "阿珍爱上了阿强_UTF16.txt",
     "author": "酷安@UTF16",
