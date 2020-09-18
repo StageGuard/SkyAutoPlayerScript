@@ -1,5 +1,21 @@
 {
   "sheets": [{
+    "name": "追光者",
+    "file": "追光者.txt",
+    "author": "酷安@Syngenex",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐谱 追光者",
+    "bpm" : 286,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "走马",
+    "file": "走马.txt",
+    "author": "酷安@Syngenex",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐谱 走马",
+    "bpm" : 289,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "Mojito",
     "file": "Mojito.txt",
     "author": "酷安@Syngenex",
