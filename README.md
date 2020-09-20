@@ -79,6 +79,8 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 修改完成后，申请`Pull Request`，等待merge即可。
 > 请注意：在申请`Pull Request`之前请确保你的SkyAutoPlayerScript仓库已同步至最新，以免出现意外问题！
 
+或通过发送乐谱到邮箱[beamiscool@qq.com](mailto:beamiscool@qq.com)
+
 <br>
 
 # 注意
