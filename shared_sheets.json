@@ -1,5 +1,29 @@
 {
   "sheets": [{
+    "name": "不知所措",
+    "file": "不知所措.txt",
+    "author": "哔哩哔哩@UTF16",
+    "desc": "哔哩哔哩用户<a href=https://space.bilibili.com/623364258>@UTF16<a/>分享乐谱 不知所措",
+    "bpm" : 300,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "那女孩对我说",
+    "file": "那女孩对我说.txt",
+    "author": "哔哩哔哩@UTF16",
+    "desc": "哔哩哔哩用户<a href=https://space.bilibili.com/623364258>@UTF16<a/>分享乐谱 那女孩对我说",
+    "bpm" : 190,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "演员",
+    "file": "演员.txt",
+    "author": "哔哩哔哩@UTF16",
+    "desc": "哔哩哔哩用户<a href=https://space.bilibili.com/623364258>@UTF16<a/>分享乐谱 演员",
+    "bpm" : 240,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "追光者",
     "file": "追光者.txt",
     "author": "酷安@Syngenex",
