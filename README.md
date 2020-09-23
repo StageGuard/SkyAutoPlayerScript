@@ -97,6 +97,7 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 3. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。
 4. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。
 5. 本脚本只是一个"弹奏机"，并不内置曲谱，请在GooglePlay下载[SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio)编谱。
+6. 本脚本不会增加解密乐谱功能，包括但不限于**加密的SkyStudio乐谱**，**加密的JS**等，也不接受加密乐谱的共享。
 
 # 贡献
 欢迎任何人贡献本项目，包括但不限于Pull Request，Issue，New feature request
