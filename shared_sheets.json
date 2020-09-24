@@ -1,5 +1,13 @@
 {
   "sheets": [{
+    "name": "See You Again (Stb)",
+    "file": "See_You_Again_(Stb).txt",
+    "author": "Phoebe(twitter@huunhut1217)",
+    "desc": "Twitter用户<a href=https://mobile.twitter.com/huunhut1217>Phoebe(twitter@huunhut1217)<a/>分享乐谱 See You Again (Stb)",
+    "bpm" : 280,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "不知所措",
     "file": "不知所措.txt",
     "author": "哔哩哔哩@UTF16",
