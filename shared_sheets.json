@@ -1,5 +1,29 @@
 {
   "sheets": [{
+    "name": "Co Chac Yeu La Day - MTP",
+    "file": "Co_Chac_Yeu_La_Day-MTP.txt",
+    "author": "Phoebe(twitter@huunhut1217)",
+    "desc": "Twitter用户<a href=https://mobile.twitter.com/huunhut1217>Phoebe(twitter@huunhut1217)<a/>分享乐谱 Co Chac Yeu La Day - MTP",
+    "bpm" : 720,
+    "suggested_instrument": 1,
+    "pitchLevel": 6
+  }, {
+    "name": "Hanava",
+    "file": "Hanava.txt",
+    "author": "Phoebe(twitter@huunhut1217)",
+    "desc": "Twitter用户<a href=https://mobile.twitter.com/huunhut1217>Phoebe(twitter@huunhut1217)<a/>分享乐谱 Hanava",
+    "bpm" : 800,
+    "suggested_instrument": 1,
+    "pitchLevel": 10
+  }, {
+    "name": "Summertime",
+    "file": "Summertime.txt",
+    "author": "Phoebe(twitter@huunhut1217)",
+    "desc": "Twitter用户<a href=https://mobile.twitter.com/huunhut1217>Phoebe(twitter@huunhut1217)<a/>分享乐谱 Summertime",
+    "bpm" : 850,
+    "suggested_instrument": 1,
+    "pitchLevel": 2
+  }, {
     "name": "See You Again (Stb)",
     "file": "See_You_Again_(Stb).txt",
     "author": "Phoebe(twitter@huunhut1217)",
