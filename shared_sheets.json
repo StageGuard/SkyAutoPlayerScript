@@ -1,5 +1,13 @@
 {
   "sheets": [{
+    "name": "Love 5",
+    "file": "Love_5.txt",
+    "author": "Phoebe(twitter@huunhut1217)",
+    "desc": "Twitter用户<a href=https://mobile.twitter.com/huunhut1217>Phoebe(twitter@huunhut1217)<a/>分享乐谱 Love 5",
+    "bpm" : 600,
+    "suggested_instrument": 1,
+    "pitchLevel": 2
+  }, {
     "name": "Co Chac Yeu La Day - MTP",
     "file": "Co_Chac_Yeu_La_Day-MTP.txt",
     "author": "Phoebe(twitter@huunhut1217)",
