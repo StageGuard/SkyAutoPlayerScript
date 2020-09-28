@@ -1,5 +1,29 @@
 {
   "sheets": [{
+    "name": "恋爱循环",
+    "file": "恋爱循环.txt",
+    "author": "酷安@Syngenex",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐谱 恋爱循环",
+    "bpm" : 480,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "微微",
+    "file": "微微.txt",
+    "author": "酷安@Syngenex",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐谱 微微",
+    "bpm" : 204,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
+    "name": "Dream It Possible",
+    "file": "Dream_It_Possible.txt",
+    "author": "酷安@Syngenex",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐谱 Dream It Possible\n华为加油",
+    "bpm" : 455,
+    "suggested_instrument": 1,
+    "pitchLevel": 0
+  }, {
     "name": "Love 5",
     "file": "Love_5.txt",
     "author": "Phoebe(twitter@huunhut1217)",
