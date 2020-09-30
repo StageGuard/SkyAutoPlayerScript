@@ -90,7 +90,7 @@ sheetmgr = {
 		return resultList;
 	},
 	
-	downloadAndLoad: function(file, author, listener) {
+	downloadAndLoad: function(file, extraData, listener) {
 		listener({status:1});
 		config.fetchRepoFile("shared_sheets/" + file, null, function(body) {
 			var sheet = files.join(sheetmgr.rootDir, files.getNameWithoutExtension(file) + (function(length) {
@@ -105,7 +105,8 @@ sheetmgr = {
 			files.write(sheet, parsed = (function() {
 				var data = eval(body.string())[0];
 				listener({status:2});
-				data.author = author;
+				data.author = extraData.author;
+				data.keyCount = extraData.keyCount;
 				return "[" + JSON.stringify(data) + "]";
 			}()), sheetmgr.encoding);
 			parsed = eval(parsed)[0];
@@ -220,6 +221,8 @@ sheetplayer = {
 	currentNote: 0,
 	playing: false,
 	nextInterval: 0,
+
+	keyCount: 15,
 	
 	speed: 1,
 	current_speed_index: 9,
@@ -261,11 +264,8 @@ sheetplayer = {
 				run: function() {
 					var gestureMap = [];
 					sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {
-						gestureMap.push([
-							0, 25, 
-							[config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]], 
-							[config.values.key_coordinates[e][0], config.values.key_coordinates[e][1]]
-						]);
+						var keyCoordinates = sheetplayer.keyCount == 15 ? [config.values.key_coordinates15[e][0], config.values.key_coordinates15[e][1]] : [config.values.key_coordinates8[e][0], config.values.key_coordinates8[e][1]];
+						gestureMap.push([0, 25, keyCoordinates, keyCoordinates]);
 					});
 					gestureMap = sheetplayer.toSource(gestureMap);
 					eval("gestures(" + gestureMap.slice(1, gestureMap.length - 1) + ");");
@@ -319,6 +319,7 @@ sheetplayer = {
 		this.pitch = j.pitchLevel;
 		this.bpm = j.bpm;
 		this.noteCount = this.notes.length;
+		this.keyCount = j.keyCount;
 	},
 	
 	toSource: function(obj) {
@@ -344,16 +345,18 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		key_coordinates: [],
+		key_coordinates15: [],
+		key_coordinates8: [],
 		skipRunScriptTip: false,
 		skipOpenWindowTip: false,
 		skipOpenPlayerPanelWindowTip: false,
 		skipOnlineUploadTip: false,
 		skipOnlineSharedSheetCTip: false,
 		skipImportLocalSheetTip: false,
+		skipChangeKeyCountTip: false,
 		showFailedSheets: true,
 		tipOnAndroidR: true,
-		currentVersion: 14,
+		currentVersion: 15,
 		gitVersion: "",
 	},
 	
@@ -362,13 +365,15 @@ config = {
 	init: function() {
 		this._global_storage = storages.create("StageGuard:SkyAutoPlayer:Config");
 
-		this.values.key_coordinates = this._global_storage.get("key_coordinates", this.values.key_coordinates);
+		this.values.key_coordinates15 = this._global_storage.get("key_coordinates15", this.values.key_coordinates15);
+		this.values.key_coordinates8 = this._global_storage.get("key_coordinates8", this.values.key_coordinates8);
 		this.values.skipRunScriptTip = this._global_storage.get("skip_run_script_tip", this.values.skipRunScriptTip);
 		this.values.skipOpenWindowTip = this._global_storage.get("skip_open_window_tip", this.values.skipOpenWindowTip);
 		this.values.skipOpenPlayerPanelWindowTip = this._global_storage.get("skip_open_player_panel_window_tip", this.values.skipOpenPlayerPanelWindowTip);
 		this.values.skipOnlineUploadTip = this._global_storage.get("skip_online_upload_tip", this.values.skipOnlineUploadTip);
 		this.values.skipOnlineSharedSheetCTip = this._global_storage.get("skip_shared_sheet_c_tip", this.values.skipOnlineSharedSheetCTip);
 		this.values.skipImportLocalSheetTip = this._global_storage.get("skip_import_local_sheet_tip", this.values.skipImportLocalSheetTip);
+		this.values.skipChangeKeyCountTip = this._global_storage.get("skip_change_key_count_tip", this.values.skipChangeKeyCountTip);
 		this.values.showFailedSheets = this._global_storage.get("show_failed_sheets", this.values.showFailedSheets);
 		this.values.tipOnAndroidR = this._global_storage.get("tip_storage_on_android_r", this.values.tipOnAndroidR);
 
@@ -755,273 +760,273 @@ gui = {
 	
 	dialogs: {
 		showDialog: function(layout, width, height, onDismiss, canExit) {
-					var frame, trans, params;
-					frame = new android.widget.FrameLayout(ctx);
-					frame.setBackgroundColor(android.graphics.Color.argb(0x80, 0, 0, 0));
-					frame.setOnTouchListener(new android.view.View.OnTouchListener({
-						onTouch: function touch(v, e) {
-							try {
-								if (e.getAction() == e.ACTION_DOWN && canExit) {
-									frame.setEnabled(false);
-									frame.setClickable(false);
-									gui.utils.value_animation("Float", 1.0, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
-										frame.setAlpha(anim.getAnimatedValue());
-										if(anim.getAnimatedValue() == 0) {
-											if(onDismiss != null) onDismiss(frame);
-											gui.winMgr.removeView(frame);
-										}
-									});
+			var frame, trans, params;
+			frame = new android.widget.FrameLayout(ctx);
+			frame.setBackgroundColor(android.graphics.Color.argb(0x80, 0, 0, 0));
+			frame.setOnTouchListener(new android.view.View.OnTouchListener({
+				onTouch: function touch(v, e) {
+					try {
+						if (e.getAction() == e.ACTION_DOWN && canExit) {
+							frame.setEnabled(false);
+							frame.setClickable(false);
+							gui.utils.value_animation("Float", 1.0, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
+								frame.setAlpha(anim.getAnimatedValue());
+								if(anim.getAnimatedValue() == 0) {
+									if(onDismiss != null) onDismiss(frame);
+									gui.winMgr.removeView(frame);
 								}
-								return false;
-							} catch (e) {
-								error(e);
-								return false;
-							}
+							});
 						}
-					}));
-					layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(width, height, android.view.Gravity.CENTER));
-					layout.getLayoutParams().setMargins(20 * dp, 20 * dp, 20 * dp, 20 * dp);
-					frame.addView(layout);
-					gui.utils.value_animation("Float", 0, 1, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
-						frame.setAlpha(anim.getAnimatedValue());
+						return false;
+					} catch (e) {
+						error(e);
+						return false;
+					}
+				}
+			}));
+			layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(width, height, android.view.Gravity.CENTER));
+			layout.getLayoutParams().setMargins(20 * dp, 20 * dp, 20 * dp, 20 * dp);
+			frame.addView(layout);
+			gui.utils.value_animation("Float", 0, 1, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
+				frame.setAlpha(anim.getAnimatedValue());
+			});
+			layout.setElevation(16 * dp);
+			params = new android.view.WindowManager.LayoutParams();
+			params.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+			if(!canExit) params.flags = android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+			params.format = android.graphics.PixelFormat.TRANSLUCENT;
+			params.width = -1;
+			params.height = -1;
+			gui.winMgr.addView(frame, params);
+			return frame;
+		},
+		showProgressDialog: function self(f, isNoText, canExit) {
+			self.init = function(o) {
+				gui.run(function() {
+					try {
+						var layout = o.layout = new android.widget.LinearLayout(ctx);
+						layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+						layout.setPadding(dp * 10, isNoText ? dp * 5 : dp * 10, dp * 10, isNoText ? dp * 5 : 0);
+						layout.setBackgroundColor(gui.config.colors.background);
+						if (!isNoText) {
+							var text = o.text = new android.widget.TextView(ctx);
+							text.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
+							text.setTextColor(gui.config.colors.text);
+							text.setPadding(dp * 10, dp * 10, dp * 10, dp * 10);
+							layout.addView(text);
+						}
+						var progress = o.progress = android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+						layout.addView(progress);
+						o.popup = gui.dialogs.showDialog(layout, -2, -2, null, canExit);
+					} catch (e) {
+						error(e + " → " + e.lineNumber);
+					}
+				})
+			}, self.controller = {
+				setText: function(s) {
+					if (isNoText) return;
+					var o = this;
+					gui.run(function() {
+						try {
+							o.text.setText(s);
+						} catch (e) {
+							error(e + " → " + e.lineNumber);
+						}
 					});
-					layout.setElevation(16 * dp);
-					params = new android.view.WindowManager.LayoutParams();
-					params.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-					if(!canExit) params.flags = android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-					params.format = android.graphics.PixelFormat.TRANSLUCENT;
-					params.width = -1;
-					params.height = -1;
-					gui.winMgr.addView(frame, params);
-					return frame;
 				},
-				showProgressDialog: function self(f, isNoText, canExit) {
-					self.init = function(o) {
-						gui.run(function() {
-							try {
-								var layout = o.layout = new android.widget.LinearLayout(ctx);
-								layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-								layout.setPadding(dp * 10, isNoText ? dp * 5 : dp * 10, dp * 10, isNoText ? dp * 5 : 0);
-								layout.setBackgroundColor(gui.config.colors.background);
-								if (!isNoText) {
-									var text = o.text = new android.widget.TextView(ctx);
-									text.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
-									text.setTextColor(gui.config.colors.text);
-									text.setPadding(dp * 10, dp * 10, dp * 10, dp * 10);
-									layout.addView(text);
+				setIndeterminate: function(b) {
+					var o = this;
+					gui.run(function() {
+						try {
+							o.progress.setIndeterminate(b);
+						} catch (e) {
+							error(e + " → " + e.lineNumber);
+						}
+					});
+				},
+				setMax: function(max) {
+					var o = this;
+					gui.run(function() {
+						try {
+							o.progress.setMax(max);
+						} catch (e) {
+							error(e + " → " + e.lineNumber);
+						}
+					});
+				},
+				setProgress: function(prog) {
+					var o = this;
+					gui.run(function() {
+						try {
+							if (!o.progress.isIndeterminate()) {
+								o.progress.setProgress(prog, true);
+							}
+						} catch (e) {
+							error(e + " → " + e.lineNumber);
+						}
+					});
+				},
+				close: function() {
+					var o = this;
+					gui.run(function() {
+						try {
+							gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
+								o.popup.setAlpha(anim.getAnimatedValue());
+								if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(o.popup);
+							});
+						} catch (e) {
+							error(e + " → " + e.lineNumber);
+						}
+					});
+				},
+				async: function(f) {
+					var o = this;
+					var t = threads.start(function() {
+						try {
+							f(o);
+						} catch (e) {
+							error(e + " → " + e.lineNumber);
+						}
+					});
+				}
+			};
+			var o = Object.create(self.controller);
+			self.init(o);
+			if (f) o.async(f);
+			return o;
+		},
+		showConfirmDialog: function(s) {
+			gui.run(function() {
+				try {
+					var scr, layout, title, text, skip, onClick, dialog;
+					scr = new android.widget.ScrollView(ctx);
+					scr.setBackgroundColor(gui.config.colors.background);
+					layout = new android.widget.LinearLayout(ctx);
+					layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
+					layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+					layout.setPadding(15 * dp, 15 * dp, 15 * dp, 5 * dp);
+					if (s.title) {
+						title = new android.widget.TextView(ctx);
+						title.setText(s.title);
+						title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+						title.setPadding(0, 0, 0, 10 * dp);
+						title.setTextColor(gui.config.colors.text);
+						title.setTextSize(16);
+						layout.addView(title);
+					}
+					if (s.text) {
+						text = new android.widget.TextView(ctx);
+						text.setText(s.text);
+						text.setPadding(0, 0, 0, 10 * dp);
+						text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+						text.setTextColor(gui.config.colors.sec_text);
+						text.setTextSize(14);
+						layout.addView(text);
+					}
+					if (s.skip) {
+						skip = new android.widget.CheckBox(ctx);
+						//skip.setChecked(Boolean(s.canSkip));
+						skip.setLayoutParams(android.widget.LinearLayout.LayoutParams(-2, -2, 0));
+						skip.getLayoutParams().setMargins(0, 0, 0, 10 * dp)
+						skip.setText("不再提示");
+						skip.setTextColor(gui.config.colors.sec_text)
+						layout.addView(skip);
+					}
+					onClick = function(i) {
+						if (s.skip) s.skip(skip.isChecked());
+						if (s.callback && s.callback(i)) return;
+					}
+					var closed = false;
+					s.buttons.map(function(e, i) {
+						var b = android.widget.TextView(ctx);
+						b.setId(i);
+						b.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+						b.setText(String(e));
+						b.setGravity(android.view.Gravity.CENTER);
+						b.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
+						b.setTextColor(gui.config.colors.text);
+						b.setTextSize(14);
+						b.measure(0, 0);
+						b.setBackgroundDrawable(gui.utils.ripple_drawable(b.getMeasuredWidth(), b.getMeasuredHeight(), "rect"));
+						b.setOnClickListener(new android.view.View.OnClickListener({
+							onClick: function f(v) {
+								try {if(closed != true) {
+									onClick(v.getId());
+									closed = true;
+									gui.winMgr.removeView(dialog);
+									return true;
+								}} catch (e) {
+									error(e + " → " + e.lineNumber);
 								}
-								var progress = o.progress = android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
-								layout.addView(progress);
-								o.popup = gui.dialogs.showDialog(layout, -2, -2, null, canExit);
+							}
+						}));
+						layout.addView(b);
+						return b;
+					});
+					scr.addView(layout);
+					dialog = gui.dialogs.showDialog(scr, -2, -2, null, (s.canExit != true ? false : true));
+				} catch (e) {
+					error(e + " → " + e.lineNumber);
+				}
+			})
+		},
+		showOperateDialog: function self(s, callback, canExit) {
+			gui.run(function() {
+				try {
+					var frame, list, dialog;
+					if (!self.adapter) {
+						self.adapter = function(e) {
+							e.view = new android.widget.LinearLayout(ctx);
+							e.view.setOrientation(android.widget.LinearLayout.VERTICAL);
+							e.view.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
+							e.view.setLayoutParams(new android.widget.AbsListView.LayoutParams(-1, -2));
+							e._title = new android.widget.TextView(ctx);
+							e._title.setText(e.text);
+							e._title.setGravity(android.view.Gravity.CENTER | android.view.Gravity.LEFT);
+							e._title.setFocusable(false);
+							e._title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+							e._title.setTextSize(16);
+							e._title.setTextColor(gui.config.colors.text);
+							e.view.addView(e._title);
+							if (e.description) {
+								e._description = new android.widget.TextView(ctx);
+								e._description.setText(e.description);
+								e._description.setPadding(0, 3 * dp, 0, 0);
+								e._description.setLayoutParams(android.widget.LinearLayout.LayoutParams(-1, -2));
+								e._description.setTextSize(14);
+								e._description.setTextColor(gui.config.colors.sec_text);
+								e.view.addView(e._description);
+							}
+							return e.view;
+						}
+					}
+					frame = new android.widget.FrameLayout(ctx);
+					frame.setPadding(5 * dp, 5 * dp, 5 * dp, 5 * dp);
+					frame.setBackgroundColor(gui.config.colors.background);
+					list = new android.widget.ListView(ctx);
+					list.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-1, -2));
+					list.setDividerHeight(0);
+					list.setAdapter(new RhinoListAdapter(s, self.adapter));
+					list.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+						onItemClick: function(parent, view, pos, id) {
+							try {
+								if (callback && !callback(pos, s[pos])) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
+									dialog.setAlpha(anim.getAnimatedValue());
+									if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
+								});
+								return true;
 							} catch (e) {
 								error(e + " → " + e.lineNumber);
 							}
-						})
-					}, self.controller = {
-						setText: function(s) {
-							if (isNoText) return;
-							var o = this;
-							gui.run(function() {
-								try {
-									o.text.setText(s);
-								} catch (e) {
-									error(e + " → " + e.lineNumber);
-								}
-							});
-						},
-						setIndeterminate: function(b) {
-							var o = this;
-							gui.run(function() {
-								try {
-									o.progress.setIndeterminate(b);
-								} catch (e) {
-									error(e + " → " + e.lineNumber);
-								}
-							});
-						},
-						setMax: function(max) {
-							var o = this;
-							gui.run(function() {
-								try {
-									o.progress.setMax(max);
-								} catch (e) {
-									error(e + " → " + e.lineNumber);
-								}
-							});
-						},
-						setProgress: function(prog) {
-							var o = this;
-							gui.run(function() {
-								try {
-									if (!o.progress.isIndeterminate()) {
-										o.progress.setProgress(prog, true);
-									}
-								} catch (e) {
-									error(e + " → " + e.lineNumber);
-								}
-							});
-						},
-						close: function() {
-							var o = this;
-							gui.run(function() {
-								try {
-									gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
-										o.popup.setAlpha(anim.getAnimatedValue());
-										if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(o.popup);
-									});
-								} catch (e) {
-									error(e + " → " + e.lineNumber);
-								}
-							});
-						},
-						async: function(f) {
-							var o = this;
-							var t = threads.start(function() {
-								try {
-									f(o);
-								} catch (e) {
-									error(e + " → " + e.lineNumber);
-								}
-							});
 						}
-					};
-					var o = Object.create(self.controller);
-					self.init(o);
-					if (f) o.async(f);
-					return o;
-				},
-				showConfirmDialog: function(s) {
-					gui.run(function() {
-						try {
-							var scr, layout, title, text, skip, onClick, dialog;
-							scr = new android.widget.ScrollView(ctx);
-							scr.setBackgroundColor(gui.config.colors.background);
-							layout = new android.widget.LinearLayout(ctx);
-							layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
-							layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-							layout.setPadding(15 * dp, 15 * dp, 15 * dp, 5 * dp);
-							if (s.title) {
-								title = new android.widget.TextView(ctx);
-								title.setText(s.title);
-								title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-								title.setPadding(0, 0, 0, 10 * dp);
-								title.setTextColor(gui.config.colors.text);
-								title.setTextSize(16);
-								layout.addView(title);
-							}
-							if (s.text) {
-								text = new android.widget.TextView(ctx);
-								text.setText(s.text);
-								text.setPadding(0, 0, 0, 10 * dp);
-								text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-								text.setTextColor(gui.config.colors.sec_text);
-								text.setTextSize(14);
-								layout.addView(text);
-							}
-							if (s.skip) {
-								skip = new android.widget.CheckBox(ctx);
-								//skip.setChecked(Boolean(s.canSkip));
-								skip.setLayoutParams(android.widget.LinearLayout.LayoutParams(-2, -2, 0));
-								skip.getLayoutParams().setMargins(0, 0, 0, 10 * dp)
-								skip.setText("不再提示");
-								skip.setTextColor(gui.config.colors.sec_text)
-								layout.addView(skip);
-							}
-							onClick = function(i) {
-								if (s.skip) s.skip(skip.isChecked());
-								if (s.callback && s.callback(i)) return;
-							}
-							var closed = false;
-							s.buttons.map(function(e, i) {
-								var b = android.widget.TextView(ctx);
-								b.setId(i);
-								b.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
-								b.setText(String(e));
-								b.setGravity(android.view.Gravity.CENTER);
-								b.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
-								b.setTextColor(gui.config.colors.text);
-								b.setTextSize(14);
-								b.measure(0, 0);
-								b.setBackgroundDrawable(gui.utils.ripple_drawable(b.getMeasuredWidth(), b.getMeasuredHeight(), "rect"));
-								b.setOnClickListener(new android.view.View.OnClickListener({
-									onClick: function f(v) {
-										try {if(closed != true) {
-											onClick(v.getId());
-											closed = true;
-											gui.winMgr.removeView(dialog);
-											return true;
-										}} catch (e) {
-											error(e + " → " + e.lineNumber);
-										}
-									}
-								}));
-								layout.addView(b);
-								return b;
-							});
-							scr.addView(layout);
-							dialog = gui.dialogs.showDialog(scr, -2, -2, null, (s.canExit != true ? false : true));
-						} catch (e) {
-							error(e + " → " + e.lineNumber);
-						}
-					})
-				},
-				showOperateDialog: function self(s, callback, canExit) {
-					gui.run(function() {
-						try {
-							var frame, list, dialog;
-							if (!self.adapter) {
-								self.adapter = function(e) {
-									e.view = new android.widget.LinearLayout(ctx);
-									e.view.setOrientation(android.widget.LinearLayout.VERTICAL);
-									e.view.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
-									e.view.setLayoutParams(new android.widget.AbsListView.LayoutParams(-1, -2));
-									e._title = new android.widget.TextView(ctx);
-									e._title.setText(e.text);
-									e._title.setGravity(android.view.Gravity.CENTER | android.view.Gravity.LEFT);
-									e._title.setFocusable(false);
-									e._title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
-									e._title.setTextSize(16);
-									e._title.setTextColor(gui.config.colors.text);
-									e.view.addView(e._title);
-									if (e.description) {
-										e._description = new android.widget.TextView(ctx);
-										e._description.setText(e.description);
-										e._description.setPadding(0, 3 * dp, 0, 0);
-										e._description.setLayoutParams(android.widget.LinearLayout.LayoutParams(-1, -2));
-										e._description.setTextSize(14);
-										e._description.setTextColor(gui.config.colors.sec_text);
-										e.view.addView(e._description);
-									}
-									return e.view;
-								}
-							}
-							frame = new android.widget.FrameLayout(ctx);
-							frame.setPadding(5 * dp, 5 * dp, 5 * dp, 5 * dp);
-							frame.setBackgroundColor(gui.config.colors.background);
-							list = new android.widget.ListView(ctx);
-							list.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-1, -2));
-							list.setDividerHeight(0);
-							list.setAdapter(new RhinoListAdapter(s, self.adapter));
-							list.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
-								onItemClick: function(parent, view, pos, id) {
-									try {
-										if (callback && !callback(pos, s[pos])) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
-											dialog.setAlpha(anim.getAnimatedValue());
-											if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
-										});
-										return true;
-									} catch (e) {
-										error(e + " → " + e.lineNumber);
-									}
-								}
-							}));
-							frame.addView(list);
-							dialog = gui.dialogs.showDialog(frame, -1, -2, null, (canExit != true ? (typeof(canExit) != "boolean" ? true : false) : true));
-						} catch (e) {
-							error(e + " → " + e.lineNumber);
-						}
-					})
-				},
+					}));
+					frame.addView(list);
+					dialog = gui.dialogs.showDialog(frame, -1, -2, null, (canExit != true ? (typeof(canExit) != "boolean" ? true : false) : true));
+				} catch (e) {
+					error(e + " → " + e.lineNumber);
+				}
+			})
+		},
 	},
 	
 	
@@ -1517,7 +1522,7 @@ gui = {
 		
 		current_index: 0,
 		
-		__internal_showTargetDots: function s() { gui.run(function(){
+		__internal_showTargetDots: function s(keyTargetedCbk, finishCbk) { gui.run(function(){
 			if(!gui.key_coordinate_navigation.isShowing) {
 				gui.key_coordinate_navigation._global_base = new android.widget.TextView(ctx);
 				gui.key_coordinate_navigation._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
@@ -1539,7 +1544,7 @@ gui = {
 							break;
 							case event.ACTION_UP: 
 								gui.key_coordinate_navigation._global_text.setText("键" + (gui.key_coordinate_navigation.current_index + 1) + "坐标已设置: [" + event.getRawX() + ", " + event.getRawY() + "]");
-								config.values.key_coordinates.push([event.getRawX(), event.getRawY()])
+								keyTargetedCbk([event.getRawX(), event.getRawY()]);
 								gui.utils.value_animation("Float", 1, 0, 200 , new android.view.animation.DecelerateInterpolator(), function(anim) {
 									gui.key_coordinate_navigation._global_base.setAlpha(anim.getAnimatedValue());
 									gui.key_coordinate_navigation._global_text.setAlpha(1 - anim.getAnimatedValue());
@@ -1548,19 +1553,16 @@ gui = {
 										gui.key_coordinate_navigation.isShowing = false;
 									}
 								});
-								threads.start(function() {
-									java.lang.Thread.currentThread().sleep(1000);
-									gui.run(function() {
-										if(++gui.key_coordinate_navigation.current_index < 15) {
-											gui.key_coordinate_navigation.__internal_showTargetDots(gui.key_coordinate_navigation.current_index);
-										} else {
-											config.save("key_coordinates");
-											toast("坐标设置已保存至存储！\n");
-											gui.key_coordinate_navigation.__internal_dismissText();
-											gui.main.show(2);
-										}
-									});
-								});
+								var handler = new android.os.Handler();
+								handler.postDelayed(function() {
+									if(++gui.key_coordinate_navigation.current_index < gui.key_coordinate_navigation.total) {
+										gui.key_coordinate_navigation.__internal_showTargetDots(keyTargetedCbk, finishCbk);
+									} else {
+										finishCbk();
+										gui.key_coordinate_navigation.__internal_dismissText();
+										gui.main.show(2);
+									}
+								}, 1000);
 							default: 
 							return false;
 						}
@@ -1630,11 +1632,11 @@ gui = {
 			}
 		})},
 		
-		show: function() {
-			config.values.key_coordinates.length = 0;
+		show: function(keyCount, keyTargetedCbk, finishCbk) {
 			gui.key_coordinate_navigation.current_index = 0;
+			gui.key_coordinate_navigation.total = keyCount ? keyCount : 15;
 			this.__internal_showTips();
-			this.__internal_showTargetDots();
+			this.__internal_showTargetDots(keyTargetedCbk, finishCbk);
 		},
 		
 	},
@@ -2090,18 +2092,47 @@ gui.dialogs.showProgressDialog(function(o) {
 					element.v_play.setBackgroundDrawable(gui.utils.ripple_drawable(element.v_play.getMeasuredWidth(), element.v_play.getMeasuredHeight(), "rect"));
 					element.v_play.setOnClickListener(new android.view.View.OnClickListener({
 						onClick: function() {
-							if(config.values.key_coordinates.length == 15 && gui.main.isShowing) {
-								gui.main.__internal_dismiss();
-								gui.player_panel.__internal_showPanel(element);
-							} else {
-								toast("未设置键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+							if(gui.main.isShowing) {
+								if(!element.keyCount) {
+									gui.dialogs.showConfirmDialog({
+										title: "设置键位数",
+										text: "这是一个本地乐谱，请设置这个乐谱的键位数",
+										canExit: true,
+										buttons: ["8 键位", "15 键位"],
+										callback: function(id) {
+											files.write(files.join(sheetmgr.rootDir, element.fileName), (function() {
+												var readable = files.open(files.join(sheetmgr.rootDir, element.fileName), "r", sheetmgr.encoding);
+												var parsed = eval(readable.read())[0];
+												readable.close();
+												parsed.keyCount = id == 0 ? (element.keyCount = 8) : (element.keyCount = 15)
+												return "[" + JSON.stringify(parsed) + "]";
+											}()), sheetmgr.encoding);
+											toast("已将 " + element.name + " 设置为 " + element.keyCount + " 键乐谱\n请再次点击弹奏按钮。\n长按乐谱以重新设置键位数。");
+										},
+									});
+								} else {
+									switch(element.keyCount) {
+										case 8: {
+											if(config.values.key_coordinates8.length != 8) {
+												toast("未设置8键键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+												return true;
+											}
+										};break;
+										case 15: {
+											if(config.values.key_coordinates15.length != 15) {
+												toast("未设置15键键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+												return true;
+											}
+										};break;
+									}
+									gui.main.__internal_dismiss();
+									gui.player_panel.__internal_showPanel(element);
+								}
+
 							}
 							return true;
 						}
 					}));
-				
-					
-					
 					element.v_relative.addView(element.v_play);
 				}
 				element.v_delete = new android.widget.ImageView(ctx);
@@ -2144,7 +2175,8 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_listView.setAdapter(s.ns0_listAdapterController.self);
 			s.ns0_listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 				onItemClick: function(parent, view, pos, id) {
-					var item = s.ns0_listAdapterController.get(pos);if(item.type == -1) {
+					var item = s.ns0_listAdapterController.get(pos);
+					if(item.type == -1) {
 						switch(item.index) {
 							case 0: {
 								gui.dialogs.showConfirmDialog({
@@ -2165,6 +2197,24 @@ gui.dialogs.showProgressDialog(function(o) {
 									canExit: true,
 									skip: function(checked) {
 										config.values.skipImportLocalSheetTip = config.save("skip_import_local_sheet_tip", checked);
+										if(checked) s.ns0_listAdapterController.removeByIndex(pos, true);
+									},
+									buttons: ["确认"]
+								});
+								break;
+							}
+							case 1: {
+								gui.dialogs.showConfirmDialog({
+									title: "修改乐谱键位数",
+									text: "版本15增加了对不同键位乐器(8键位和15键位)乐谱的支持，它们使用不同的坐标数据。\n" + 
+										"当前已存储在本地的乐谱(外部导入的乐谱或在版本15之前从共享乐谱下载的乐谱)，它们没有键位信息，SkyAutoPlayerScript无法确认它是8键位乐谱还是15键位乐谱。\n" + 
+										"共享乐谱信息已更新，现在下载的共享乐谱它已经包含了乐谱键位信息，不需要再设置。\n" + 
+										"点击开始弹奏按钮时，若无键位信息，则会弹出对话框以选择乐谱键位，SkyAutoPlayerScript会保存键位信息到乐谱。\n" + 
+										"如果因为一些原因设置了错误的键位信息，可以长按乐谱来重新设置。\n\n" + 
+										"p.s.: 需要重新设置15键键位坐标。",
+									canExit: true,
+									skip: function(checked) {
+										config.values.skipChangeKeyCountTip = config.save("skip_change_key_count_tip", checked);
 										if(checked) s.ns0_listAdapterController.removeByIndex(pos, true);
 									},
 									buttons: ["确认"]
@@ -2253,6 +2303,30 @@ gui.dialogs.showProgressDialog(function(o) {
 					}()), -2, -2, null, true);
 				}
 			}));
+			s.ns0_listView.setOnItemLongClickListener(new android.widget.AdapterView.OnItemLongClickListener({
+				onItemLongClick: function(parent, view, pos, id) {
+					var item = s.ns0_listAdapterController.get(pos);
+					if(!item.failed && item.type == 0) {
+						gui.dialogs.showConfirmDialog({
+							title: "设置键位数",
+							text: "这是一个本地乐谱，请设置这个乐谱的键位数",
+							canExit: true,
+							buttons: ["8 键位", "15 键位"],
+							callback: function(id) {
+								files.write(files.join(sheetmgr.rootDir, item.fileName), (function() {
+									var readable = files.open(files.join(sheetmgr.rootDir, item.fileName), "r", sheetmgr.encoding);
+									var parsed = eval(readable.read())[0];
+									readable.close();
+									parsed.keyCount = id == 0 ? (item.keyCount = 8) : (item.keyCount = 15)
+									return "[" + JSON.stringify(parsed) + "]";
+								}()), sheetmgr.encoding);
+								toast("已将 " + item.name + " 设置为 " + item.keyCount + " 键乐谱\n请再次点击弹奏按钮。\n长按乐谱以重新设置键位数。");
+							},
+						});
+					}
+					return true;
+				},
+			}));
 			s.ns0_rl.addView(s.ns0_listView);
 			
 			s.ns0_progress = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
@@ -2289,6 +2363,11 @@ gui.dialogs.showProgressDialog(function(o) {
 							title: "如何导入本地乐谱",
 							index: 0
 						});//上传乐谱提示
+						if(!config.values.skipChangeKeyCountTip) s.ns0_listAdapterController.add({
+							type: -1,
+							title: "修改乐谱键位数",
+							index: 1
+						});//修改乐谱键位提示
 						s.ns0_listAdapterController.notifyChange();
 						threads.start(function() {
 							sheetmgr.getLocalSheetList(isForce, function(successCount, failedCount) {
@@ -2297,10 +2376,11 @@ gui.dialogs.showProgressDialog(function(o) {
 								});
 							}).map(function(e, i) {
 								gui.run(function(){
-									if(!e.failed) {
-										s.ns0_listAdapterController.add(e);
-									} else if(config.values.showFailedSheets){
-										s.ns0_listAdapterController.add(e);
+									if(!e.failed || config.values.showFailedSheets) {
+										s.ns0_listAdapterController.add((function(item) {
+											item.type = 0;
+											return item;
+										}(e)));
 									}
 								});
 							});
@@ -2435,7 +2515,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.download.setBackgroundDrawable(gui.utils.ripple_drawable(element.download.getMeasuredWidth(), element.download.getMeasuredHeight(), "rect"));
 						element.download.setOnClickListener(new android.view.View.OnClickListener({
 							onClick: function() { threads.start(function() {
-								if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, element.author, function(r) {
+								if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, {author: element.author, keyCount: element.keyCount}, function(r) {
 									switch(r.status) {
 										case 1: {
 											gui.run(function() {
@@ -2797,10 +2877,29 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: "基本设置", 
 				}, {
 					type: "default",
-					name: "设置键位坐标", 
+					name: "设置8键盘键位坐标", 
 					onClick: function(v) {
 						gui.main.__internal_dismiss();
-						gui.key_coordinate_navigation.show();
+						config.values.key_coordinates8.length = 0;
+						gui.key_coordinate_navigation.show(8, function(value) {
+							config.values.key_coordinates8.push(value);
+						}, function() {
+							config.save("key_coordinates8");
+							toast("坐标设置已保存至存储！");
+						});
+					}
+				}, {
+					type: "default",
+					name: "设置15键盘键位坐标", 
+					onClick: function(v) {
+						gui.main.__internal_dismiss();
+						config.values.key_coordinates15.length = 0;
+						gui.key_coordinate_navigation.show(15, function(value) {
+							config.values.key_coordinates15.push(value);
+						}, function() {
+							config.save("key_coordinates15");
+							toast("坐标设置已保存至存储！");
+						});
 					}
 				}, {
 					type: "checkbox",
@@ -2859,7 +2958,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				try {
 					android.os.Build.VERSION_CODES.R
 				} catch (e) {
-					sList.list.splice(3, 1);
+					sList.list.splice(4, 1);
 				}
 				return sList.list;
 			}()), function self(element) {

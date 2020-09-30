@@ -77,6 +77,8 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
     "bpm" : 320,
     //暂时没用
     "suggested_instrument": 1,
+    //乐谱键位数(8键或15键)
+    "keyCount": 15,
     //乐谱音高
     "pitchLevel": 0
   }
