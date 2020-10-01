@@ -1,5 +1,14 @@
 {
   "sheets": [{
+    "name": "菊次郎的夏天(夏卡重制版)",
+    "file": "菊次郎的夏天(夏卡重制版).txt",
+    "author": "酷安@夏卡卡卡",
+    "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 菊次郎的夏天(夏卡重制版)",
+    "bpm" : 384,
+    "suggested_instrument": 1,
+    "keyCount": 15,
+    "pitchLevel": 0
+  }, {
     "name": "恋爱循环",
     "file": "恋爱循环.txt",
     "author": "酷安@Syngenex",
