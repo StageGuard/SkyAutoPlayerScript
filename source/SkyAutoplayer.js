@@ -388,8 +388,6 @@ config = {
 
 		files.ensureDir(sheetmgr.rootDir);
 
-		this.updateBitmapTheme();
-
 	},
 	
 	save: function(key, value) {
@@ -2059,6 +2057,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			o.setText(msg);
 		}
 	});
+	config.updateBitmapTheme();
 	gui.addViewMaker("sheetInfo", function(item) {
 		var scr = new android.widget.ScrollView(ctx);
 		scr.setBackgroundColor(gui.config.colors[config.values.theme].background);
