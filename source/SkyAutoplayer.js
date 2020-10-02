@@ -345,6 +345,9 @@ config = {
 	_global_storage: null,
 	
 	values: {
+		currentVersion: 17,
+		gitVersion: "",
+
 		key_coordinates15: [],
 		key_coordinates8: [],
 		skipRunScriptTip: false,
@@ -356,8 +359,7 @@ config = {
 		skipChangeKeyCountTip: false,
 		showFailedSheets: true,
 		tipOnAndroidR: true,
-		currentVersion: 16,
-		gitVersion: "",
+		theme: "dark",
 	},
 	
 	bitmaps: {},
@@ -376,6 +378,7 @@ config = {
 		this.values.skipChangeKeyCountTip = this._global_storage.get("skip_change_key_count_tip", this.values.skipChangeKeyCountTip);
 		this.values.showFailedSheets = this._global_storage.get("show_failed_sheets", this.values.showFailedSheets);
 		this.values.tipOnAndroidR = this._global_storage.get("tip_storage_on_android_r", this.values.tipOnAndroidR);
+		this.values.theme = this._global_storage.get("theme", this.values.theme);
 
 		try {
 			android.os.Build.VERSION_CODES.R
@@ -384,6 +387,8 @@ config = {
 		} catch (e) {}
 
 		files.ensureDir(sheetmgr.rootDir);
+
+		this.updateBitmapTheme();
 
 	},
 	
@@ -503,6 +508,23 @@ config = {
 			}
 		}
 	},
+
+	updateBitmapTheme: function() {
+		var filterBitmap = function(bitmap, replacedColor) {
+			var rBitmap = android.graphics.Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), android.graphics.Bitmap.Config.ARGB_8888);
+			var canvas = new android.graphics.Canvas(rBitmap);
+			var paint = new android.graphics.Paint();
+			var rect = new android.graphics.Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+			paint.setAntiAlias(true);
+			canvas.drawARGB(0, 0, 0, 0);
+			paint.setColorFilter(new android.graphics.PorterDuffColorFilter(replacedColor, android.graphics.PorterDuff.Mode.SRC_IN));
+			canvas.drawBitmap(bitmap, rect, rect, paint);
+			return rBitmap;
+		};
+		for(var i in this.bitmaps) {
+			this.bitmaps[i] = filterBitmap(this.bitmaps[i], this.values.theme == "dark" ? android.graphics.Color.WHITE : android.graphics.Color.BLACK);
+		}
+	}
 	
 }
 
@@ -719,10 +741,16 @@ gui = {
 	
 	config: {
 		colors: {
-			background: android.graphics.Color.parseColor("#212121"),
-			text: android.graphics.Color.parseColor("#FFFFFF"),
-			dark_text: android.graphics.Color.parseColor("#000000"),
-			sec_text: android.graphics.Color.parseColor("#7B7B7B"),
+			dark: {
+				background: android.graphics.Color.parseColor("#212121"),
+				text: android.graphics.Color.parseColor("#FFFFFF"),
+				sec_text: android.graphics.Color.parseColor("#7B7B7B"),
+			}, 
+			light: {
+				background: android.graphics.Color.parseColor("#F0F0F0"),
+				text: android.graphics.Color.parseColor("#000000"),
+				sec_text: android.graphics.Color.parseColor("#7B7B7B"),
+			}, 
 		},
 	},
 	
@@ -807,11 +835,11 @@ gui = {
 						var layout = o.layout = new android.widget.LinearLayout(ctx);
 						layout.setOrientation(android.widget.LinearLayout.VERTICAL);
 						layout.setPadding(dp * 10, isNoText ? dp * 5 : dp * 10, dp * 10, isNoText ? dp * 5 : 0);
-						layout.setBackgroundColor(gui.config.colors.background);
+						layout.setBackgroundColor(gui.config.colors[config.values.theme].background);
 						if (!isNoText) {
 							var text = o.text = new android.widget.TextView(ctx);
 							text.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
-							text.setTextColor(gui.config.colors.text);
+							text.setTextColor(gui.config.colors[config.values.theme].text);
 							text.setPadding(dp * 10, dp * 10, dp * 10, dp * 10);
 							layout.addView(text);
 						}
@@ -900,7 +928,7 @@ gui = {
 				try {
 					var scr, layout, title, text, skip, onClick, dialog;
 					scr = new android.widget.ScrollView(ctx);
-					scr.setBackgroundColor(gui.config.colors.background);
+					scr.setBackgroundColor(gui.config.colors[config.values.theme].background);
 					layout = new android.widget.LinearLayout(ctx);
 					layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
 					layout.setOrientation(android.widget.LinearLayout.VERTICAL);
@@ -910,7 +938,7 @@ gui = {
 						title.setText(s.title);
 						title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 						title.setPadding(0, 0, 0, 10 * dp);
-						title.setTextColor(gui.config.colors.text);
+						title.setTextColor(gui.config.colors[config.values.theme].text);
 						title.setTextSize(16);
 						layout.addView(title);
 					}
@@ -919,7 +947,7 @@ gui = {
 						text.setText(s.text);
 						text.setPadding(0, 0, 0, 10 * dp);
 						text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-						text.setTextColor(gui.config.colors.sec_text);
+						text.setTextColor(gui.config.colors[config.values.theme].sec_text);
 						text.setTextSize(14);
 						layout.addView(text);
 					}
@@ -929,7 +957,7 @@ gui = {
 						skip.setLayoutParams(android.widget.LinearLayout.LayoutParams(-2, -2, 0));
 						skip.getLayoutParams().setMargins(0, 0, 0, 10 * dp)
 						skip.setText("不再提示");
-						skip.setTextColor(gui.config.colors.sec_text)
+						skip.setTextColor(gui.config.colors[config.values.theme].sec_text)
 						layout.addView(skip);
 					}
 					onClick = function(i) {
@@ -944,7 +972,7 @@ gui = {
 						b.setText(String(e));
 						b.setGravity(android.view.Gravity.CENTER);
 						b.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
-						b.setTextColor(gui.config.colors.text);
+						b.setTextColor(gui.config.colors[config.values.theme].text);
 						b.setTextSize(14);
 						b.measure(0, 0);
 						b.setBackgroundDrawable(gui.utils.ripple_drawable(b.getMeasuredWidth(), b.getMeasuredHeight(), "rect"));
@@ -986,7 +1014,7 @@ gui = {
 							e._title.setFocusable(false);
 							e._title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
 							e._title.setTextSize(16);
-							e._title.setTextColor(gui.config.colors.text);
+							e._title.setTextColor(gui.config.colors[config.values.theme].text);
 							e.view.addView(e._title);
 							if (e.description) {
 								e._description = new android.widget.TextView(ctx);
@@ -994,7 +1022,7 @@ gui = {
 								e._description.setPadding(0, 3 * dp, 0, 0);
 								e._description.setLayoutParams(android.widget.LinearLayout.LayoutParams(-1, -2));
 								e._description.setTextSize(14);
-								e._description.setTextColor(gui.config.colors.sec_text);
+								e._description.setTextColor(gui.config.colors[config.values.theme].sec_text);
 								e.view.addView(e._description);
 							}
 							return e.view;
@@ -1002,7 +1030,7 @@ gui = {
 					}
 					frame = new android.widget.FrameLayout(ctx);
 					frame.setPadding(5 * dp, 5 * dp, 5 * dp, 5 * dp);
-					frame.setBackgroundColor(gui.config.colors.background);
+					frame.setBackgroundColor(gui.config.colors[config.values.theme].background);
 					list = new android.widget.ListView(ctx);
 					list.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-1, -2));
 					list.setDividerHeight(0);
@@ -1010,10 +1038,13 @@ gui = {
 					list.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
 						onItemClick: function(parent, view, pos, id) {
 							try {
-								if (callback && !callback(pos, s[pos])) gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
+								if (callback) {
+									callback(pos);
+									gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
 									dialog.setAlpha(anim.getAnimatedValue());
 									if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
 								});
+								}
 								return true;
 							} catch (e) {
 								error(e + " → " + e.lineNumber);
@@ -1156,11 +1187,11 @@ gui = {
 				gui.main._global_base.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
 				gui.main._global_base.setOrientation(android.widget.LinearLayout.VERTICAL);
 				gui.main._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * gui.main.window_width, dp * gui.main.window_height));
-				gui.main._global_base.setBackgroundColor(gui.config.colors.background);
+				gui.main._global_base.setBackgroundColor(gui.config.colors[config.values.theme].background);
 				
 				gui.main._global_statusbar = new android.widget.RelativeLayout(ctx);
 				gui.main._global_statusbar.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * gui.main.status_bar_height));
-				gui.main._global_statusbar.setBackgroundColor(gui.config.colors.background);
+				gui.main._global_statusbar.setBackgroundColor(gui.config.colors[config.values.theme].background);
 				gui.main._global_statusbar.setElevation(10 * dp);
 				
 				gui.main._global_title = new android.widget.TextView(ctx);
@@ -1171,7 +1202,7 @@ gui = {
 				if(content.title != null) gui.main._global_title.setText(content.title);
 				gui.main._global_title.setTextSize(15);
 				gui.main._global_title.setShadowLayer(dp * 5, 0, 0, android.graphics.Color.BLACK);
-				gui.main._global_title.setTextColor(gui.config.colors.text);
+				gui.main._global_title.setTextColor(gui.config.colors[config.values.theme].text);
 				gui.main._global_title.setOnTouchListener(new android.view.View.OnTouchListener({
 					onTouch: function onTouchFunction(view, event) {
 						switch (event.getAction()) {
@@ -1202,7 +1233,7 @@ gui = {
 				gui.main._global_close.setBackgroundDrawable(gui.utils.ripple_drawable(gui.main._global_close.getMeasuredWidth(), gui.main._global_close.getMeasuredHeight(), "rect"));
 				gui.main._global_close.setText("×");
 				gui.main._global_close.setTextSize(22);
-				gui.main._global_close.setTextColor(gui.config.colors.text);
+				gui.main._global_close.setTextColor(gui.config.colors[config.values.theme].text);
 				gui.main._global_close.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
 						gui.main.__internal_dismiss();
@@ -1216,7 +1247,7 @@ gui = {
 				
 				gui.main._global_content_container = new android.widget.RelativeLayout(ctx);
 				gui.main._global_content_container.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, dp * (gui.main.window_height - gui.main.status_bar_height - gui.main.navigation_bar_height)));
-				gui.main._global_content_container.setBackgroundColor(gui.config.colors.background);
+				gui.main._global_content_container.setBackgroundColor(gui.config.colors[config.values.theme].background);
 				
 				s._content_height = dp * (gui.main.window_height - gui.main.status_bar_height - gui.main.navigation_bar_height);
 				gui.main._global_content_container.measure(0, 0);
@@ -1240,7 +1271,7 @@ gui = {
 				gui.main._global_navigation_bar.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
 				gui.main._global_navigation_bar.setOrientation(android.widget.LinearLayout.HORIZONTAL);
 				gui.main._global_navigation_bar.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, dp * (gui.main.navigation_bar_height + gui.main.navigation_bar_updown_margin * 2)));
-				gui.main._global_navigation_bar.setBackgroundColor(gui.config.colors.background);
+				gui.main._global_navigation_bar.setBackgroundColor(gui.config.colors[config.values.theme].background);
 				
 				gui.main.__internal_genNavigationList(s, content);
 				
@@ -1343,7 +1374,7 @@ gui = {
 					view.setBackgroundDrawable(gui.utils.ripple_drawable(view.getMeasuredWidth(), view.getMeasuredHeight(), "rect"));
 					view.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 					view.setAlpha(0);
-					view.setImageBitmap(content.func[i].icon);
+					view.setImageBitmap(config.bitmaps[content.func[i].icon]);
 					view.setOnClickListener(new android.view.View.OnClickListener({
 						onClick: function(view) {content.func[view.getId() - (gui.main._global_close.getId() + 1)].onClick(s, content)}
 					}));
@@ -1388,12 +1419,12 @@ gui = {
 				s["navigationBtnText" + i].setText(gui.main.views[i].navigation_title);
 				s["navigationBtnText" + i].setTextSize(12);
 				s["navigationBtnText" + i].setShadowLayer(dp, 0, 0, android.graphics.Color.BLACK);
-				s["navigationBtnText" + i].setTextColor(s.index == gui.main.views[i].index ? gui.config.colors.text : gui.config.colors.sec_text);
+				s["navigationBtnText" + i].setTextColor(s.index == gui.main.views[i].index ? gui.config.colors[config.values.theme].text : gui.config.colors[config.values.theme].sec_text);
 				
 				s["navigationBtnImg" + i] = new android.widget.ImageView(ctx);
 				s["navigationBtnImg" + i].setId(14);
 				s["navigationBtnImg" + i].setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-				if(gui.main.views[i].navigation_icon != null) s["navigationBtnImg" + i].setImageBitmap(gui.main.views[i].navigation_icon);
+				if(gui.main.views[i].navigation_icon != null) s["navigationBtnImg" + i].setImageBitmap(config.bitmaps[gui.main.views[i].navigation_icon]);
 				s.__navigationBtnImgHeight = (function() {
 					s["navigationBtnText" + i].measure(0, 0);
 					return dp * gui.main.navigation_bar_height - s["navigationBtnText" + i].getMeasuredHeight();
@@ -1409,11 +1440,11 @@ gui = {
 			if(gui.main._global_navigation_bar == null) return;
 			if(!/^android/.test(String(gui.main._global_navigation_bar.findViewById(s.index)))) return;
 			if(gui.main.current_navigation_selection == s.index) return;
-			var colorAnim = android.animation.ObjectAnimator.ofInt(gui.main._global_navigation_bar.findViewById(s.index).findViewById(12), "textColor", gui.config.colors.sec_text, gui.config.colors.text);
+			var colorAnim = android.animation.ObjectAnimator.ofInt(gui.main._global_navigation_bar.findViewById(s.index).findViewById(12), "textColor", gui.config.colors[config.values.theme].sec_text, gui.config.colors[config.values.theme].text);
 			colorAnim.setDuration(300);
 			colorAnim.setEvaluator(new android.animation.ArgbEvaluator());
 			colorAnim.start();
-			colorAnim = android.animation.ObjectAnimator.ofInt(gui.main._global_navigation_bar.findViewById(gui.main.current_navigation_selection).findViewById(12), "textColor", gui.config.colors.text, gui.config.colors.sec_text);
+			colorAnim = android.animation.ObjectAnimator.ofInt(gui.main._global_navigation_bar.findViewById(gui.main.current_navigation_selection).findViewById(12), "textColor", gui.config.colors[config.values.theme].text, gui.config.colors[config.values.theme].sec_text);
 			colorAnim.setDuration(300);
 			colorAnim.setEvaluator(new android.animation.ArgbEvaluator());
 			colorAnim.start();
@@ -1616,8 +1647,8 @@ gui = {
 			if(!gui.key_coordinate_navigation.isShowingText) {
 				gui.key_coordinate_navigation._global_text = new android.widget.TextView(ctx);
 				gui.key_coordinate_navigation._global_text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-				gui.key_coordinate_navigation._global_text.setTextColor(gui.config.colors.text);
-				gui.key_coordinate_navigation._global_text.setBackgroundColor(gui.config.colors.background);
+				gui.key_coordinate_navigation._global_text.setTextColor(gui.config.colors[config.values.theme].text);
+				gui.key_coordinate_navigation._global_text.setBackgroundColor(gui.config.colors[config.values.theme].background);
 				gui.key_coordinate_navigation._global_text.setTextSize(16);
 				gui.key_coordinate_navigation._global_text.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				gui.key_coordinate_navigation._global_text.getLayoutParams().setMargins(dp * 5, dp * 5, dp * 5, dp * 5);
@@ -1676,12 +1707,12 @@ gui = {
 				gui.player_panel._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 				gui.player_panel._global_base.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				gui.player_panel._global_base.getLayoutParams().setMargins(dp * 5, dp * 5, dp * 5, dp * 5);
-				gui.player_panel._global_base.setBackgroundColor(gui.config.colors.background);
+				gui.player_panel._global_base.setBackgroundColor(gui.config.colors[config.values.theme].background);
 				
 				gui.player_panel._global_text = new android.widget.TextView(ctx);
 				gui.player_panel._global_text.setId(12);
 				gui.player_panel._global_text.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-				gui.player_panel._global_text.setTextColor(gui.config.colors.text);
+				gui.player_panel._global_text.setTextColor(gui.config.colors[config.values.theme].text);
 				gui.player_panel._global_text.setTextSize(14);
 				gui.player_panel._global_text.setText("解析中...");
 				gui.player_panel._global_text.setSingleLine(true);
@@ -1718,7 +1749,7 @@ gui = {
 				s.close.setBackgroundDrawable(gui.utils.ripple_drawable(s.close.getMeasuredWidth(), s.close.getMeasuredHeight(), "rect"));
 				s.close.setText("×");
 				s.close.setTextSize(15);
-				s.close.setTextColor(gui.config.colors.text);
+				s.close.setTextColor(gui.config.colors[config.values.theme].text);
 				s.close.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
 						if(gui.player_panel.isShowing) {
@@ -1757,7 +1788,7 @@ gui = {
 				gui.player_panel._global_status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP);
 				gui.player_panel._global_status.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 				gui.player_panel._global_status.getLayoutParams().setMargins(0, 0, 0, dp * 1);
-				gui.player_panel._global_status.setTextColor(gui.config.colors.sec_text);
+				gui.player_panel._global_status.setTextColor(gui.config.colors[config.values.theme].sec_text);
 				gui.player_panel._global_status.setTextSize(12);
 				//gui.player_panel._global_status.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				s.control_panel.addView(gui.player_panel._global_status);
@@ -1768,7 +1799,7 @@ gui = {
 				gui.player_panel._global_cnote.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 14);
 				gui.player_panel._global_cnote.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 				gui.player_panel._global_cnote.getLayoutParams().setMargins(0, dp * 1, 0, 0);
-				gui.player_panel._global_cnote.setTextColor(gui.config.colors.sec_text);
+				gui.player_panel._global_cnote.setTextColor(gui.config.colors[config.values.theme].sec_text);
 				gui.player_panel._global_cnote.setTextSize(12);
 				//gui.player_panel._global_cnote.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 				s.control_panel.addView(gui.player_panel._global_cnote);
@@ -2030,7 +2061,7 @@ gui.dialogs.showProgressDialog(function(o) {
 	});
 	gui.addViewMaker("sheetInfo", function(item) {
 		var scr = new android.widget.ScrollView(ctx);
-		scr.setBackgroundColor(gui.config.colors.background);
+		scr.setBackgroundColor(gui.config.colors[config.values.theme].background);
 		var layout = new android.widget.LinearLayout(ctx);
 		layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
 		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
@@ -2040,7 +2071,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 		title.setPadding(0, 0, 0, 10 * dp);
 		title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-		title.setTextColor(gui.config.colors.text);
+		title.setTextColor(gui.config.colors[config.values.theme].text);
 		title.setTextSize(20);
 		title.getLayoutParams().setMargins(0, 0, 0, 7.5 * dp);
 		layout.addView(title);
@@ -2061,7 +2092,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		authorText.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
 		authorText.setPadding(0, 0, 0, 0);
 		authorText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-		authorText.setTextColor(gui.config.colors.text);
+		authorText.setTextColor(gui.config.colors[config.values.theme].text);
 		authorText.setTextSize(16);
 		authorText.getLayoutParams().setMargins(dp * 7.5, 0, 0, dp * 5);
 		var noteImg = new android.widget.ImageView(ctx);
@@ -2080,7 +2111,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		noteText.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 11);
 		noteText.setPadding(0, 0, 0, 0);
 		noteText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-		noteText.setTextColor(gui.config.colors.text);
+		noteText.setTextColor(gui.config.colors[config.values.theme].text);
 		noteText.setTextSize(16);
 		noteText.getLayoutParams().setMargins(dp * 7.5, dp * 5, 0, dp * 5);
 		var pitchImg = new android.widget.ImageView(ctx);
@@ -2117,7 +2148,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		pitchText.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
 		pitchText.setPadding(0, 0, 0, 0);
 		pitchText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-		pitchText.setTextColor(gui.config.colors.text);
+		pitchText.setTextColor(gui.config.colors[config.values.theme].text);
 		pitchText.setTextSize(16);
 		pitchText.getLayoutParams().setMargins(dp * 7.5, dp * 5, 0, dp * 5);
 		infoLayout.addView(authorImg);
@@ -2152,7 +2183,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			timeText.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 15);
 			timeText.setPadding(0, 0, 0, 0);
 			timeText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-			timeText.setTextColor(gui.config.colors.text);
+			timeText.setTextColor(gui.config.colors[config.values.theme].text);
 			timeText.setTextSize(16);
 			timeText.getLayoutParams().setMargins(dp * 7.5, dp * 5, 0, 0);
 			infoLayout.addView(timeImg);
@@ -2165,7 +2196,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		sugPrompt.setText("建议弹奏地点:");
 		sugPrompt.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 		sugPrompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-		sugPrompt.setTextColor(gui.config.colors.text);
+		sugPrompt.setTextColor(gui.config.colors[config.values.theme].text);
 		sugPrompt.setTextSize(16);
 		sugPrompt.getLayoutParams().setMargins(0, 5 * dp, 0, 5 * dp);
 		layout.addView(sugPrompt);
@@ -2180,7 +2211,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		}()));
 		sug.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 		sug.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
-		sug.setTextColor(gui.config.colors.sec_text);
+		sug.setTextColor(gui.config.colors[config.values.theme].sec_text);
 		sug.setTextSize(15);
 		sug.getLayoutParams().setMargins(7 * dp, 5 * dp, 0, 0);
 		layout.addView(sug);
@@ -2191,9 +2222,9 @@ gui.dialogs.showProgressDialog(function(o) {
 		index: 0, 
 		title: "本地乐谱", 
 		navigation_title: "本地乐谱",
-		navigation_icon: config.bitmaps.local,
+		navigation_icon: "local",
 		func: [{
-			icon: android.graphics.Bitmap.createBitmap(config.bitmaps.refresh),
+			icon: "refresh",
 			onClick: function(s, selfContent) {
 				selfContent.getSheetList(s, true);
 			},
@@ -2226,7 +2257,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 					element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
 					element.v_upload.setTextSize(13);
-					element.v_upload.setTextColor(gui.config.colors.sec_text);
+					element.v_upload.setTextColor(gui.config.colors[config.values.theme].sec_text);
 					element.v_upload.setText(element.title);
 					element.v_relative.addView(element.v_upload);
 					return element.v_relative;
@@ -2240,7 +2271,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 				if(element.failed) element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 				element.v_title.setTextSize(16);
-				element.v_title.setTextColor(element.failed ? gui.config.colors.sec_text : gui.config.colors.text);
+				element.v_title.setTextColor(element.failed ? gui.config.colors[config.values.theme].sec_text : gui.config.colors[config.values.theme].text);
 				element.v_title.setText(element.failed ? android.text.Html.fromHtml("<s>" + element.fileName + "</s>") : element.name);
 				element.v_relative.addView(element.v_title);
 				
@@ -2252,7 +2283,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
 					element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 					element.v_author.setTextSize(14);
-					element.v_author.setTextColor(gui.config.colors.sec_text);
+					element.v_author.setTextColor(gui.config.colors[config.values.theme].sec_text);
 					element.v_author.setText("键数: " + element.songNotes.length + " - BPM: " + element.bpm);
 					element.v_relative.addView(element.v_author);
 					
@@ -2449,7 +2480,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns0_progress.setPadding(0, 0, 0, 0);
 			s.ns0_progress.getLayoutParams().setMargins(0, 0, 0, 0);
 			s.ns0_progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
-			s.ns0_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
+			s.ns0_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors[config.values.theme].background));
 			s.ns0_progress.setIndeterminate(true);
 			s.ns0_progress.setAlpha(0);
 			
@@ -2519,9 +2550,9 @@ gui.dialogs.showProgressDialog(function(o) {
 		index: 1, 
 		title: "共享乐谱",
 		navigation_title: "共享乐谱", 
-		navigation_icon: config.bitmaps.online,
+		navigation_icon: "online",
 		func: [{
-			icon: android.graphics.Bitmap.createBitmap(config.bitmaps.refresh),
+			icon: "refresh",
 			onClick: function(s, selfContent) {
 				if(s.ns1_isShowingSearchEditTextView) selfContent.removeSearchEditTextView(s, selfContent);
 				selfContent.getOnlineSheetList(s, true);
@@ -2532,7 +2563,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				toast("Click filter")
 			},
 		},*/ {
-			icon: android.graphics.Bitmap.createBitmap(config.bitmaps.search),
+			icon: "search",
 			onClick: function(s, selfContent) {
 				if(s.ns1_isShowingSearchEditTextView) {
 					selfContent.removeSearchEditTextView(s, selfContent);
@@ -2575,7 +2606,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 						element.v_upload.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
 						element.v_upload.setTextSize(13);
-						element.v_upload.setTextColor(gui.config.colors.sec_text);
+						element.v_upload.setTextColor(gui.config.colors[config.values.theme].sec_text);
 						element.v_upload.setText(element.title);
 						element.v_relative.addView(element.v_upload);
 					};break;
@@ -2591,7 +2622,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_title.getLayoutParams().setMargins(dp * 15, dp * 15, dp * 15, dp * 1);
 						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_title.setTextSize(16);
-						element.v_title.setTextColor(gui.config.colors.text);
+						element.v_title.setTextColor(gui.config.colors[config.values.theme].text);
 						element.v_title.setText(element.name);
 						element.v_relative.addView(element.v_title);
 						
@@ -2602,7 +2633,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
 						element.v_info.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_info.setTextSize(15);
-						element.v_info.setTextColor(gui.config.colors.text);
+						element.v_info.setTextColor(gui.config.colors[config.values.theme].text);
 						element.v_info.setText(element.author);
 						element.v_relative.addView(element.v_info);
 						
@@ -2613,7 +2644,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_desc.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 11);
 						element.v_desc.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_desc.setTextSize(13);
-						element.v_desc.setTextColor(gui.config.colors.sec_text);
+						element.v_desc.setTextColor(gui.config.colors[config.values.theme].sec_text);
 						element.v_desc.setText(android.text.Html.fromHtml(element.desc.replace(new RegExp("\x0a", "gi"), "<br>")));
 						element.v_relative.addView(element.v_desc);
 						
@@ -2698,7 +2729,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_status.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_status.setTextSize(13);
 						element.v_status.setAlpha(0);
-						element.v_status.setTextColor(gui.config.colors.text);
+						element.v_status.setTextColor(gui.config.colors[config.values.theme].text);
 						
 						element.v_progress = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
 						element.v_progress.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * 15));
@@ -2706,7 +2737,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_progress.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
 						element.v_progress.getLayoutParams().setMargins(dp * 15, 0, dp * 15, dp * 5);
 						element.v_progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
-						element.v_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
+						element.v_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors[config.values.theme].background));
 						element.v_progress.setIndeterminate(false);
 						element.v_progress.setAlpha(0);
 					};break;
@@ -2787,7 +2818,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns1_progress.setPadding(0, 0, 0, 0);
 			s.ns1_progress.getLayoutParams().setMargins(0, 0, 0, 0);
 			s.ns1_progress.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
-			s.ns1_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors.background));
+			s.ns1_progress.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors[config.values.theme].background));
 			s.ns1_progress.setIndeterminate(true);
 			s.ns1_progress.setAlpha(0);
 			
@@ -2808,8 +2839,8 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns1_searchEditText.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
 			s.ns1_searchEditText.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 			s.ns1_searchEditText.setTextSize(15);
-			s.ns1_searchEditText.setTextColor(gui.config.colors.text);
-			s.ns1_searchEditText.setHintTextColor(gui.config.colors.sec_text);
+			s.ns1_searchEditText.setTextColor(gui.config.colors[config.values.theme].text);
+			s.ns1_searchEditText.setHintTextColor(gui.config.colors[config.values.theme].sec_text);
 			s.ns1_searchEditText.setHint("按回车开始搜索");
 			s.ns1_searchEditText.setAlpha(0);
 			s.ns1_searchEditText.setOnClickListener(new android.view.View.OnClickListener({
@@ -2924,7 +2955,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		index: 2, 
 		title: "设置", 
 		navigation_title: "设置",
-		navigation_icon: config.bitmaps.settings,
+		navigation_icon: "settings",
 		view: function(s) {
 			s.ns2_listView = new android.widget.ListView(ctx);
 			s.ns2_listView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, s._content_height));
@@ -2973,6 +3004,24 @@ gui.dialogs.showProgressDialog(function(o) {
 						config.values.tipOnAndroidR = config.save("tip_storage_on_android_r", checked);
 					}
 				}, {
+					type: "default", 
+					name: "设置主题色",
+					onClick: function(v) {
+						gui.dialogs.showOperateDialog([{
+							text: "亮色"
+						}, {
+							text: "暗色"
+						}], function(pos) {
+							config.values.theme = config.save("theme", pos == 1 ? "dark" : "light");
+							config.updateBitmapTheme();
+							gui.main.__internal_dismiss();
+							var handler = new android.os.Handler();
+							handler.postDelayed(function (){
+								gui.main.show(gui.main.current);
+							}, 500);
+						});
+					}
+				}, {
 					type: "tag",
 					name: "关于", 
 				}, {
@@ -2994,6 +3043,21 @@ gui.dialogs.showProgressDialog(function(o) {
 							config.fetchRepoFile("LICENSE", null, function(body) {
 								gui.dialogs.showConfirmDialog({
 									title: "GNU GENERAL PUBLIC LICENSE",
+									text: body.string(),
+									canExit: true,
+									buttons: ["确认"],
+								});
+							});
+						});
+					},
+				}, {
+					type: "default",
+					name: "查看更新日志", 
+					onClick: function(v) {
+						threads.start(function() {
+							config.fetchRepoFile("update_log.txt", null, function(body) {
+								gui.dialogs.showConfirmDialog({
+									title: "更新日志",
 									text: body.string(),
 									canExit: true,
 									buttons: ["确认"],
@@ -3030,7 +3094,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_title.getLayoutParams().setMargins(dp * 5, dp * 5, dp * 5, dp * 5);
 						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_title.setTextSize(12);
-						element.v_title.setTextColor(gui.config.colors.sec_text);
+						element.v_title.setTextColor(gui.config.colors[config.values.theme].sec_text);
 						element.v_title.setText(element.name);
 						element.v_relative.addView(element.v_title);
 					break;
@@ -3041,7 +3105,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_title.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 10, dp * 10);
 						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_title.setTextSize(14);
-						element.v_title.setTextColor(gui.config.colors.text);
+						element.v_title.setTextColor(gui.config.colors[config.values.theme].text);
 						element.v_title.setText(element.name);
 						element.v_relative.addView(element.v_title);
 					break;
@@ -3053,7 +3117,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
 						element.v_title.setTextSize(14);
-						element.v_title.setTextColor(gui.config.colors.text);
+						element.v_title.setTextColor(gui.config.colors[config.values.theme].text);
 						element.v_title.setText(element.name);
 						element.v_relative.addView(element.v_title);
 
