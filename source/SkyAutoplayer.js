@@ -356,7 +356,7 @@ config = {
 		skipChangeKeyCountTip: false,
 		showFailedSheets: true,
 		tipOnAndroidR: true,
-		currentVersion: 15,
+		currentVersion: 16,
 		gitVersion: "",
 	},
 	
@@ -414,7 +414,7 @@ config = {
 	
 	fetchResources: function(listener) {
 		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
-		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png"/*, "filter.png"*/];
+		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png", "note.png", "user.png", "piano.png", "clock.png"/*, "filter.png"*/];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/bitmaps/";
 		var downloadQueue = [];
 		var tryCount = 1;
@@ -720,8 +720,8 @@ gui = {
 	config: {
 		colors: {
 			background: android.graphics.Color.parseColor("#212121"),
-			text: android.graphics.Color.WHITE,
-			dark_text: android.graphics.Color.BLACK,
+			text: android.graphics.Color.parseColor("#FFFFFF"),
+			dark_text: android.graphics.Color.parseColor("#000000"),
 			sec_text: android.graphics.Color.parseColor("#7B7B7B"),
 		},
 	},
@@ -755,7 +755,7 @@ gui = {
 			if (customshape == "roundrect") gradientDrawable.setCornerRadius(arguments[3]);
 			gradientDrawable.setStroke(dp * 10, android.graphics.Color.TRANSPARENT);
 			return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(android.graphics.Color.argb(1, 0, 0, 0)), gradientDrawable, mask);
-		},
+		}
 	},
 	
 	dialogs: {
@@ -1027,6 +1027,25 @@ gui = {
 				}
 			})
 		},
+	},
+
+	
+	vmaker: {},
+
+	addViewMaker: function(name, vmaker) {
+		if(!this.vmaker[name]) {
+			this.vmaker[name] = vmaker;
+		} else {
+			error("ViewMaker " + name + " already exists.");
+		}
+	},
+
+	getViewMaker: function(name) {
+		if(this.vmaker[name]) {
+			return this.vmaker[name];
+		} else {
+			error("ViewMaker " + name + " doesn't exist.");
+		}
 	},
 	
 	
@@ -1319,7 +1338,6 @@ gui = {
 					var view = new android.widget.ImageView(ctx);
 					view.setId(++s.baseFuncIndex);
 					view.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * gui.main.status_bar_height, dp * gui.main.status_bar_height));
-					view.setPadding(dp * 1, dp * 1, dp * 1, dp * 1);
 					view.getLayoutParams().addRule(android.widget.RelativeLayout.LEFT_OF, s.baseFuncIndex - 1);
 					view.measure(0, 0);
 					view.setBackgroundDrawable(gui.utils.ripple_drawable(view.getMeasuredWidth(), view.getMeasuredHeight(), "rect"));
@@ -2010,6 +2028,165 @@ gui.dialogs.showProgressDialog(function(o) {
 			o.setText(msg);
 		}
 	});
+	gui.addViewMaker("sheetInfo", function(item) {
+		var scr = new android.widget.ScrollView(ctx);
+		scr.setBackgroundColor(gui.config.colors.background);
+		var layout = new android.widget.LinearLayout(ctx);
+		layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
+		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+		layout.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
+		var title = new android.widget.TextView(ctx);
+		title.setText(item.name);
+		title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+		title.setPadding(0, 0, 0, 10 * dp);
+		title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		title.setTextColor(gui.config.colors.text);
+		title.setTextSize(20);
+		title.getLayoutParams().setMargins(0, 0, 0, 7.5 * dp);
+		layout.addView(title);
+		var infoLayout = new android.widget.RelativeLayout(ctx);
+		infoLayout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
+		infoLayout.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
+		var authorImg = new android.widget.ImageView(ctx);
+		authorImg.setId(10);
+		authorImg.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 38, dp * 38));
+		authorImg.measure(0, 0);
+		authorImg.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+		authorImg.setImageBitmap(config.bitmaps.user);
+		authorImg.getLayoutParams().setMargins(0, 0, dp * 7.5, dp * 5);
+		var authorText = new android.widget.TextView(ctx);
+		authorText.setId(11);
+		authorText.setText(android.text.Html.fromHtml((item.author.length == 0 ? "<font color=#7B7B7B>Not Provided</font>" : item.author)));
+		authorText.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, dp * 38));
+		authorText.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 10);
+		authorText.setPadding(0, 0, 0, 0);
+		authorText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		authorText.setTextColor(gui.config.colors.text);
+		authorText.setTextSize(16);
+		authorText.getLayoutParams().setMargins(dp * 7.5, 0, 0, dp * 5);
+		var noteImg = new android.widget.ImageView(ctx);
+		noteImg.setId(12);
+		noteImg.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 38, dp * 38));
+		noteImg.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 10);
+		noteImg.measure(0, 0);
+		noteImg.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+		noteImg.setImageBitmap(config.bitmaps.piano);
+		noteImg.getLayoutParams().setMargins(0, dp * 5, dp * 7.5, dp * 5);
+		var noteText = new android.widget.TextView(ctx);
+		noteText.setId(13);
+		noteText.setText((item.noteCount ? item.noteCount : item.songNotes.length) + " notes");
+		noteText.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, dp * 38));
+		noteText.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 12);
+		noteText.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 11);
+		noteText.setPadding(0, 0, 0, 0);
+		noteText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		noteText.setTextColor(gui.config.colors.text);
+		noteText.setTextSize(16);
+		noteText.getLayoutParams().setMargins(dp * 7.5, dp * 5, 0, dp * 5);
+		var pitchImg = new android.widget.ImageView(ctx);
+		pitchImg.setId(14);
+		pitchImg.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 38, dp * 38));
+		pitchImg.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 12);
+		pitchImg.measure(0, 0);
+		pitchImg.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+		pitchImg.setImageBitmap(config.bitmaps.note);
+		pitchImg.getLayoutParams().setMargins(0, dp * 5, dp * 7.5, dp * 5);
+		var pitchText = new android.widget.TextView(ctx);
+		pitchText.setId(15);
+		pitchText.setText(android.text.Html.fromHtml((function(){
+			var r = "<font color=";
+			switch(item.pitchLevel) {
+				case 0: r += "#FF6100";break;
+				case 1: r += "#FF9200";break;
+				case 2: r += "#FFC600";break;
+				case 3: r += "#FFFF00";break;
+				case 4: r += "#8CC619";break;
+				case 5: r += "#00815A";break;
+				case 6: r += "#0096B5";break;
+				case 7: r += "#2971B5";break;
+				case 8: r += "#424DA4";break;
+				case 9: r += "#6B3594";break;
+				case 10: r += "#C5047B";break;
+				case 11: r += "#FF0000";break;
+			}
+			r += (">" + sheetmgr.pitch_suggestion[item.pitchLevel].name + "</font>");
+			return r;
+		}())));
+		pitchText.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, dp * 38));
+		pitchText.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 14);
+		pitchText.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 13);
+		pitchText.setPadding(0, 0, 0, 0);
+		pitchText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		pitchText.setTextColor(gui.config.colors.text);
+		pitchText.setTextSize(16);
+		pitchText.getLayoutParams().setMargins(dp * 7.5, dp * 5, 0, dp * 5);
+		infoLayout.addView(authorImg);
+		infoLayout.addView(authorText);
+		infoLayout.addView(noteImg);
+		infoLayout.addView(noteText);
+		infoLayout.addView(pitchImg);
+		infoLayout.addView(pitchText);
+		if(item.songNotes) {
+			var timeImg = new android.widget.ImageView(ctx);
+			timeImg.setId(16);
+			timeImg.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(dp * 38, dp * 38));
+			timeImg.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 14);
+			timeImg.measure(0, 0);
+			timeImg.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+			timeImg.setImageBitmap(config.bitmaps.clock);
+			timeImg.getLayoutParams().setMargins(0, dp * 5, dp * 7.5, 0);
+			var timeText = new android.widget.TextView(ctx);
+			timeText.setId(17);
+			timeText.setText((function(){
+				var time_ms = item.songNotes[item.songNotes.length - 1].time;
+				var second_s = Math.floor(time_ms / 1000);
+				
+				var millis = time_ms - second_s * 1000;
+				var minute = Math.floor(second_s / 60);
+				var second = second_s - minute * 60;
+				
+				return minute + ":" + second + "." + millis;
+			}()));
+			timeText.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, dp * 38));
+			timeText.getLayoutParams().addRule(android.widget.RelativeLayout.RIGHT_OF, 16);
+			timeText.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 15);
+			timeText.setPadding(0, 0, 0, 0);
+			timeText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+			timeText.setTextColor(gui.config.colors.text);
+			timeText.setTextSize(16);
+			timeText.getLayoutParams().setMargins(dp * 7.5, dp * 5, 0, 0);
+			infoLayout.addView(timeImg);
+			infoLayout.addView(timeText);
+		}
+		infoLayout.measure(0, 0);
+		layout.addView(infoLayout);
+
+		var sugPrompt = new android.widget.TextView(ctx);
+		sugPrompt.setText("建议弹奏地点:");
+		sugPrompt.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+		sugPrompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		sugPrompt.setTextColor(gui.config.colors.text);
+		sugPrompt.setTextSize(16);
+		sugPrompt.getLayoutParams().setMargins(0, 5 * dp, 0, 5 * dp);
+		layout.addView(sugPrompt);
+
+		var sug = new android.widget.TextView(ctx);
+		sug.setText((function(){
+			var r = "";
+			sheetmgr.pitch_suggestion[item.pitchLevel].places.map(function(e, i) {
+				r += ((i == 0 ? "" : "\n") + "• " + e)
+			}); 
+			return r;
+		}()));
+		sug.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+		sug.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		sug.setTextColor(gui.config.colors.sec_text);
+		sug.setTextSize(15);
+		sug.getLayoutParams().setMargins(7 * dp, 5 * dp, 0, 0);
+		layout.addView(sug);
+		scr.addView(layout);
+		return scr;
+	});
 	gui.main.addPage({
 		index: 0, 
 		title: "本地乐谱", 
@@ -2237,70 +2414,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						});
 						return;
 					}
-					gui.dialogs.showDialog((function () {
-						var scr = new android.widget.ScrollView(ctx);
-						scr.setBackgroundColor(gui.config.colors.background);
-						var layout = new android.widget.LinearLayout(ctx);
-						layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
-						layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-						layout.setPadding(15 * dp, 15 * dp, 15 * dp, 5 * dp);
-						var title = new android.widget.TextView(ctx);
-						title.setText(item.name);
-						title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-						title.setPadding(0, 0, 0, 10 * dp);
-						title.setTextColor(gui.config.colors.text);
-						title.setTextSize(16);
-						layout.addView(title);
-						var text = new android.widget.TextView(ctx);
-						text.setText(android.text.Html.fromHtml(
-							"<font color=#FFFFFF>作者: " + (item.author.length == 0 ? "</font><font color=#7B7B7B>Not Provided</font><font color=#FFFFFF>" : item.author) + "</font><br>" + 
-							"<font color=#FFFFFF>BPM: " + item.bpm + "</font><br>" + 
-							"<font color=#FFFFFF>时长: " + (function(){
-								var time_ms = item.songNotes[item.songNotes.length - 1].time;
-								var second_s = Math.floor(time_ms / 1000);
-								
-								var millis = time_ms - second_s * 1000;
-								var minute = Math.floor(second_s / 60);
-								var second = second_s - minute * 60;
-								
-								return minute + ":" + second + "." + millis;
-							}()) + "</font><br>" + 
-							"<br>" + 
-							"<font color=#FFFFFF>音高: " + (function(){
-								var r = "</font><font color=";
-								switch(item.pitchLevel) {
-									case 0: r += "#FF6100";break;
-									case 1: r += "#FF9200";break;
-									case 2: r += "#FFC600";break;
-									case 3: r += "#FFFF00";break;
-									case 4: r += "#8CC619";break;
-									case 5: r += "#00815A";break;
-									case 6: r += "#0096B5";break;
-									case 7: r += "#2971B5";break;
-									case 8: r += "#424DA4";break;
-									case 9: r += "#6B3594";break;
-									case 10: r += "#C5047B";break;
-									case 11: r += "#FF0000";break;
-								}
-								r += ">" + sheetmgr.pitch_suggestion[item.pitchLevel].name
-								return r;
-							}()) + "</font><br>" + 
-							"<font color=#FFFFFF>建议弹奏地点: " + (function(){
-								var r = "</font>";
-								sheetmgr.pitch_suggestion[item.pitchLevel].places.map(function(e, i) {
-									r += "<br><font color=#FFFFFF> * </font><font color=#7B7B7B>" + e + "</font>"
-								}); 
-								return r;
-							}())
-						));
-						text.setPadding(0, 0, 0, 10 * dp);
-						text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-						text.setTextColor(gui.config.colors.sec_text);
-						text.setTextSize(14);
-						layout.addView(text);
-						scr.addView(layout)
-						return scr;
-					}()), -2, -2, null, true);
+					gui.dialogs.showDialog(gui.getViewMaker("sheetInfo")(item), -2, -2, null, true);
 				}
 			}));
 			s.ns0_listView.setOnItemLongClickListener(new android.widget.AdapterView.OnItemLongClickListener({
@@ -2659,64 +2773,7 @@ gui.dialogs.showProgressDialog(function(o) {
 
 						};break;
 						default: {
-							gui.dialogs.showDialog((function () {
-								var scr = new android.widget.ScrollView(ctx);
-								scr.setBackgroundColor(gui.config.colors.background);
-								var layout = new android.widget.LinearLayout(ctx);
-								layout.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-2, -2));
-								layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-								layout.setPadding(15 * dp, 15 * dp, 15 * dp, 5 * dp);
-								var title = new android.widget.TextView(ctx);
-								title.setText(item.name);
-								title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-								title.setPadding(0, 0, 0, 10 * dp);
-								title.setTextColor(gui.config.colors.text);
-								title.setTextSize(16);
-								layout.addView(title);
-								var text = new android.widget.TextView(ctx);
-								text.setText(android.text.Html.fromHtml(
-									"<font color=#FFFFFF>作者: " + (item.author.length == 0 ? "</font><font color=#7B7B7B>Not Provided</font><font color=#FFFFFF>" : item.author) + "</font><br>" + 
-									"<font color=#FFFFFF>BPM: " + item.bpm + "</font><br>" + 
-									"<br>" + 
-									"<font color=#FFFFFF>音高: " + (function(){
-										var r = "</font><font color=";
-										switch(item.pitchLevel) {
-											case 0: r += "#FF6100";break;
-											case 1: r += "#FF9200";break;
-											case 2: r += "#FFC600";break;
-											case 3: r += "#FFFF00";break;
-											case 4: r += "#8CC619";break;
-											case 5: r += "#00815A";break;
-											case 6: r += "#0096B5";break;
-											case 7: r += "#2971B5";break;
-											case 8: r += "#424DA4";break;
-											case 9: r += "#6B3594";break;
-											case 10: r += "#C5047B";break;
-											case 11: r += "#FF0000";break;
-										}
-										r += ">" + sheetmgr.pitch_suggestion[item.pitchLevel].name
-										return r;
-									}()) + "</font><br>" + 
-									"<font color=#FFFFFF>建议弹奏地点: " + (function(){
-										var r = "</font>";
-										sheetmgr.pitch_suggestion[item.pitchLevel].places.map(function(e, i) {
-											r += "<br><font color=#FFFFFF> * </font><font color=#7B7B7B>" + e + "</font>"
-										}); 
-										return r;
-									}()) + 
-									"<br><br>" + 
-									"<font color=#FFFFFF>简介: </font><br><font color=#7B7B7B>" + 
-									item.desc.replace(new RegExp("\x0a", "gi"), "<br>")
-									+ "</font>"
-								));
-								text.setPadding(0, 0, 0, 10 * dp);
-								text.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-								text.setTextColor(gui.config.colors.sec_text);
-								text.setTextSize(14);
-								layout.addView(text);
-								scr.addView(layout)
-								return scr;
-							}()), -2, -2, null, true);
+							gui.dialogs.showDialog(gui.getViewMaker("sheetInfo")(item), -2, -2, null, true);
 						}break;
 					}
 					return true;
