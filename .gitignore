@@ -1,2 +1,5 @@
 .vscode/settings.json
 .vscode/tasks.json
+rhino.jar
+update.sh
+updateSharedSheets.js
