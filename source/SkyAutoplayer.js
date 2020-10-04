@@ -351,7 +351,7 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		currentVersion: 17,
+		currentVersion: 18,
 		gitVersion: "",
 
 		key_coordinates15: [],
