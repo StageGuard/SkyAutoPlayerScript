@@ -64,7 +64,7 @@ threads.start(function() {
 	
 sheetmgr = {
 	rootDir: android.os.Environment.getExternalStorageDirectory() + "/Android/data/com.Maple.SkyStudio/files/Sheet/",
-	encoding: "utf-16le",
+	encoding: "x-UTF-16LE-BOM",
 	
 	cachedLocalSheetList: [],
 	cachedOnlineSharedSheetInfoList: [],
@@ -103,19 +103,13 @@ sheetmgr = {
 			} (7)) + ".txt");
 
 			var parsed;
-			var utf8charset = new java.lang.String((new java.lang.String(parsed = (function() {
+			files.write(sheet, parsed = (function() {
 				var data = eval(body.string())[0];
 				listener({status:2});
 				data.author = extraData.author;
 				data.keyCount = extraData.keyCount;
 				return "[" + JSON.stringify(data) + "]";
-			}()))).getBytes(), "utf-8");
-			var sheetFile = new java.io.File(sheet);
-			sheetFile.createNewFile();
-			var writer = new java.io.OutputStreamWriter(new java.io.FileOutputStream(sheetFile), "x-UTF-16LE-BOM");
-			writer.write(utf8charset);
-			writer.close();
-
+			}()), sheetmgr.encoding);
 			parsed = eval(parsed)[0];
 			parsed.fileName = sheet;
 			sheetmgr.cachedLocalSheetList.push(parsed);
