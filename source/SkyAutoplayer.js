@@ -101,16 +101,22 @@ sheetmgr = {
 				}
 				return stringBuffer.toString();
 			} (7)) + ".txt");
+
 			var parsed;
-			files.write(sheet, parsed = (function() {
+			var utf8charset = new java.lang.String((new java.lang.String(parsed = (function() {
 				var data = eval(body.string())[0];
 				listener({status:2});
 				data.author = extraData.author;
 				data.keyCount = extraData.keyCount;
 				return "[" + JSON.stringify(data) + "]";
-			}()), sheetmgr.encoding);
+			}()))).getBytes(), "utf-8");
+			var sheetFile = new java.io.File(sheet);
+			sheetFile.createNewFile();
+			var writer = new java.io.OutputStreamWriter(new java.io.FileOutputStream(sheetFile), "x-UTF-16LE-BOM");
+			writer.write(utf8charset);
+			writer.close();
+
 			parsed = eval(parsed)[0];
-			//parsed.songNotes = sheetmgr.parseSongNote(parsed.songNotes);
 			parsed.fileName = sheet;
 			sheetmgr.cachedLocalSheetList.push(parsed);
 			listener({status:3});
