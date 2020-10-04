@@ -1,6 +1,17 @@
 {
 	"sheets": [
 		{
+			"name": "烟花易冷",
+			"file": "烟花易冷K.txt",
+			"author": "酷安@终究是错付了",
+			"desc": "酷安酷友<a href=http://www.coolapk.com/u/2293899>@终究是错付了<a/>分享乐谱 烟花易冷",
+			"bpm": 132,
+			"suggested_instrument": 1,
+			"keyCount": 15,
+			"pitchLevel": 4,
+			"noteCount": 153
+		},
+		{
 			"name": "菊次郎的夏天(夏卡重制版)",
 			"file": "菊次郎的夏天(夏卡重制版).txt",
 			"author": "酷安@夏卡卡卡",
