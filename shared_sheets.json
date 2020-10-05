@@ -1,6 +1,17 @@
 {
 	"sheets": [
 		{
+			"name": "未闻花名",
+			"file": "未闻花名.txt",
+			"author": "酷安@终究是错付了",
+			"desc": "酷安酷友<a href=http://www.coolapk.com/u/2293899>@终究是错付了<a/>分享乐谱 未闻花名",
+			"bpm": 240,
+			"suggested_instrument": 1,
+			"keyCount": 15,
+			"pitchLevel": 6,
+			"noteCount": 266
+		},
+		{
 			"name": "烟花易冷",
 			"file": "烟花易冷K.txt",
 			"author": "酷安@终究是错付了",
