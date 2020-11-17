@@ -159,8 +159,9 @@ sheetmgr = {
 		var r = [];
 		var t_time = 0;
 		var t_sets = [];
+		const regexp = /^(\d)Key(\d{1,})$/;
 		for(var i in raw) {
-			var key = Number(raw[i].key.replace(/^(\d)Key(\d{1,})$/, "$2"));
+			var key = Number(raw[i].key.replace(regexp, "$2"));
 			if(raw[i].time != t_time) {
 				r.push({time: t_time, keys: t_sets});
 				t_sets = [];
