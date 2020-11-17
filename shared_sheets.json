@@ -1,6 +1,17 @@
 {
 	"sheets": [
 		{
+			"name": "Genshin Liyue",
+			"file": "Genshin_Liyue.txt",
+			"author": "Phoebe(twitter@huunhut1217)",
+			"desc": "Twitter用户<a href=https://mobile.twitter.com/huunhut1217>Phoebe(twitter@huunhut1217)<a/>分享乐谱 Genshin Liyue",
+			"bpm": 750,
+			"suggested_instrument": 1,
+			"keyCount": 15,
+			"pitchLevel": 4,
+			"noteCount": 605
+		},
+		{
 			"name": "凉凉",
 			"file": "凉凉.txt",
 			"author": "酷安@终究是错付了",
