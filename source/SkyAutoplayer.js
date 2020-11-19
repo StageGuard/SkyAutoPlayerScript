@@ -285,6 +285,7 @@ sheetplayer = {
 				java.lang.Thread.sleep(sheetplayer.nextInterval = Math.round(sheetplayer.nextInterval *  sheetplayer.speed));
 				sheetplayer.currentNote ++;
 			}
+			sheetplayer.stop();
 		});
 		
 	},
@@ -348,7 +349,7 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		currentVersion: 18,
+		currentVersion: 19,
 		gitVersion: "",
 
 		key_coordinates15: [],
@@ -420,7 +421,7 @@ config = {
 	
 	fetchResources: function(listener) {
 		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
-		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png", "note.png", "user.png", "piano.png", "clock.png"/*, "filter.png"*/];
+		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png", "note.png", "user.png", "piano.png", "clock.png"/*, "filter.png"*/, "coolapk.png", "douyin.png", "github.png", "twitter.png", "bilibili.png"];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/bitmaps/";
 		var downloadQueue = [];
 		var tryCount = 1;
@@ -2215,8 +2216,95 @@ gui.dialogs.showProgressDialog(function(o) {
 		sug.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 		sug.setTextColor(gui.config.colors[config.values.theme].sec_text);
 		sug.setTextSize(15);
-		sug.getLayoutParams().setMargins(7 * dp, 5 * dp, 0, 0);
+		sug.getLayoutParams().setMargins(7 * dp, 5 * dp, 0, 7 * dp);
 		layout.addView(sug);
+		if(item.social) {
+			var colorPicker = function(platform) {
+				switch(platform) {
+					case "coolapk": return "#11B566";
+					case "twitter": return "#1DA1F2";
+					case "douyin": return (function(){
+						if(config.values.theme == "light") {
+							return "#1F0B1A";
+						} else {
+							return "#FFFFFF";
+						}
+					}());
+					case "github": return (function(){
+						if(config.values.theme == "light") {
+							return "#24292E";
+						} else {
+							return "#FFFFFF";
+						}
+					}());
+					case "bilibili": return "#FB7299";
+				}
+			}
+			var filterBitmap = function(bitmap, replacedColor) {
+				var rBitmap = android.graphics.Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), android.graphics.Bitmap.Config.ARGB_8888);
+				var canvas = new android.graphics.Canvas(rBitmap);
+				var paint = new android.graphics.Paint();
+				var rect = new android.graphics.Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+				paint.setAntiAlias(true);
+				canvas.drawARGB(0, 0, 0, 0);
+				paint.setColorFilter(new android.graphics.PorterDuffColorFilter(replacedColor, android.graphics.PorterDuff.Mode.SRC_IN));
+				canvas.drawBitmap(bitmap, rect, rect, paint);
+				return rBitmap;
+			};
+			var socialPrompt = new android.widget.TextView(ctx);
+			socialPrompt.setText("查看作者:");
+			socialPrompt.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+			socialPrompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+			socialPrompt.setTextColor(gui.config.colors[config.values.theme].text);
+			socialPrompt.setTextSize(16);
+			socialPrompt.getLayoutParams().setMargins(0, 5 * dp, 0, 5 * dp);
+			layout.addView(socialPrompt);
+			var socialLayout = new android.widget.LinearLayout(ctx);
+			socialLayout.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+			socialLayout.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+			socialLayout.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
+			socialLayout.getLayoutParams().setMargins(dp * 2, dp * 6, dp * 2, 0);
+			socialLayout.setPadding(5 * dp, 5 * dp, 5 * dp, 5 * dp);
+			socialLayout.measure(0, 0);
+			if(item.social.length == 1) {
+				var socialImage = new android.widget.ImageView(ctx);
+				socialImage.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				socialImage.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 34, dp * 34));
+				socialImage.getLayoutParams().setMargins(0, 0, dp * 5, 0);
+				socialImage.setImageBitmap(filterBitmap(config.bitmaps[item.social[0].platform], android.graphics.Color.parseColor(colorPicker(item.social[0].platform))));
+				socialLayout.addView(socialImage);
+				var socialPrompt1 = new android.widget.TextView(ctx);
+				socialPrompt1.setText(android.text.Html.fromHtml(("在 <font color=" + colorPicker(item.social[0].platform) + ">" + item.social[0].name +"</font> 查看作者")));
+				socialPrompt1.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, dp * 34));
+				socialPrompt1.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+				socialPrompt1.setTextColor(gui.config.colors[config.values.theme].text);
+				socialPrompt1.setTextSize(14);
+				socialLayout.addView(socialPrompt1);
+				socialLayout.setBackgroundDrawable(gui.utils.ripple_drawable(socialLayout.getMeasuredWidth(), socialLayout.getMeasuredHeight(), "rect"));
+				socialLayout.setOnClickListener(new android.view.View.OnClickListener({
+					onClick: function() {
+						app.openUrl(item.social[0].link);
+					}
+				}));
+			} else {
+				for(var i in item.social) {
+					var socialImage = new android.widget.ImageView(ctx);
+					socialImage.setId(i);
+					socialImage.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+					socialImage.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 34, dp * 34));
+					socialImage.getLayoutParams().setMargins(dp * 5, 0, dp * 5, 0);
+					socialImage.setImageBitmap(filterBitmap(config.bitmaps[item.social[i].platform], android.graphics.Color.parseColor(colorPicker(item.social[i].platform))));
+					socialImage.setOnClickListener(new android.view.View.OnClickListener({
+						onClick: function(view) {
+							print(view.getId())
+							app.openUrl(item.social[view.getId()].link);
+						}
+					}));
+					socialLayout.addView(socialImage);
+				}
+			}
+			layout.addView(socialLayout);
+		}
 		scr.addView(layout);
 		return scr;
 	});
@@ -2445,9 +2533,10 @@ gui.dialogs.showProgressDialog(function(o) {
 							canExit: true,
 							buttons: ["确认"]
 						});
-						return;
+					} else { 
+						gui.dialogs.showDialog(gui.getViewMaker("sheetInfo")(item), -2, -2, null, true);
 					}
-					gui.dialogs.showDialog(gui.getViewMaker("sheetInfo")(item), -2, -2, null, true);
+					
 				}
 			}));
 			s.ns0_listView.setOnItemLongClickListener(new android.widget.AdapterView.OnItemLongClickListener({
