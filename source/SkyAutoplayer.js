@@ -2294,6 +2294,8 @@ gui.dialogs.showProgressDialog(function(o) {
 					socialImage.setLayoutParams(new android.widget.LinearLayout.LayoutParams(dp * 34, dp * 34));
 					socialImage.getLayoutParams().setMargins(dp * 5, 0, dp * 5, 0);
 					socialImage.setImageBitmap(filterBitmap(config.bitmaps[item.social[i].platform], android.graphics.Color.parseColor(colorPicker(item.social[i].platform))));
+					socialImage.measure(0, 0);
+					socialImage.setBackgroundDrawable(gui.utils.ripple_drawable(socialImage.getMeasuredWidth(), socialImage.getMeasuredHeight(), "rect"));
 					socialImage.setOnClickListener(new android.view.View.OnClickListener({
 						onClick: function(view) {
 							print(view.getId())
