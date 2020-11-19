@@ -285,9 +285,8 @@ sheetplayer = {
 				java.lang.Thread.sleep(sheetplayer.nextInterval = Math.round(sheetplayer.nextInterval *  sheetplayer.speed));
 				sheetplayer.currentNote ++;
 			}
-			sheetplayer.stop();
+			if(!(sheetplayer.currentNote < sheetplayer.noteCount)) sheetplayer.stop();
 		});
-		
 	},
 	
 	stop: function() {
@@ -2308,6 +2307,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			layout.addView(socialLayout);
 		}
 		scr.addView(layout);
+		
 		return scr;
 	});
 	gui.main.addPage({
