@@ -10,7 +10,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 980,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1706128" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1706128"
+        }
+      ]
     },
     {
       "name": "陈奕迅 - 心的距离",
@@ -22,7 +28,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 520,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1075889" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1075889"
+        }
+      ]
     },
     {
       "name": "Genshin Liyue",
@@ -34,7 +46,13 @@
       "keyCount": 15,
       "pitchLevel": 4,
       "noteCount": 605,
-      "social": { "Twitter": "https://mobile.twitter.com/huunhut1217" }
+      "social": [
+        {
+          "platform": "twitter",
+          "name": "Twitter",
+          "link": "https://mobile.twitter.com/huunhut1217"
+        }
+      ]
     },
     {
       "name": "凉凉",
@@ -46,7 +64,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 160,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2293899" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2293899"
+        }
+      ]
     },
     {
       "name": "未闻花名",
@@ -58,11 +82,17 @@
       "keyCount": 15,
       "pitchLevel": 6,
       "noteCount": 266,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2293899" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2293899"
+        }
+      ]
     },
     {
       "name": "烟花易冷",
-      "file": "烟 花易冷K.txt",
+      "file": "烟花易冷K.txt",
       "author": "酷安@终究是错付了",
       "desc": "酷安酷友<a href=http://www.coolapk.com/u/2293899>@终究是错付了<a/>分享乐谱 烟花易冷",
       "bpm": 132,
@@ -70,7 +100,13 @@
       "keyCount": 15,
       "pitchLevel": 4,
       "noteCount": 153,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2293899" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2293899"
+        }
+      ]
     },
     {
       "name": "菊次郎的夏天(夏卡重制版)",
@@ -82,7 +118,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 640,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "恋爱循环",
@@ -94,7 +136,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 442,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "微微",
@@ -106,7 +154,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 172,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "Dream It Possible",
@@ -118,7 +172,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 290,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "Love 5",
@@ -130,7 +190,13 @@
       "keyCount": 15,
       "pitchLevel": 2,
       "noteCount": 802,
-      "social": { "Twitter": "https://mobile.twitter.com/huunhut1217" }
+      "social": [
+        {
+          "platform": "twitter",
+          "name": "Twitter",
+          "link": "https://mobile.twitter.com/huunhut1217"
+        }
+      ]
     },
     {
       "name": "Co Chac Yeu La Day - MTP",
@@ -142,7 +208,13 @@
       "keyCount": 15,
       "pitchLevel": 6,
       "noteCount": 1426,
-      "social": { "Twitter": "https://mobile.twitter.com/huunhut1217" }
+      "social": [
+        {
+          "platform": "twitter",
+          "name": "Twitter",
+          "link": "https://mobile.twitter.com/huunhut1217"
+        }
+      ]
     },
     {
       "name": "Hanava",
@@ -154,7 +226,13 @@
       "keyCount": 15,
       "pitchLevel": 10,
       "noteCount": 1069,
-      "social": { "CoolApk": "https://mobile.twitter.com/huunhut1217" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://mobile.twitter.com/huunhut1217"
+        }
+      ]
     },
     {
       "name": "Summertime",
@@ -166,7 +244,13 @@
       "keyCount": 15,
       "pitchLevel": 2,
       "noteCount": 1112,
-      "social": { "CoolApk": "https://mobile.twitter.com/huunhut1217" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://mobile.twitter.com/huunhut1217"
+        }
+      ]
     },
     {
       "name": "See You Again (Stb)",
@@ -178,7 +262,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 246,
-      "social": { "CoolApk": "https://mobile.twitter.com/huunhut1217" }
+      "social": [
+        {
+          "platform": "twitter",
+          "name": "Twitter",
+          "link": "https://mobile.twitter.com/huunhut1217"
+        }
+      ]
     },
     {
       "name": "不知所措",
@@ -190,7 +280,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 247,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "那女孩对我说",
@@ -202,7 +298,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 133,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "演员",
@@ -214,7 +316,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 207,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "追光者",
@@ -226,7 +334,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 155,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "走马",
@@ -238,19 +352,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 205,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "Mojito",
       "file": "Mojito.txt",
       "author": "酷安@Syngenex",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐 谱 Mojito",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/1093421>@Syngenex<a/>分享乐谱 Mojito",
       "bpm": 245,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 95,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "下雨天",
@@ -262,7 +388,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 214,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "极乐净土（和弦）",
@@ -274,7 +406,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 531,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "极乐净土（无和弦）",
@@ -286,19 +424,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 617,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1093421" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1093421"
+        }
+      ]
     },
     {
       "name": "童话镇",
       "file": "童话镇.txt",
       "author": "哔哩哔哩@UTF16",
-      "desc": "哔哩哔哩用户<a href=https://space.bilibili.com/623364258>@UTF16<a/>分享 乐谱 童话镇",
+      "desc": "哔哩哔哩用户<a href=https://space.bilibili.com/623364258>@UTF16<a/>分享乐谱 童话镇",
       "bpm": 240,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 248,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "体面",
@@ -310,7 +460,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 463,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "阿珍爱上了阿强",
@@ -322,7 +478,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 115,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "虫儿飞儿歌",
@@ -334,7 +496,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 111,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "辞乆门回忆",
@@ -346,7 +514,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 115,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "打上花火",
@@ -358,7 +532,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 282,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "大悲咒",
@@ -370,7 +550,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 149,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "好运来HX",
@@ -382,7 +568,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 114,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "幻昼CH",
@@ -394,7 +586,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 204,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "偏爱",
@@ -406,7 +604,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 374,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "四月是你的谎言",
@@ -418,7 +622,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 680,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "误红装A1",
@@ -430,7 +640,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 237,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "夏天的风",
@@ -442,7 +658,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 211,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "夏天的风GF",
@@ -454,7 +676,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 119,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "小星星",
@@ -466,7 +694,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 135,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "心作",
@@ -478,7 +712,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 165,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "雨林",
@@ -490,7 +730,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 119,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "猪猪侠",
@@ -502,7 +748,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 184,
-      "social": { "CoolApk": "https://space.bilibili.com/623364258" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "https://space.bilibili.com/623364258"
+        }
+      ]
     },
     {
       "name": "もペもぺ（mopemope）",
@@ -514,7 +766,13 @@
       "keyCount": 15,
       "pitchLevel": 7,
       "noteCount": 210,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "[IPhone]马林巴琴",
@@ -526,7 +784,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 238,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "穿越时空的思念",
@@ -538,19 +802,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 264,
-      "social": { "CoolApk": "http://www.coolapk.com/u/463478" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/463478"
+        }
+      ]
     },
     {
       "name": "不染",
       "file": "不染_enhanced.txt",
       "author": "酷安@九方辰",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/634078>酷安@九方辰<a/>分享乐谱 不染\n原作者为 抖音用户@子哲啊?(zizhe1880689503) \n 完善后续，修改了杂音",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/634078>酷安@九方辰<a/>分享乐谱 不染\n原作者为 抖音用户@子哲啊🌈(zizhe1880689503) \n 完善后续，修改了杂音",
       "bpm": 150,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 226,
-      "social": { "CoolApk": "http://www.coolapk.com/u/634078" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/634078"
+        }
+      ]
     },
     {
       "name": "Souvevirs d'Enfance\n童年的回忆",
@@ -562,7 +838,13 @@
       "keyCount": 15,
       "pitchLevel": 7,
       "noteCount": 758,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2416229" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2416229"
+        }
+      ]
     },
     {
       "name": "Canon卡农 C大调 简易版",
@@ -574,7 +856,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 427,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "九九八十一",
@@ -586,10 +874,16 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 701,
-      "social": { "CoolApk": "http://www.coolapk.com/u/3286967" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3286967"
+        }
+      ]
     },
     {
-      "name": "Коробейники (货郎)\n俄罗斯方块BGM",
+      "name": "Коробейники (货郎)\n俄罗斯方 块BGM",
       "file": "Коробейники.txt",
       "author": "酷安@夏卡卡卡",
       "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 Коробейники (货郎)",
@@ -598,19 +892,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 633,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
-      "name": "土耳其进行 曲(莫扎特)",
+      "name": "土耳其进行曲(莫扎特)",
       "file": "土耳其进行曲(莫扎特).txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡 卡<a/>分享乐谱 土耳其进行曲(莫扎特)",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 土耳其进行曲(莫扎特)",
       "bpm": 528,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 2518,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "The truth that you leave\n你离开的事实",
@@ -622,7 +928,13 @@
       "keyCount": 15,
       "pitchLevel": 11,
       "noteCount": 245,
-      "social": { "CoolApk": "http://www.coolapk.com/u/643670" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/643670"
+        }
+      ]
     },
     {
       "name": "名侦探柯南",
@@ -634,7 +946,13 @@
       "keyCount": 15,
       "pitchLevel": 8,
       "noteCount": 165,
-      "social": { "CoolApk": "http://www.coolapk.com/u/643670" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/643670"
+        }
+      ]
     },
     {
       "name": "Unity",
@@ -646,7 +964,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 460,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "大鱼(简易)",
@@ -658,19 +982,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 341,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "嘿咻狂想曲",
       "file": "嘿咻狂想曲.txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 嘿咻狂想曲\n<b>I love you? , I miss you?</b>\n<u>建议在雨林右侧副本的隐藏图(两人掉下去那个)，释放蝴蝶后弹奏</u>",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 嘿咻狂想曲\n<b>I love you? , I miss you?</b>\n<u>建议在雨林右侧副本的隐藏图(两人掉下去那个)， 释放蝴蝶后弹奏</u>",
       "bpm": 480,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 5,
       "noteCount": 289,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "城南花已开",
@@ -682,7 +1018,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 522,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "撒野完整版",
@@ -694,31 +1036,49 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 605,
-      "social": { "CoolApk": "http://www.coolapk.com/u/3005974" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3005974"
+        }
+      ]
     },
     {
       "name": "婚礼进行曲(整活用)",
       "file": "婚礼进行曲(整活用).txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡 卡<a/>分享乐谱 婚礼进行曲(整活用)(简易版)\n<b>不推荐在别人递白蜡烛?时使用，因为会导致画面极度生草，且伴有顺着网线被暴打一顿的风险，没听 懂的话我再强调一遍( 滑稽 )</b>",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 婚礼进行曲(整活用)(简易版)\n<b>不推荐在别人递白蜡烛?时使用，因为会导致画面极度生草，且伴有顺着网线被暴打一顿的风险，没听懂的话我再强调一遍( 滑稽 )</b>",
       "bpm": 280,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 77,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "Graze the Roof",
       "file": "Graze_the_Roof.txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 Graze the Roof\n游戏《植物大战僵尸》(Plants vs. Zombies Soundtrack) 屋顶关卡背景音 乐",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 Graze the Roof\n游戏《植物大战僵尸》(Plants vs. Zombies Soundtrack) 屋顶关卡背景音乐",
       "bpm": 520,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 8,
       "noteCount": 735,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "Only My Railgun",
@@ -730,19 +1090,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 1758,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "生命之名(いのちの名前)",
       "file": "生命之名(いのちの名前).txt",
       "author": "酷安@你们很有趣呢",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2416229>酷安@你们很有趣呢<a/>分享乐谱\n 生命之名(いのちの名前)\n(千と千寻の神隠し插曲One Summer’s Day完整版)\n这是我第一次的手编 谱，可能有些音转的不完美。\nPs:这谱很长很长，而且越弹到后面越不对劲。",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2416229>酷安@你们很有趣呢<a/>分享乐谱\n 生命之名(いのちの名前)\n(千と千寻の神隠し插曲One Summer’s Day完整版)\n这是我第一次的手编谱，可能有些音转的不完美。\nPs:这谱很长很长，而且越弹 到后面越不对劲。",
       "bpm": 595,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 1,
       "noteCount": 1456,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2416229" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2416229"
+        }
+      ]
     },
     {
       "name": "Martin Ermen - River Flows in You",
@@ -754,7 +1126,18 @@
       "keyCount": 15,
       "pitchLevel": 4,
       "noteCount": 729,
-      "social": { "GitHub": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "github",
+          "name": "GitHub",
+          "link": "https://github.com/StageGuard"
+        }, 
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1790774"
+        }
+      ]
     },
     {
       "name": "神々が恋した幻想郷(修改版)",
@@ -766,7 +1149,18 @@
       "keyCount": 15,
       "pitchLevel": 5,
       "noteCount": 922,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        },
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1790774"
+        }
+      ]
     },
     {
       "name": "猪八戒背媳妇(简易单指)",
@@ -778,11 +1172,17 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 67,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "猪八戒背媳妇",
-      "file": "猪八戒 背媳妇.txt",
+      "file": "猪八戒背媳妇.txt",
       "author": "酷安@夏卡卡卡",
       "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 猪八戒背媳妇\n背 背 友 尽 曲 ",
       "bpm": 440,
@@ -790,7 +1190,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 463,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "夜的钢琴曲(五)",
@@ -802,7 +1208,13 @@
       "keyCount": 15,
       "pitchLevel": 3,
       "noteCount": 957,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "雨的印记（Kiss the Rain)",
@@ -814,7 +1226,13 @@
       "keyCount": 15,
       "pitchLevel": 9,
       "noteCount": 459,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2416229" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2416229"
+        }
+      ]
     },
     {
       "name": "The Right Path",
@@ -826,7 +1244,13 @@
       "keyCount": 15,
       "pitchLevel": 10,
       "noteCount": 336,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "[C418]Danny (Minecraft BGM)",
@@ -838,7 +1262,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 159,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "[C418]Wet Hands (Minecraft BGM)",
@@ -850,7 +1280,13 @@
       "keyCount": 15,
       "pitchLevel": 9,
       "noteCount": 241,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "[C418]Hal2 (Minecraft BGM)",
@@ -862,7 +1298,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 309,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "MIUI铃声(循环)",
@@ -874,7 +1316,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 512,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "美丽拍档(朱一旦枯燥曲)",
@@ -886,7 +1334,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 275,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "Flower Dance",
@@ -898,55 +1352,85 @@
       "keyCount": 15,
       "pitchLevel": 11,
       "noteCount": 2307,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "不染",
       "file": "不染.txt",
-      "author": "抖音@子哲啊?(zizhe1880689503)",
-      "desc": "抖音用户@子哲啊?(zizhe1880689503)上传乐谱 不染",
+      "author": "抖音@子哲啊🌈(zizhe1880689503)",
+      "desc": "抖音用户@子哲啊🌈(zizhe1880689503)上传乐谱 不染",
       "bpm": 150,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 89,
-      "social": { "Douyin": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "douyin",
+          "name": "抖音",
+          "link": "https://v.douyin.com/J9gUaVE/"
+        }
+      ]
     },
     {
       "name": "赤岭",
       "file": "赤岭.txt",
-      "author": "抖音@子哲啊?(zizhe1880689503)",
-      "desc": "抖音用户@子哲啊?(zizhe1880689503)上传乐谱 赤岭",
+      "author": "抖音@子哲啊🌈(zizhe1880689503)",
+      "desc": "抖音用户@子哲啊🌈(zizhe1880689503)上传乐谱 赤岭",
       "bpm": 145,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 66,
-      "social": { "Douyin": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "douyin",
+          "name": "抖音",
+          "link": "https://v.douyin.com/J9gUaVE/"
+        }
+      ]
     },
     {
       "name": "大鱼海棠",
       "file": "大鱼海棠.txt",
-      "author": "抖音@子哲啊?(zizhe1880689503)",
-      "desc": "抖音用户@子哲啊?(zizhe1880689503)上传乐谱 大鱼海棠",
+      "author": "抖音@子哲啊🌈(zizhe1880689503)",
+      "desc": "抖音用户@子哲啊🌈(zizhe1880689503)上传乐谱 大 鱼海棠",
       "bpm": 123,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 58,
-      "social": { "Douyin": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "douyin",
+          "name": "抖音",
+          "link": "https://v.douyin.com/J9gUaVE/"
+        }
+      ]
     },
     {
       "name": "失眠飞行t",
       "file": "失眠飞行t.txt",
-      "author": "抖音@子哲啊?(zizhe1880689503)",
-      "desc": "抖音用户@子哲啊?(zizhe1880689503)上传乐谱 失眠飞行t",
+      "author": "抖音@子哲啊🌈(zizhe1880689503)",
+      "desc": "抖音用户@子哲啊🌈(zizhe1880689503)上传乐谱 失眠飞行t",
       "bpm": 200,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 69,
-      "social": { "Douyin": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "douyin",
+          "name": "抖音",
+          "link": "https://v.douyin.com/J9gUaVE/"
+        }
+      ]
     },
     {
       "name": "千本桜",
@@ -958,19 +1442,31 @@
       "keyCount": 15,
       "pitchLevel": 5,
       "noteCount": 3207,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
-      "name": "神々が恋 した幻想郷",
+      "name": "神々が恋した幻想郷",
       "file": "神々が恋した幻想郷.txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "越共探头(\n酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 神々が恋した幻想郷",
+      "desc": "越共探头(\n酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡 卡卡<a/>分享乐谱 神々が恋した幻想郷",
       "bpm": 256,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 5,
       "noteCount": 890,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "Vicetone - Nevada",
@@ -982,7 +1478,18 @@
       "keyCount": 15,
       "pitchLevel": 3,
       "noteCount": 1308,
-      "social": { "GitHub": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "github",
+          "name": "GitHub",
+          "link": "https://github.com/StageGuard"
+        },
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1790774"
+        }
+      ]
     },
     {
       "name": "TK from Ling tosite sigure - Unravel",
@@ -994,19 +1501,36 @@
       "keyCount": 15,
       "pitchLevel": 10,
       "noteCount": 2252,
-      "social": { "GitHub": "https://github.com/StageGuard" }
+      "social": [
+        {
+          "platform": "github",
+          "name": "GitHub",
+          "link": "https://github.com/StageGuard"
+        },
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1790774"
+        }
+      ]
     },
     {
       "name": "[CL]だんご大家族",
       "file": "だんご大家族.txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "<b>写作CL，译作经典，拼读人生。</b>\n酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 だ んご大家族",
+      "desc": "<b>写作CL，译作经典，拼读人生。</b>\n酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 だんご大家族",
       "bpm": 200,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 6,
       "noteCount": 535,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "いつも何度でも (「千と千尋の神隠し」主題歌)",
@@ -1018,19 +1542,31 @@
       "keyCount": 15,
       "pitchLevel": 5,
       "noteCount": 1323,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "[钢琴曲]潮鸣り(原速)",
       "file": "潮鸣り.txt",
       "author": "酷安@夏卡卡卡",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 [钢琴曲]潮鸣り(原速)\n<b>只建议用钢琴演奏原速</b>\n如需切合其他乐器，请<u>通过Sky Studio修改更高的速度</u>",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/>分享乐谱 [钢琴曲] 潮鸣り(原速)\n<b>只建议用钢琴演奏原速</b>\n如需切合其他乐器，请<u>通过Sky Studio修改更高的速度</u>",
       "bpm": 108,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 282,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "Lemon",
@@ -1042,19 +1578,31 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 62,
-      "social": { "CoolApk": "http://www.coolapk.com/u/3005974" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3005974"
+        }
+      ]
     },
     {
-      "name": "克罗地亚 狂想曲",
+      "name": "克罗地亚狂想曲",
       "file": "克罗地亚狂想曲.txt",
       "author": "酷安@深空失忆か",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/> 分享乐谱 克罗地亚狂想曲",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 克罗地亚狂想曲",
       "bpm": 720,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 3,
       "noteCount": 1269,
-      "social": { "CoolApk": "http://www.coolapk.com/u/3005974" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3005974"
+        }
+      ]
     },
     {
       "name": "斗地主",
@@ -1066,19 +1614,31 @@
       "keyCount": 15,
       "pitchLevel": 10,
       "noteCount": 52,
-      "social": { "CoolApk": "http://www.coolapk.com/u/3005974" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3005974"
+        }
+      ]
     },
     {
       "name": "黑人抬棺Astronomia",
       "file": "Astronomia.txt",
       "author": "酷安@深空失忆か",
-      "desc": "酷 安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 黑人抬棺Astronomia",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/3005974>@深空失忆か<a/>分享乐谱 黑人抬棺Astronomia",
       "bpm": 240,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 10,
       "noteCount": 319,
-      "social": { "CoolApk": "http://www.coolapk.com/u/3005974" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3005974"
+        }
+      ]
     },
     {
       "name": "简易茉莉花",
@@ -1090,7 +1650,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 89,
-      "social": { "CoolApk": "http://www.coolapk.com/u/2313452" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
     },
     {
       "name": "大悲咒",
@@ -1102,7 +1668,13 @@
       "keyCount": 15,
       "pitchLevel": 3,
       "noteCount": 314,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "坏苹果",
@@ -1114,7 +1686,13 @@
       "keyCount": 15,
       "pitchLevel": 6,
       "noteCount": 641,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "三葉",
@@ -1126,7 +1704,13 @@
       "keyCount": 15,
       "pitchLevel": 0,
       "noteCount": 121,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "亡灵序曲选节",
@@ -1138,7 +1722,13 @@
       "keyCount": 15,
       "pitchLevel": 6,
       "noteCount": 327,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "天空之城",
@@ -1150,7 +1740,13 @@
       "keyCount": 15,
       "pitchLevel": 3,
       "noteCount": 111,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "幻昼",
@@ -1162,7 +1758,13 @@
       "keyCount": 15,
       "pitchLevel": 10,
       "noteCount": 96,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "烟花易冷",
@@ -1174,19 +1776,31 @@
       "keyCount": 15,
       "pitchLevel": 4,
       "noteCount": 153,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "菊次郎的夏天",
       "file": "菊次郎的夏天.txt",
       "author": "酷安@Aex技术总监",
-      "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分享乐谱 菊次郎的夏天",
+      "desc": "酷安酷友<a href=http://www.coolapk.com/u/1286879>@Aex技术总监</a>分 享乐谱 菊次郎的夏天",
       "bpm": 349,
       "suggested_instrument": 1,
       "keyCount": 15,
       "pitchLevel": 2,
       "noteCount": 189,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     },
     {
       "name": "起风了",
@@ -1198,7 +1812,13 @@
       "keyCount": 15,
       "pitchLevel": 6,
       "noteCount": 260,
-      "social": { "CoolApk": "http://www.coolapk.com/u/1286879" }
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1286879"
+        }
+      ]
     }
   ]
 }
