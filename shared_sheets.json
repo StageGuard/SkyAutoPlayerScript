@@ -1,6 +1,28 @@
 {
 	"sheets": [
 		{
+			"name": "Avicii - Waiting for Love",
+			"file": "Waiting_for_love.txt",
+			"author": "酷安@明明酱",
+			"desc": "酷安酷友<a href=http://www.coolapk.com/u/1706128>@明明酱<a/>分享乐谱 Avicii - Waiting for Love",
+			"bpm": 515,
+			"suggested_instrument": 1,
+			"keyCount": 15,
+			"pitchLevel": 0,
+			"noteCount": 980
+		},
+		{
+			"name": "陈奕迅 - 心的距离",
+			"file": "陈奕迅_心的距离.txt",
+			"author": "酷安@DesperatU",
+			"desc": "酷安酷友<a href=http://www.coolapk.com/u/1075889>@DesperatU<a/>分享乐谱 陈奕迅 - 心的距离",
+			"bpm": 300,
+			"suggested_instrument": 1,
+			"keyCount": 15,
+			"pitchLevel": 0,
+			"noteCount": 520
+		},
+		{
 			"name": "Genshin Liyue",
 			"file": "Genshin_Liyue.txt",
 			"author": "Phoebe(twitter@huunhut1217)",
