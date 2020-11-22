@@ -95,7 +95,8 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 ### 请仔细阅读以下使用须知！
 
 1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！
-2. **SkyAutoPlayer是完全免费且开源的软件/脚本([https://github.com/StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript))，禁止使用本脚本作为盈利用途！**
+2. **SkyAutoPlayer是完全免费且开源的软件/脚本([https://github.com/StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript))，使用SkyAutoPlayer盈利的同时请标注源项目链接。**
+3. **共享乐谱不遵守LGPL-2.1协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！**
 3. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。
 4. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。
 5. 本脚本只是一个"弹奏机"，并不内置曲谱，请在GooglePlay下载[SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio)编谱。

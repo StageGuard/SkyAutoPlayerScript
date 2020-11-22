@@ -35,7 +35,7 @@ const user_agreements =
 	"3. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。\n\n" + 
 	"4. 本脚本只是一个\"弹奏机\"，并不内置曲谱，请在GooglePlay下载SkyStudio编谱。\n\n" + 
 	"5. 本脚本不会增加解密乐谱功能，包括但不限于加密的SkyStudio乐谱，加密的JS等，也不接受加密乐谱的共享。\n\n" + 
-	"6. 本脚本的发行遵守GPLv3协议，若你不了解协议内容，请访问 https://www.gnu.org/licenses 查看"
+	"6. 本脚本的发行遵守LGPL-2.1协议，若你不了解协议内容，请访问 https://www.gnu.org/licenses 查看"
 ;
 
 //Script global scope
