@@ -285,7 +285,25 @@ sheetplayer = {
 				java.lang.Thread.sleep(sheetplayer.nextInterval = Math.round(sheetplayer.nextInterval *  sheetplayer.speed));
 				sheetplayer.currentNote ++;
 			}
-			if(!(sheetplayer.currentNote < sheetplayer.noteCount)) sheetplayer.stop();
+			// 播放完自动下一首
+			if(config.values.autoPlay && !(sheetplayer.currentNote < sheetplayer.noteCount) && gui.player_panel.isShowing) {
+				gui.player_panel.__internal_dismiss();
+				sheetplayer.stop();
+				// gui.main.show(0);
+				if(sheetmgr.cachedLocalSheetList.length>0){
+					setTimeout(function(){
+						let sheet = sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
+						if(!sheet.keyCount){
+							sheet.keyCount = 15 //默认键位
+						}
+						gui.player_panel.__internal_showPanel(sheet);
+						// sheetplayer.stop();
+						setTimeout(function(){
+							sheetplayer.play(gui.player_panel.refreshStatus);
+						}, 1500)
+					}, 500)
+				}
+			}
 		});
 	},
 	
@@ -350,7 +368,7 @@ config = {
 	values: {
 		currentVersion: 19,
 		gitVersion: "",
-
+		
 		key_coordinates15: [],
 		key_coordinates8: [],
 		skipRunScriptTip: false,
@@ -363,6 +381,7 @@ config = {
 		showFailedSheets: true,
 		tipOnAndroidR: true,
 		theme: "dark",
+		autoPlay: false
 	},
 	
 	bitmaps: {},
@@ -382,7 +401,7 @@ config = {
 		this.values.showFailedSheets = this._global_storage.get("show_failed_sheets", this.values.showFailedSheets);
 		this.values.tipOnAndroidR = this._global_storage.get("tip_storage_on_android_r", this.values.tipOnAndroidR);
 		this.values.theme = this._global_storage.get("theme", this.values.theme);
-
+		this.values.autoPlay = this._global_storage.get("auto_play", this.values.autoPlay);
 		try {
 			android.os.Build.VERSION_CODES.R
 			sheetmgr.rootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/sheets/";
@@ -3084,6 +3103,13 @@ gui.dialogs.showProgressDialog(function(o) {
 					}
 				}, {
 					type: "checkbox",
+					name: "连续随机播放", 
+					check: config.values.autoPlay,
+					onClick: function(checked) {
+						config.values.autoPlay = config.save("auto_play", checked);
+					}
+				}, {
+					type: "checkbox",
 					name: "显示加载失败的乐谱", 
 					check: config.values.showFailedSheets,
 					onClick: function(checked) {
@@ -3172,7 +3198,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				try {
 					android.os.Build.VERSION_CODES.R
 				} catch (e) {
-					sList.list.splice(4, 1);
+					sList.list.splice(5, 1);
 				}
 				return sList.list;
 			}()), function self(element) {
