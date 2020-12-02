@@ -292,10 +292,12 @@ sheetplayer = {
 				// gui.main.show(0);
 				if(sheetmgr.cachedLocalSheetList.length>0){
 					setTimeout(function(){
-						gui.player_panel.__internal_showPanel(
-							sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
-						);
-						sheetplayer.stop();
+						let sheet = sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
+						if(!sheet.keyCount){
+							sheet.keyCount = 15 //默认键位
+						}
+						gui.player_panel.__internal_showPanel(sheet);
+						// sheetplayer.stop();
 						setTimeout(function(){
 							sheetplayer.play(gui.player_panel.refreshStatus);
 						}, 1500)
