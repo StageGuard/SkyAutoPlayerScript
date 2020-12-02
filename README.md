@@ -108,7 +108,8 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 ## 贡献者名单(按照首次贡献时间排序)
 
 ### SkyAutoPlayerScript
-无
+[@tiaod](https://github.com/tiaod)<br>
+<br>
 
 ### 共享乐谱
 酷安[@Aex技术总监](http://www.coolapk.com/u/1286879)<br>
