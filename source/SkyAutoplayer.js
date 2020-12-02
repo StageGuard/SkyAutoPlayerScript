@@ -286,22 +286,27 @@ sheetplayer = {
 				sheetplayer.currentNote ++;
 			}
 			// 播放完自动下一首
-			if(config.values.autoPlay && !(sheetplayer.currentNote < sheetplayer.noteCount) && gui.player_panel.isShowing) {
-				gui.player_panel.__internal_dismiss();
-				sheetplayer.stop();
-				// gui.main.show(0);
-				if(sheetmgr.cachedLocalSheetList.length>0){
-					setTimeout(function(){
-						let sheet = sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
-						if(!sheet.keyCount){
-							sheet.keyCount = 15 //默认键位
-						}
-						gui.player_panel.__internal_showPanel(sheet);
-						// sheetplayer.stop();
+
+			if(!(sheetplayer.currentNote < sheetplayer.noteCount)) {
+				if(config.values.autoPlay && gui.player_panel.isShowing) {
+					gui.player_panel.__internal_dismiss();
+					sheetplayer.stop();
+					// gui.main.show(0);
+					if(sheetmgr.cachedLocalSheetList.length>0){
 						setTimeout(function(){
-							sheetplayer.play(gui.player_panel.refreshStatus);
-						}, 1500)
-					}, 500)
+							let sheet = sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
+							if(!sheet.keyCount){
+								sheet.keyCount = 15 //默认键位
+							}
+							gui.player_panel.__internal_showPanel(sheet);
+							// sheetplayer.stop();
+							setTimeout(function(){
+								sheetplayer.play(gui.player_panel.refreshStatus);
+							}, 1500)
+						}, 500)
+					}
+				} else {
+					sheetplayer.stop();
 				}
 			}
 		});
@@ -2030,7 +2035,6 @@ gui = {
 	},
 	
 };
-
 
 gui.run(function(){
 	ui.setContentView((function(){
