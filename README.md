@@ -15,6 +15,9 @@ Gitee 用户[嗨游圈(@vipssp)](https://gitee.com/vipssp)在未经乐谱上传�
         <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-9-57.PNG" />
     </td>
     <td align="center" height="200">
+        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-44-4.PNG" />
+    </td>
+    <td align="center" height="200">
         <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/Screenshot_2020-12-19-00-10-12-499_com.coolapk.market.jpg" />
     </td>
     <td align="center" height="200">
