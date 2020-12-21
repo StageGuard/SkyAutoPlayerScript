@@ -61,6 +61,15 @@ const error = function(text) {
 	console.error("SkyAutoPlayer发生了一个错误，请酷安私信@StageGuard或在github中的StageGuard/SkyAutoPlayerScript新建Issue来反馈这个BUG！\n详细信息：" + text);
 };
 
+String.format = function() {
+	var s = arguments[0];
+	for (var i = 0; i < arguments.length - 1; i++) {
+		var reg = new RegExp("\\{" + i + "\\}", "gm");
+		s = s.replace(reg, arguments[i + 1]);
+    }
+    return s;
+}
+
 //Asynchronous load script
 threads.start(function() {
 	
@@ -386,10 +395,134 @@ config = {
 		showFailedSheets: true,
 		tipOnAndroidR: true,
 		theme: "dark",
-		autoPlay: false
+		autoPlay: false,
+		lang: "zh_CN"
 	},
 	
 	bitmaps: {},
+
+	languages: {
+		zh_CN: {
+			launch_tip_in_content: "当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
+			launch_tip_force_exit: "强制退出",
+			launch_tip_storage_on_android11: "安卓11不允许外部应用读取应用私有文件夹，乐谱文件夹移至 {0}",
+
+			op_loading_resources: "加载资源中...",
+			op_user_agreement_title: "使用须知",
+
+			button_confirm: "确认",
+			button_cancel: "取消",
+
+			sheet_detail_dialog_suggestion_locale: "建议弹奏地点:",
+			sheet_detail_dialog_view_author_social_link: "查看作者:",
+
+			page_lc_title: "本地乐谱",
+			page_lc_navigation_title: "本地乐谱",
+			page_lc_sheet_item_info: "键数: {0} - BPM: {1}",
+			page_lc_kc_title: "设置键位数",
+			page_lc_kc_desc: "这是一个本地乐谱，请设置这个乐谱的键位数",
+			page_lc_kc_8k: "8键位",
+			page_lc_kc_15k: "15键位",
+			page_lc_kc_set: "已将 {0} 设置为 {1} 键乐谱\n请再次点击弹奏按钮。\n长按乐谱以重新设置键位数。",
+			page_lc_no_8k_set: "未设置 8 键键位坐标或坐标数据错误，请前往设置页设置键位坐标",
+			page_lc_no_15k_set: "未设置 15 键键位坐标或坐标数据错误，请前往设置页设置键位坐标",
+			page_lc_del_title: "删除文件",
+			page_lc_del_desc: "确认要删除 {0} 吗？\n该操作不可恢复！",
+			page_lc_import_title: "如何导入本地乐谱",
+			page_lc_import_desc: "本地乐谱文件夹在{0}\n" + 
+				"<u><b>{1}</u></b>\n" + 
+				"将外部乐谱复制进这个文件夹即可\n\n" + 
+				"注意：\n" + 
+				"SkyStudio对乐谱的存储/读取使用<u><b>{2}</u></b>编码\n" + 
+				"请确保外部乐谱的编码与SkyStudio使用的编码一致\n",
+			page_lc_import_stand_document_folder: "Android标准文档文件夹",
+			page_lc_import_sky_pri_storage_folder: "SkyStudio的乐谱存储位置",
+			page_lc_kctip_title: "修改乐谱键位数",
+			page_lc_kctip_desc: "版本15增加了对不同键位乐器(8键位和15键位)乐谱的支持，它们使用不同的坐标数据。\n" + 
+				"当前已存储在本地的乐谱(外部导入的乐谱或在版本15之前从共享乐谱下载的乐谱)，它们没有键位信息，SkyAutoPlayerScript无法确认它是8键位乐谱还是15键位乐谱。\n" + 
+				"共享乐谱信息已更新，现在下载的共享乐谱它已经包含了乐谱键位信息，不需要再设置。\n" + 
+				"点击开始弹奏按钮时，若无键位信息，则会弹出对话框以选择乐谱键位，SkyAutoPlayerScript会保存键位信息到乐谱。\n" + 
+				"如果因为一些原因设置了错误的键位信息，可以长按乐谱来重新设置。\n\n" + 
+				"p.s.: 需要重新设置15键键位坐标。",
+			page_lc_load_failed_title: "加载 {0} 失败",
+			page_lc_load_failed_desc: "加载乐谱 {0} 失败\n\n原因：\n{1}\n\n请检查以下内容：\n{2}",
+			page_lc_load_failed_r1: "谱子编码是否为UTF16-LE", 
+			page_lc_load_failed_r2: "谱子是否为未加密的JSON格式", 
+			page_lc_load_failed_r3: "谱子是否有JSON语法错误", 
+			page_lc_loading_sheet: "加载中: 共 {0} 首乐谱({1} 失败)",
+
+			page_sc_title: "共享乐谱",
+			page_sc_navigation_title: "共享乐谱",
+			page_sc_downloading: "下载乐谱中...",
+			page_sc_analyzing: "解析乐谱中...",
+			page_sc_download_success: "下载完成: {0}\n请在本地曲谱页面刷新",
+			page_sc_download_failed: "下载 {0} 失败: {1}",
+			page_sc_upload_title: "如何上传乐谱",
+			page_sc_upload_desc: "共有两种方式可以上传乐谱：\n\n" + 
+				"①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
+				"②在github fork StageGuard/SkyAutoplayerScript\n" + 
+				"在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n" + 
+				"并提出 Pull Request 合并申请\n\n" + 
+				"注：若是转载转载请注明原作者同意\n\n" + 
+				"如果所有人都白嫖，那么这个列表将永远也不会扩充",
+			page_sc_upload_open_coolapk: "打开酷安",
+			page_sc_upload_open_github: "打开 Github",
+			page_sc_upload_ca_not_exist: "无法打开酷安，应用不存在！",
+			page_sc_announcement_title: "乐谱共享声明",
+			page_sc_announcement_desc: "此列表共享的乐谱在\n<a href=https://github.com/StageGuard/SkyAutoPlayerScript>github.com/StageGuard/SkyAutoPlayerScript</a>\n均可以找到\n\n" + 
+				"用户原创乐谱<b><u>仅在SkyAutoplayerScript共享并使用</u></b>，\n" + 
+				"转载至其他平台请<b>取得作者授权</b>！\n\n" + 
+				"转载在此共享列表的乐谱均会标明\n" + 
+				"转载请</b>注明原作者授权</b>或<b>遵循原作者意愿</b>\n\n" + 
+				"此声明没有强制执行性，这是个人素质的体现\n" + 
+				"<b><u>非法利益不可取</b></u>",
+			page_sc_announcement_confirm: "我已了解",
+			page_sc_search_hint: "按回车开始搜索",
+			page_sc_fetching_list: "获取列表中...",
+
+			page_setting_title: "设置",
+			page_setting_navigation_title: "设置",
+			page_setting_basic: "基础设置",
+			page_setting_set_8key_coordinate: "设置8键盘键位坐标",
+			page_setting_set_15key_coordinate: "设置15键盘键位坐标",
+			page_setting_key_coordinate_saved: "坐标设置已保存至存储！",
+			page_setting_random_and_continuate_play: "连续随机播放",
+			page_setting_show_broken_sheet: "显示加载失败的乐谱",
+			page_setting_show_storage_tip_on_android11: "启动脚本时显示存储提示",
+			page_setting_set_theme: "设置主题色",
+			page_setting_theme_light: "亮色",
+			page_setting_theme_dark: "暗色",
+			page_setting_about: "关于",
+			page_setting_user_agreement: "查看使用须知",
+			page_setting_user_agreement_title: "使用须知",
+			page_setting_show_license: "查看 LICENSE",
+			page_setting_show_changelog: "查看更新日志", 
+			page_setting_changelog_title: "更新日志",
+			page_setting_exit_script: "结束脚本运行", 
+
+			gui_player_panel_tip: "拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。",
+			gui_player_penel_analyzing: "解析中...",
+			gui_move_diamond_tip: "移动\"\u26d2\"至目标位置来设置第 {0} 个键坐标",
+			gui_key_coordinate_is_set: "键 {0} 坐标已设置: [{1}, {2}]",
+			gui_move_window_tip: "拖动标题栏的标题文字来移动悬浮窗位置。",
+			gui_dialog_do_not_show_again: "不再显示",
+
+			res_updated: "SkyAutoPlayer已更新",
+			res_updated_detail: "当前版本: {0} ← {1}\n\n更新日志: \n{2}",
+			res_check_update_error: "版本检查失败，无法获取更新信息",
+			res_loading_general: "加载资源中...",
+			res_loading_detail: "加载资源中: {0}",
+			res_loading_error: "加载失败: {0}",
+			res_put_into_download_queue: "无本地资源，进入下载队列: {0}",
+			res_load_successful: "资源加载完成",
+			res_try_download: "第 {0} 次尝试下载资源，共需下载 {1} 项资源",
+			res_downloading: "下载资源中: {0}",
+			res_download_or_load_failed: "资源 {0} 下载/加载失败: {1}",
+			res_download_failed: "以下资源下载失败：{0}",
+			res_download_successful: "资源下载完成",
+			res_error_while_downloading: "资源下载时发生了问题: {0}",
+		}
+	},
 	
 	init: function() {
 		this._global_storage = storages.create("StageGuard:SkyAutoPlayer:Config");
@@ -407,10 +540,11 @@ config = {
 		this.values.tipOnAndroidR = this._global_storage.get("tip_storage_on_android_r", this.values.tipOnAndroidR);
 		this.values.theme = this._global_storage.get("theme", this.values.theme);
 		this.values.autoPlay = this._global_storage.get("auto_play", this.values.autoPlay);
+		this.values.lang = this._global_storage.get("language", this.values.lang)
 		try {
 			android.os.Build.VERSION_CODES.R
 			sheetmgr.rootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/sheets/";
-			if(this.values.tipOnAndroidR) toast("安卓11不允许外部应用读取应用私有文件夹，乐谱文件夹移至" + sheetmgr.rootDir);
+			if(this.values.tipOnAndroidR) toast(String.format(config.languages[config.values.lang].launch_tip_storage_on_android11, sheetmgr.rootDir));
 		} catch (e) {}
 
 		files.ensureDir(sheetmgr.rootDir);
@@ -430,13 +564,13 @@ config = {
 		if(periodVersion < currentVersion) {
 			config.fetchRepoFile("update_log.txt", this.values.gitVersion, function(body) {
 				gui.dialogs.showConfirmDialog({
-					title: "SkyAutoPlayer已更新",
-					text: "当前版本: " + currentVersion + " ← " + periodVersion + "\n\n更新日志: \n" + body.string(),
+					title: config.languages[config.values.lang].res_updated,
+					text: String.format(config.languages[config.values.lang].res_updated_detail, currentVersion, periodVersion, body.string()),
 					canExit: false,
-					buttons: ["确认"]
+					buttons: [config.languages[config.values.lang].button_confirm]
 				});
 			}, function(msg) {
-				toast("版本检查失败，无法获取更新信息");
+				toast(config.languages[config.values.lang].res_check_update_error);
 			});
 		}
 		this.save("version", currentVersion);
@@ -450,35 +584,35 @@ config = {
 		var tryCount = 1;
 		try {
 			files.createWithDirs(localRootDir);
-			listener("加载资源中...");
+			listener(config.languages[config.values.lang].res_loading_general);
 			resourceList.map(function(element, i) {
 				var absolutePath = files.join(localRootDir, element);
 				if(files.exists(absolutePath)) {
 					try {
-						listener("加载资源中: " + element);
+						listener(String.format(config.languages[config.values.lang].res_loading_detail, element));
 						config.bitmaps[files.getNameWithoutExtension(absolutePath)] = android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeFile(absolutePath));
 					} catch(e) {
-						listener("加载失败: " + element);
+						listener(String.format(config.languages[config.values.lang].res_loading_error, element));
 						downloadQueue.push(element);
 					}
 				} else {
-					listener("无本地资源，进入下载队列: " + element);
+					listener(String.format(config.languages[config.values.lang].res_put_into_download_queue, element));
 					downloadQueue.push(element);
 				}
 			});
 			if(downloadQueue.length == 0) {
-				listener("资源加载完成");
+				listener(config.languages[config.values.lang].res_load_successful);
 				java.lang.Thread.sleep(500); //为了方便看清
 				return;
 			}
 			while (downloadQueue.length != 0 && tryCount <= 5) {
-				listener("第" + tryCount + "次尝试下载资源，共需下载" + downloadQueue.length + "项资源");
+				listener(String.format(config.languages[config.values.lang].res_try_download, tryCount, downloadQueue.length));
 				java.lang.Thread.sleep(750); //为了方便看清
 				var tmpQueue = [];
 				for(var i in downloadQueue) tmpQueue.push(downloadQueue[i]);
 				var iterator = 0;
 				tmpQueue.map(function(element, i) {
-					listener("下载资源中: " + element);
+					listener(String.format(config.languages[config.values.lang].res_downloading, element));
 					config.fetchRepoFile("resources/" + element, config.values.gitVersion, function(body) {
 						var absolutePath = files.join(localRootDir, element);
 						files.create(absolutePath);
@@ -487,7 +621,7 @@ config = {
 						downloadQueue.splice(iterator, 1);
 					}, function(msg) {
 						iterator++;
-						listener("资源" + element + "下载/加载失败: " + e);
+						listener(String.format(config.languages[config.values.lang].res_download_or_load_failed, element, e));
 						java.lang.Thread.sleep(500); //为了方便看清
 					});
 					
@@ -496,13 +630,13 @@ config = {
 			}
 			//处理结果
 			if(tryCount > 5) {
-				listener(new Error("以下资源下载失败：" + downloadQueue))
+				listener(new Error(String.format(config.languages[config.values.lang].res_download_failed, downloadQueue)))
 			} else {
-				listener("资源下载完成");
+				listener(config.languages[config.values.lang].res_download_successful);
 				java.lang.Thread.sleep(1000); //为了方便看清
 			}
 		} catch(error) {
-			listener(new Error("资源下载时发生了问题" + error));
+			listener(new Error(String.format(config.languages[config.values.lang].res_error_while_downloading, error)));
 		}
 		
 	},
@@ -981,7 +1115,7 @@ gui = {
 						//skip.setChecked(Boolean(s.canSkip));
 						skip.setLayoutParams(android.widget.LinearLayout.LayoutParams(-2, -2, 0));
 						skip.getLayoutParams().setMargins(0, 0, 0, 10 * dp)
-						skip.setText("不再提示");
+						skip.setText(config.languages[config.values.lang].gui_dialog_do_not_show_again);
 						skip.setTextColor(gui.config.colors[config.values.theme].sec_text)
 						layout.addView(skip);
 					}
@@ -1325,7 +1459,7 @@ gui = {
 				
 				if(s._anim != null) s._anim();
 				if(!config.values.skipOpenWindowTip) {
-					toast("拖动标题栏的标题文字来移动悬浮窗位置。");
+					toast(config.languages[config.values.lang].gui_move_window_tip);
 					config.values.skipOpenWindowTip = config.save("skip_open_window_tip", true);
 				}
 			} else { //window is showing, change content view
@@ -1617,7 +1751,7 @@ gui = {
 								onTouchFunction.offsetY = s.y - event.getRawY();
 							break;
 							case event.ACTION_UP: 
-								gui.key_coordinate_navigation._global_text.setText("键" + (gui.key_coordinate_navigation.current_index + 1) + "坐标已设置: [" + event.getRawX() + ", " + event.getRawY() + "]");
+								gui.key_coordinate_navigation._global_text.setText(String.format(config.languages[config.values.lang].gui_key_coordinate_is_set, gui.key_coordinate_navigation.current_index + 1, event.getRawX(), event.getRawY()));
 								keyTargetedCbk([event.getRawX(), event.getRawY()]);
 								gui.utils.value_animation("Float", 1, 0, 200 , new android.view.animation.DecelerateInterpolator(), function(anim) {
 									gui.key_coordinate_navigation._global_base.setAlpha(anim.getAnimatedValue());
@@ -1657,7 +1791,7 @@ gui = {
 					gui.key_coordinate_navigation._global_base.setAlpha(anim.getAnimatedValue());
 					gui.key_coordinate_navigation._global_text.setAlpha(anim.getAnimatedValue());
 				});
-				gui.key_coordinate_navigation._global_text.setText("移动\"\u26d2\"至目标位置来设置第" + (gui.key_coordinate_navigation.current_index + 1) + "个键坐标");
+				gui.key_coordinate_navigation._global_text.setText(String.format(config.languages[config.values.lang].gui_move_diamond_tip, gui.key_coordinate_navigation.current_index + 1));
 				gui.key_coordinate_navigation.isShowing = true;
 			}
 		})},
@@ -1739,7 +1873,7 @@ gui = {
 				gui.player_panel._global_text.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
 				gui.player_panel._global_text.setTextColor(gui.config.colors[config.values.theme].text);
 				gui.player_panel._global_text.setTextSize(14);
-				gui.player_panel._global_text.setText("解析中...");
+				gui.player_panel._global_text.setText(config.languages[config.values.lang].gui_player_penel_analyzing);
 				gui.player_panel._global_text.setSingleLine(true);
 				gui.player_panel._global_text.setEllipsize(android.text.TextUtils.TruncateAt.END);
 				//gui.player_panel._global_text.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
@@ -1934,7 +2068,7 @@ gui = {
 				gui.player_panel.refreshStatus();
 				
 				if(!config.values.skipOpenPlayerPanelWindowTip) {
-					toast("拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。");
+					toast(config.languages[config.values.lang].gui_player_panel_tip);
 					config.values.skipOpenPlayerPanelWindowTip = config.save("skip_open_player_panel_window_tip", true);
 				}
 				
@@ -2036,44 +2170,12 @@ gui = {
 	
 };
 
-gui.run(function(){
-	ui.setContentView((function(){
-		var layout = new android.widget.LinearLayout(ctx);
-		layout.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -1));
-		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-		layout.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
-		layout.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-		var prompt = new android.widget.TextView(ctx);
-		prompt.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
-		prompt.getLayoutParams().setMargins(dp * 15, dp * 5, dp * 15, dp * 15);
-		prompt.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-		prompt.setText(android.text.Html.fromHtml("当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br>" + (function() {
-			if(app.autojs.versionCode == 461) {
-				return "Auto.js版本为 <b>4.1.1 Alpha2</b>"
-			} else {
-				return "<font color=red>Auto.js版本为 <b>" + app.autojs.versionName + "</b>，不保证稳定性！</font><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>"
-			}
-		}())));
-		layout.addView(prompt);
-		var btn = new android.widget.Button(ctx);
-		btn.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
-		btn.setText("强制退出");
-		btn.setOnClickListener(new android.view.View.OnClickListener({
-			onClick: function() {
-				java.lang.System.exit(0);
-			}
-		}));
-		layout.addView(btn);
-		return layout;
-	}()));
-});
-
 gui.dialogs.showProgressDialog(function(o) {
 	o.setIndeterminate(true);
 	o.setText("加载配置中...");
 	config.init();
 	config.checkVersion();
-	o.setText("加载资源中...");
+	o.setText(config.languages[config.values.lang].op_loading_resources);
 	config.fetchResources(function(msg) {
 		if(msg instanceof Error) {
 			o.close();
@@ -2218,7 +2320,7 @@ gui.dialogs.showProgressDialog(function(o) {
 		layout.addView(infoLayout);
 
 		var sugPrompt = new android.widget.TextView(ctx);
-		sugPrompt.setText("建议弹奏地点:");
+		sugPrompt.setText(config.languages[config.values.lang].sheet_detail_dialog_suggestion_locale);
 		sugPrompt.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 		sugPrompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 		sugPrompt.setTextColor(gui.config.colors[config.values.theme].text);
@@ -2274,7 +2376,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				return rBitmap;
 			};
 			var socialPrompt = new android.widget.TextView(ctx);
-			socialPrompt.setText("查看作者:");
+			socialPrompt.setText(config.languages[config.values.lang].sheet_detail_dialog_view_author_social_link);
 			socialPrompt.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 			socialPrompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 			socialPrompt.setTextColor(gui.config.colors[config.values.theme].text);
@@ -2335,8 +2437,8 @@ gui.dialogs.showProgressDialog(function(o) {
 	});
 	gui.main.addPage({
 		index: 0, 
-		title: "本地乐谱", 
-		navigation_title: "本地乐谱",
+		title: config.languages[config.values.lang].page_lc_title, 
+		navigation_title: config.languages[config.values.lang].page_lc_navigation_title,
 		navigation_icon: "local",
 		func: [{
 			icon: "refresh",
@@ -2399,7 +2501,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					element.v_author.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
 					element.v_author.setTextSize(14);
 					element.v_author.setTextColor(gui.config.colors[config.values.theme].sec_text);
-					element.v_author.setText("键数: " + element.songNotes.length + " - BPM: " + element.bpm);
+					element.v_author.setText(String.format(config.languages[config.values.lang].page_lc_sheet_item_info, element.songNotes.length, element.bpm));
 					element.v_relative.addView(element.v_author);
 					
 					element.v_play = new android.widget.ImageView(ctx);
@@ -2418,10 +2520,10 @@ gui.dialogs.showProgressDialog(function(o) {
 							if(gui.main.isShowing) {
 								if(!element.keyCount) {
 									gui.dialogs.showConfirmDialog({
-										title: "设置键位数",
-										text: "这是一个本地乐谱，请设置这个乐谱的键位数",
+										title: config.languages[config.values.lang].page_lc_kc_title,
+										text: config.languages[config.values.lang].page_lc_kc_desc,
 										canExit: true,
-										buttons: ["8 键位", "15 键位"],
+										buttons: [config.languages[config.values.lang].page_lc_kc_8k, config.languages[config.values.lang].page_lc_kc_15k],
 										callback: function(id) {
 											files.write(files.join(sheetmgr.rootDir, element.fileName), (function() {
 												var readable = files.open(files.join(sheetmgr.rootDir, element.fileName), "r", sheetmgr.encoding);
@@ -2430,20 +2532,20 @@ gui.dialogs.showProgressDialog(function(o) {
 												parsed.keyCount = id == 0 ? (element.keyCount = 8) : (element.keyCount = 15)
 												return "[" + JSON.stringify(parsed) + "]";
 											}()), sheetmgr.encoding);
-											toast("已将 " + element.name + " 设置为 " + element.keyCount + " 键乐谱\n请再次点击弹奏按钮。\n长按乐谱以重新设置键位数。");
+											toast(String.format(config.languages[config.values.lang].page_lc_kc_set, element.name, element.keyCount));
 										},
 									});
 								} else {
 									switch(element.keyCount) {
 										case 8: {
 											if(config.values.key_coordinates8.length != 8) {
-												toast("未设置8键键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+												toast(config.languages[config.values.lang].page_lc_no_8k_set);
 												return true;
 											}
 										};break;
 										case 15: {
 											if(config.values.key_coordinates15.length != 15) {
-												toast("未设置15键键位坐标或坐标数据错误，请前往设置页设置键位坐标");
+												toast(config.languages[config.values.lang].page_lc_no_15k_set);
 												return true;
 											}
 										};break;
@@ -2476,10 +2578,10 @@ gui.dialogs.showProgressDialog(function(o) {
 					onClick: function() {
 						var path = files.join(sheetmgr.rootDir, element.fileName);
 						gui.dialogs.showConfirmDialog({
-							title: "删除文件",
-							text: "确认要删除 " + path + " 吗？\n该操作不可恢复！",
+							title: config.languages[config.values.lang].page_lc_del_title,
+							text: String.format(config.languages[config.values.lang].page_lc_del_desc, path),
 							canExit: true,
-							buttons: ["确认", "取消"],
+							buttons: [config.languages[config.values.lang].button_confirm, config.languages[config.values.lang].button_cancel],
 							callback: function(id) {
 								if(id == 0) {
 									files.remove(path);
@@ -2503,44 +2605,37 @@ gui.dialogs.showProgressDialog(function(o) {
 						switch(item.index) {
 							case 0: {
 								gui.dialogs.showConfirmDialog({
-									title: "如何导入本地乐谱",
-									text: android.text.Html.fromHtml(String("本地乐谱文件夹在" + (function(){
-										try {
-											android.os.Build.VERSION_CODES.R
-											return "<b>Android标准文档文件夹</b>下"
-										} catch (e) {
-											return "<b>SkyStudio的乐谱存储位置</b>";
-										}
-									}()) + "\n" + 
-										"<u><b>" + sheetmgr.rootDir + "</u></b>\n" + 
-										"将外部乐谱复制进这个文件夹即可\n\n" + 
-										"注意：\n" + 
-										"SkyStudio对乐谱的存储/读取使用<u><b>" + sheetmgr.encoding.toUpperCase() + "</u></b>编码\n" + 
-										"请确保外部乐谱的编码与SkyStudio使用的编码一致\n").replace(new RegExp("\x0a", "gi"), "<br>")),
+									title: config.languages[config.values.lang].page_lc_import_title,
+									text: android.text.Html.fromHtml(String.format(
+										config.languages[config.values.lang].page_lc_import_desc,
+										(function(){
+											try {
+												android.os.Build.VERSION_CODES.R
+												return "<b>" + config.languages[config.values.lang].page_lc_import_stand_document_folder + "</b>"
+											} catch (e) {
+												return "<b>" + config.languages[config.values.lang].page_lc_import_sky_pri_storage_folder + "</b>";
+											}
+										}()), sheetmgr.rootDir, sheetmgr.encoding.toUpperCase()
+									).replace(new RegExp("\x0a", "gi"), "<br>")),
 									canExit: true,
 									skip: function(checked) {
 										config.values.skipImportLocalSheetTip = config.save("skip_import_local_sheet_tip", checked);
 										if(checked) s.ns0_listAdapterController.removeByIndex(pos, true);
 									},
-									buttons: ["确认"]
+									buttons: [config.languages[config.values.lang].button_confirm]
 								});
 								break;
 							}
 							case 1: {
 								gui.dialogs.showConfirmDialog({
-									title: "修改乐谱键位数",
-									text: "版本15增加了对不同键位乐器(8键位和15键位)乐谱的支持，它们使用不同的坐标数据。\n" + 
-										"当前已存储在本地的乐谱(外部导入的乐谱或在版本15之前从共享乐谱下载的乐谱)，它们没有键位信息，SkyAutoPlayerScript无法确认它是8键位乐谱还是15键位乐谱。\n" + 
-										"共享乐谱信息已更新，现在下载的共享乐谱它已经包含了乐谱键位信息，不需要再设置。\n" + 
-										"点击开始弹奏按钮时，若无键位信息，则会弹出对话框以选择乐谱键位，SkyAutoPlayerScript会保存键位信息到乐谱。\n" + 
-										"如果因为一些原因设置了错误的键位信息，可以长按乐谱来重新设置。\n\n" + 
-										"p.s.: 需要重新设置15键键位坐标。",
+									title: config.languages[config.values.lang].page_lc_kctip_title,
+									text: config.languages[config.values.lang].page_lc_kctip_desc,
 									canExit: true,
 									skip: function(checked) {
 										config.values.skipChangeKeyCountTip = config.save("skip_change_key_count_tip", checked);
 										if(checked) s.ns0_listAdapterController.removeByIndex(pos, true);
 									},
-									buttons: ["确认"]
+									buttons: [config.languages[config.values.lang].button_confirm]
 								});
 								break;
 							}
@@ -2549,14 +2644,16 @@ gui.dialogs.showProgressDialog(function(o) {
 					}
 					if(item.failed) {
 						gui.dialogs.showConfirmDialog({
-							title: "加载" + item.fileName + "失败",
-							text: android.text.Html.fromHtml(String("加载乐谱" + item.fileName + "失败\n\n原因：\n" + item.reason + "\n\n请检查以下内容：\n" + 
-								(item.errtype == -1 ? "<b>1. 谱子编码是否为UTF16-LE</b>\n" : "<s>1. 谱子编码是否为UTF16-LE</s>\n") + 
-								(item.errtype == 1 ? "<b>2. 谱子是否为未加密的JSON格式</b>\n" : "<s>2. 谱子是否为未加密的JSON格式</s>\n") + 
-								(item.errtype == 2 ? "<b>3. 谱子是否有JSON语法错误</b>" : "<s>3. 谱子是否有JSON语法错误</s>")
+							title: String.format(config.languages[config.values.lang].page_lc_load_failed_title, item.fileName),
+							text: android.text.Html.fromHtml(String.format(
+								config.languages[config.values.lang].page_lc_load_failed_desc,
+								item.fileName, item.reason, 
+								(item.errtype == -1 ? "<b>1. " + config.languages[config.values.lang].page_lc_load_failed_r1 + "</b>\n" : "<s>1. " + config.languages[config.values.lang].page_lc_load_failed_r1 + "</s>\n") + 
+								(item.errtype == 1 ? "<b>2. " + config.languages[config.values.lang].page_lc_load_failed_r2 + "</b>\n" : "<s>2. " + config.languages[config.values.lang].page_lc_load_failed_r2 + "</s>\n") + 
+								(item.errtype == 2 ? "<b>3. " + config.languages[config.values.lang].page_lc_load_failed_r3 + "</b>" : "<s>3. " + config.languages[config.values.lang].page_lc_load_failed_r3 + "</s>")
 							).replace(new RegExp("\x0a", "gi"), "<br>")), 
 							canExit: true,
-							buttons: ["确认"]
+							buttons: [config.languages[config.values.lang].button_confirm]
 						});
 					} else { 
 						gui.dialogs.showDialog(gui.getViewMaker("sheetInfo")(item), -2, -2, null, true);
@@ -2569,10 +2666,10 @@ gui.dialogs.showProgressDialog(function(o) {
 					var item = s.ns0_listAdapterController.get(pos);
 					if(!item.failed && item.type == 0) {
 						gui.dialogs.showConfirmDialog({
-							title: "设置键位数",
-							text: "这是一个本地乐谱，请设置这个乐谱的键位数",
+							title: config.languages[config.values.lang].page_lc_kc_title,
+							text: config.languages[config.values.lang].page_lc_kc_desc,
 							canExit: true,
-							buttons: ["8 键位", "15 键位"],
+							buttons: [config.languages[config.values.lang].page_lc_kc_8k, config.languages[config.values.lang].page_lc_kc_15k],
 							callback: function(id) {
 								files.write(files.join(sheetmgr.rootDir, item.fileName), (function() {
 									var readable = files.open(files.join(sheetmgr.rootDir, item.fileName), "r", sheetmgr.encoding);
@@ -2581,7 +2678,7 @@ gui.dialogs.showProgressDialog(function(o) {
 									parsed.keyCount = id == 0 ? (item.keyCount = 8) : (item.keyCount = 15)
 									return "[" + JSON.stringify(parsed) + "]";
 								}()), sheetmgr.encoding);
-								toast("已将 " + item.name + " 设置为 " + item.keyCount + " 键乐谱\n请再次点击弹奏按钮。\n长按乐谱以重新设置键位数。");
+								toast(String.format(config.languages[config.values.lang].page_lc_kc_set, item.name, item.keyCount));
 							},
 						});
 					}
@@ -2621,19 +2718,19 @@ gui.dialogs.showProgressDialog(function(o) {
 						s.ns0_listView.setAlpha(1);
 						if(!config.values.skipImportLocalSheetTip) s.ns0_listAdapterController.add({
 							type: -1,
-							title: "如何导入本地乐谱",
+							title: config.languages[config.values.lang].page_lc_import_title,
 							index: 0
 						});//上传乐谱提示
 						if(!config.values.skipChangeKeyCountTip) s.ns0_listAdapterController.add({
 							type: -1,
-							title: "修改乐谱键位数",
+							title: config.languages[config.values.lang].page_lc_kctip_title,
 							index: 1
 						});//修改乐谱键位提示
 						s.ns0_listAdapterController.notifyChange();
 						threads.start(function() {
 							sheetmgr.getLocalSheetList(isForce, function(successCount, failedCount) {
 								gui.run(function(){
-									gui.main._global_title.setText("加载中: 共" + successCount + "首乐谱(" + failedCount + "失败)");
+									gui.main._global_title.setText(String.format(config.languages[config.values.lang].page_lc_loading_sheet, successCount, failedCount));
 								});
 							}).map(function(e, i) {
 								gui.run(function(){
@@ -2664,8 +2761,8 @@ gui.dialogs.showProgressDialog(function(o) {
 	});
 	gui.main.addPage({
 		index: 1, 
-		title: "共享乐谱",
-		navigation_title: "共享乐谱", 
+		title: config.languages[config.values.lang].page_sc_title,
+		navigation_title: config.languages[config.values.lang].page_sc_navigation_title, 
 		navigation_icon: "online",
 		func: [{
 			icon: "refresh",
@@ -2780,7 +2877,7 @@ gui.dialogs.showProgressDialog(function(o) {
 									switch(r.status) {
 										case 1: {
 											gui.run(function() {
-												element.v_status.setText("下载中...");
+												element.v_status.setText(config.languages[config.values.lang].page_sc_downloading);
 												element.v_relative.addView(element.v_status);
 												element.v_relative.addView(element.v_progress);
 												element.isShowingStatusBar = true;
@@ -2795,13 +2892,13 @@ gui.dialogs.showProgressDialog(function(o) {
 										}
 										case 2: {
 											if(gui.main.isShowing) gui.run(function() {
-												element.v_status.setText("解析中...");
+												element.v_status.setText(config.languages[config.values.lang].page_sc_analyzing);
 											});
 											break;
 										}
 										case 3: {
 											if(gui.main.isShowing) { gui.run(function() { 
-												toast("下载完成: " + element.name + "\n请在本地曲谱页面刷新");
+												toast(String.format(config.languages[config.values.lang].page_sc_download_success, element.name));
 												gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.DecelerateInterpolator(), function(anim) {
 													element.v_progress.setAlpha(anim.getAnimatedValue());
 													element.v_status.setAlpha(anim.getAnimatedValue());
@@ -2817,7 +2914,7 @@ gui.dialogs.showProgressDialog(function(o) {
 										}
 										case -1: {
 											if(gui.main.isShowing) { gui.run(function() { 
-												toast("下载" + element.name + "失败: " + r.msg);
+												toast(String.format(config.languages[config.values.lang].page_sc_download_failed, element.name, r.msg));
 												gui.utils.value_animation("Float", 1, 0, 150, new android.view.animation.DecelerateInterpolator(), function(anim) {
 													element.v_progress.setAlpha(anim.getAnimatedValue());
 													element.v_status.setAlpha(anim.getAnimatedValue());
@@ -2871,23 +2968,21 @@ gui.dialogs.showProgressDialog(function(o) {
 							switch(item.index) {
 								case 0: {
 									gui.dialogs.showConfirmDialog({
-										title: "如何上传乐谱",
-										text: "共有两种方式可以上传乐谱：\n\n" + 
-											"①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
-											"②在github fork StageGuard/SkyAutoplayerScript\n" + 
-											"在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n" + 
-											"并提出 Pull Request 合并申请\n\n" + 
-											"注：若是转载转载请注明原作者同意\n\n" + 
-											"如果所有人都白嫖，那么这个列表将永远也不会扩充",
+										title: config.languages[config.values.lang].page_sc_upload_title,
+										text: config.languages[config.values.lang].page_sc_upload_desc,
 										canExit: true,
 										skip: function(checked) {
 											config.values.skipOnlineUploadTip = config.save("skip_online_upload_tip", checked);
 											if(checked) s.ns1_listAdapterController.removeByIndex(pos, true);
 										},
-										buttons: ["打开酷安", "打开Github", "取消"],
+										buttons: [
+											config.languages[config.values.lang].page_sc_upload_open_coolapk, 
+											config.languages[config.values.lang].page_sc_upload_open_github, 
+											config.languages[config.values.lang].button_cancel
+										],
 										callback: function(id) {
 											if(id == 0) {
-												if(!app.launch("com.coolapk.market")) toast("应用 酷安 不存在！");
+												if(!app.launch("com.coolapk.market")) toast(config.languages[config.values.lang].page_sc_upload_ca_not_exist);
 											} else if(id == 1) {
 												app.openUrl("https://github.com/StageGuard/SkyAutoplayerScript/");
 											}
@@ -2897,20 +2992,14 @@ gui.dialogs.showProgressDialog(function(o) {
 								}
 								case 1: {
 									gui.dialogs.showConfirmDialog({
-										title: "乐谱共享声明",
-										text: android.text.Html.fromHtml(String("此列表共享的乐谱在\n<a href=https://github.com/StageGuard/SkyAutoPlayerScript>github.com/StageGuard/SkyAutoPlayerScript</a>\n均可以找到\n\n" + 
-											"用户原创乐谱<b><u>仅在SkyAutoplayerScript共享并使用</u></b>，\n" + 
-											"转载至其他平台请<b>取得作者授权</b>！\n\n" + 
-											"转载在此共享列表的乐谱均会标明\n" + 
-											"转载请</b>注明原作者授权</b>或<b>遵循原作者意愿</b>\n\n" + 
-											"此声明没有强制执行性，这是个人素质的体现\n" + 
-											"<b><u>非法利益不可取</b></u>").replace(new RegExp("\x0a", "gi"), "<br>")),
+										title: config.languages[config.values.lang].page_sc_announcement_title,
+										text: android.text.Html.fromHtml(String(config.languages[config.values.lang].page_sc_announcement_desc).replace(new RegExp("\x0a", "gi"), "<br>")),
 										canExit: true,
 										skip: function(checked) {
 											config.values.skipOnlineSharedSheetCTip = config.save("skip_shared_sheet_c_tip", checked);
 											if(checked) s.ns1_listAdapterController.removeByIndex(pos, true);
 										},
-										buttons: ["我已了解"]
+										buttons: [config.languages[config.values.lang].page_sc_announcement_confirm]
 									});
 									break;
 								}
@@ -2957,7 +3046,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns1_searchEditText.setTextSize(15);
 			s.ns1_searchEditText.setTextColor(gui.config.colors[config.values.theme].text);
 			s.ns1_searchEditText.setHintTextColor(gui.config.colors[config.values.theme].sec_text);
-			s.ns1_searchEditText.setHint("按回车开始搜索");
+			s.ns1_searchEditText.setHint(config.languages[config.values.lang].page_sc_search_hint);
 			s.ns1_searchEditText.setAlpha(0);
 			s.ns1_searchEditText.setOnClickListener(new android.view.View.OnClickListener({
 				onClick: function(view) {
@@ -3027,17 +3116,17 @@ gui.dialogs.showProgressDialog(function(o) {
 					if(anim.getAnimatedValue() == 0) {
 						if(!config.values.skipOnlineUploadTip) s.ns1_listAdapterController.add({
 							type: -1,
-							title: "如何上传乐谱",
+							title: config.languages[config.values.lang].page_sc_upload_title,
 							index: 0
 						});//上传乐谱提示
 						if(!config.values.skipOnlineSharedSheetCTip) s.ns1_listAdapterController.add({
 							type: -1,
-							title: "乐谱共享声明",
+							title: config.languages[config.values.lang].page_sc_announcement_title,
 							index: 1
 						});//乐谱共享问题提示
 						s.ns1_listAdapterController.notifyChange();
 						s.ns1_listView.setAlpha(1);
-						gui.main._global_title.setText("获取列表中...");
+						gui.main._global_title.setText(config.languages[config.values.lang].page_sc_fetching_list);
 						threads.start(function() {
 							var list = [];
 							if(typeof(filterBlock) == "function") {
@@ -3069,8 +3158,8 @@ gui.dialogs.showProgressDialog(function(o) {
 	});
 	gui.main.addPage({
 		index: 2, 
-		title: "设置", 
-		navigation_title: "设置",
+		title: config.languages[config.values.lang].page_setting_title, 
+		navigation_title: config.languages[config.values.lang].page_setting_navigation_title,
 		navigation_icon: "settings",
 		view: function(s) {
 			s.ns2_listView = new android.widget.ListView(ctx);
@@ -3078,10 +3167,10 @@ gui.dialogs.showProgressDialog(function(o) {
 			s.ns2_listView.setAdapter(s.ns2_listAdapter = new RhinoListAdapter((function sList(){
 				sList.list = [{
 					type: "tag",
-					name: "基本设置", 
+					name: config.languages[config.values.lang].page_setting_basic, 
 				}, {
 					type: "default",
-					name: "设置8键盘键位坐标", 
+					name: config.languages[config.values.lang].page_setting_set_8key_coordinate, 
 					onClick: function(v) {
 						gui.main.__internal_dismiss();
 						config.values.key_coordinates8.length = 0;
@@ -3089,12 +3178,12 @@ gui.dialogs.showProgressDialog(function(o) {
 							config.values.key_coordinates8.push(value);
 						}, function() {
 							config.save("key_coordinates8");
-							toast("坐标设置已保存至存储！");
+							toast(config.languages[config.values.lang].page_setting_key_coordinate_saved);
 						});
 					}
 				}, {
 					type: "default",
-					name: "设置15键盘键位坐标", 
+					name: config.languages[config.values.lang].page_setting_set_15key_coordinate, 
 					onClick: function(v) {
 						gui.main.__internal_dismiss();
 						config.values.key_coordinates15.length = 0;
@@ -3102,38 +3191,38 @@ gui.dialogs.showProgressDialog(function(o) {
 							config.values.key_coordinates15.push(value);
 						}, function() {
 							config.save("key_coordinates15");
-							toast("坐标设置已保存至存储！");
+							toast(config.languages[config.values.lang].page_setting_key_coordinate_saved);
 						});
 					}
 				}, {
 					type: "checkbox",
-					name: "连续随机播放", 
+					name: config.languages[config.values.lang].page_setting_random_and_continuate_play, 
 					check: config.values.autoPlay,
 					onClick: function(checked) {
 						config.values.autoPlay = config.save("auto_play", checked);
 					}
 				}, {
 					type: "checkbox",
-					name: "显示加载失败的乐谱", 
+					name: config.languages[config.values.lang].page_setting_show_broken_sheet, 
 					check: config.values.showFailedSheets,
 					onClick: function(checked) {
 						config.values.showFailedSheets = config.save("show_failed_sheets", checked);
 					}
 				}, {
 					type: "checkbox",
-					name: "启动脚本时显示存储提示",
+					name: config.languages[config.values.lang].page_setting_show_storage_tip_on_android11,
 					check: config.values.tipOnAndroidR,
 					onClick: function(checked) {
 						config.values.tipOnAndroidR = config.save("tip_storage_on_android_r", checked);
 					}
 				}, {
 					type: "default", 
-					name: "设置主题色",
+					name: config.languages[config.values.lang].page_setting_set_theme,
 					onClick: function(v) {
 						gui.dialogs.showOperateDialog([{
-							text: "亮色"
+							text: config.languages[config.values.lang].page_setting_theme_light
 						}, {
-							text: "暗色"
+							text: config.languages[config.values.lang].page_setting_theme_dark
 						}], function(pos) {
 							config.values.theme = config.save("theme", pos == 1 ? "dark" : "light");
 							config.updateBitmapTheme();
@@ -3146,21 +3235,21 @@ gui.dialogs.showProgressDialog(function(o) {
 					}
 				}, {
 					type: "tag",
-					name: "关于", 
+					name: config.languages[config.values.lang].page_setting_about, 
 				}, {
 					type: "default",
-					name: "查看使用须知", 
+					name: config.languages[config.values.lang].page_setting_user_agreement, 
 					onClick: function(v) {
 						gui.dialogs.showConfirmDialog({
-							title: "使用须知",
+							title: config.languages[config.values.lang].page_setting_user_agreement_title,
 							text: user_agreements,
 							canExit: true,
-							buttons: ["确认"],
+							buttons: [config.languages[config.values.lang].button_confirm],
 						})
 					},
 				}, {
 					type: "default",
-					name: "查看LICENSE", 
+					name: config.languages[config.values.lang].page_setting_show_license, 
 					onClick: function(v) {
 						threads.start(function() {
 							config.fetchRepoFile("LICENSE", null, function(body) {
@@ -3168,29 +3257,29 @@ gui.dialogs.showProgressDialog(function(o) {
 									title: "GNU GENERAL PUBLIC LICENSE",
 									text: body.string(),
 									canExit: true,
-									buttons: ["确认"],
+									buttons: [config.languages[config.values.lang].button_confirm],
 								});
 							});
 						});
 					},
 				}, {
 					type: "default",
-					name: "查看更新日志", 
+					name: config.languages[config.values.lang].page_setting_show_changelog, 
 					onClick: function(v) {
 						threads.start(function() {
 							config.fetchRepoFile("update_log.txt", null, function(body) {
 								gui.dialogs.showConfirmDialog({
-									title: "更新日志",
+									title: config.languages[config.values.lang].page_setting_changelog_title,
 									text: body.string(),
 									canExit: true,
-									buttons: ["确认"],
+									buttons: [config.languages[config.values.lang].button_confirm],
 								});
 							});
 						});
 					},
 				}, {
 					type: "default",
-					name: "结束脚本运行", 
+					name: config.languages[config.values.lang].page_setting_exit_script, 
 					onClick: function(v) {
 						gui.main.__internal_dismiss();
 						exit();
@@ -3287,16 +3376,41 @@ gui.dialogs.showProgressDialog(function(o) {
 	//ctx.moveTaskToBack(true);
 	if(!config.values.skipRunScriptTip) {
 		gui.dialogs.showConfirmDialog({
-			title: "使用须知",
+			title: config.languages[config.values.lang].op_user_agreement_title,
 			text: user_agreements,
 			canExit: false,
-			buttons: ["确认"],
+			buttons: [config.languages[config.values.lang].button_confirm],
 			skip: function(checked) {
 				config.save("skip_run_script_tip", checked);
 			},
 			callback: function(id) {},
 		});
 	}
-}, false, false);
 
+	gui.run(function(){
+		ui.setContentView((function(){
+			var layout = new android.widget.LinearLayout(ctx);
+			layout.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -1));
+			layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+			layout.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
+			layout.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
+			var prompt = new android.widget.TextView(ctx);
+			prompt.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+			prompt.getLayoutParams().setMargins(dp * 15, dp * 5, dp * 15, dp * 15);
+			prompt.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
+			prompt.setText(android.text.Html.fromHtml(config.languages[config.values.lang].launch_tip_in_content));
+			layout.addView(prompt);
+			var btn = new android.widget.Button(ctx);
+			btn.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+			btn.setText(config.languages[config.values.lang].launch_tip_force_exit);
+			btn.setOnClickListener(new android.view.View.OnClickListener({
+				onClick: function() {
+					java.lang.System.exit(0);
+				}
+			}));
+			layout.addView(btn);
+			return layout;
+		}()));
+	});
+}, false, true);
 });
