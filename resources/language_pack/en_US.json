@@ -104,6 +104,7 @@
         "res_language_dialog_title": "Choose language",
         "res_language_download_failed": "Failed to download language pack: {0}",
         "res_language_dialog_tip": "Your language is not on the list?<br>Welcome to translate the script:<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
-        "res_language_failed_fetch_online_list": "Failed to fetch online language list"
+        "res_language_failed_fetch_online_list": "Failed to fetch online language list",
+        "res_language_update_needed": "Language pack need to be updated, please go to setting->language and click current language again to upgrade."
     }
 }

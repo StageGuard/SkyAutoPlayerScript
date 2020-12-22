@@ -104,6 +104,7 @@
         "res_language_dialog_title": "选择语言",
         "res_language_download_failed": "语言下载失败：{0}",
         "res_language_dialog_tip": "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
-        "res_language_failed_fetch_online_list": "无法获取在线语言列表"
+        "res_language_failed_fetch_online_list": "无法获取在线语言列表",
+        "res_language_update_needed": "语言需要更新，请前往设置界面重新点击当前语言来更新"
     }
 }
