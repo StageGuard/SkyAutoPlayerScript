@@ -1,7 +1,7 @@
 {
     "name": "简体中文",
     "code": "zh_CN",
-    "version": 1,
+    "version": 2,
     "content": {
         "launch_tip_in_content": "当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "强制退出",
@@ -103,7 +103,7 @@
         "res_use_language": "使用语言: {0}",
         "res_language_dialog_title": "选择语言",
         "res_language_download_failed": "语言下载失败：{0}",
-        "res_language_dialog_tip": "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
+        "res_language_dialog_tip": "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript/blob/master/contribute-translation.md</a>",
         "res_language_failed_fetch_online_list": "无法获取在线语言列表",
         "res_language_update_needed": "语言需要更新，请前往设置界面重新点击当前语言来更新"
     }

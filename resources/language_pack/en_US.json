@@ -1,7 +1,7 @@
 {
     "name": "English (US)",
     "code": "en_US",
-    "version": 1,
+    "version": 2,
     "content": {
         "launch_tip_in_content": "If you can't see a diamond popup dialog,<br>make sure that Auto.js is allowed to <u><b>display pop-up window</u></b><br><br><br>Version <b>4.1.1 Alpha2</b> is recommended.<br><b>4.1.1 Alpha2</b> Download: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "FORCE EXIT",
@@ -103,7 +103,7 @@
         "res_use_language": "Use language: {0}",
         "res_language_dialog_title": "Choose language",
         "res_language_download_failed": "Failed to download language pack: {0}",
-        "res_language_dialog_tip": "Your language is not on the list?<br>Welcome to translate the script:<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
+        "res_language_dialog_tip": "Your language is not on the list?<br>Welcome to translate the script:<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript/blob/master/contribute-translation.md</a>",
         "res_language_failed_fetch_online_list": "Failed to fetch online language list",
         "res_language_update_needed": "Language pack need to be updated, please go to setting->language and click current language again to upgrade."
     }
