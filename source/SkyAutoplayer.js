@@ -276,10 +276,11 @@ sheetplayer = {
 			var executor = java.util.concurrent.Executors.newCachedThreadPool();
 			var tragetRunnable = new java.lang.Runnable({
 				run: function() {
-					var gestureMap = [];
+					var gestureMap = [], delay = 0;
 					sheetplayer.notes[sheetplayer.currentNote].keys.map(function(e, i) {
 						var keyCoordinates = sheetplayer.keyCount == 15 ? [config.values.key_coordinates15[e][0], config.values.key_coordinates15[e][1]] : [config.values.key_coordinates8[e][0], config.values.key_coordinates8[e][1]];
-						gestureMap.push([0, 25, keyCoordinates, keyCoordinates]);
+						delay += config.values.chordDelay;
+						gestureMap.push([delay, 25, keyCoordinates, keyCoordinates]);
 					});
 					gestureMap = sheetplayer.toSource(gestureMap);
 					eval("gestures(" + gestureMap.slice(1, gestureMap.length - 1) + ");");
@@ -382,7 +383,7 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		currentVersion: 21,
+		currentVersion: 22,
 		gitVersion: "",
 		
 		key_coordinates15: [],
@@ -398,7 +399,8 @@ config = {
 		tipOnAndroidR: true,
 		theme: "dark",
 		autoPlay: false,
-		lang: "zh_CN"
+		lang: "zh_CN",
+		chordDelay: 0,
 	},
 	
 	bitmaps: {},
@@ -502,6 +504,7 @@ config = {
 			page_setting_changelog_title: "更新日志",
 			page_setting_exit_script: "结束脚本运行", 
 			page_setting_language: "语言",
+			page_setting_chord_delay: "和弦按压延迟",
 
 			gui_player_panel_tip: "拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。",
 			gui_player_penel_analyzing: "解析中...",
@@ -539,7 +542,7 @@ config = {
 		var langs = files.listDir(langPath)
 		for(var i in langs) {
 			var code = files.getNameWithoutExtension(langs[i]);
-			if(code == this.values.lang) {
+			if(code == this.values.lang && code != "zh_CN") {
 				try {
 					var content = JSON.parse(files.read(langPath + langs[i]));
 					this.languages[content.code] = content.content;
@@ -603,6 +606,7 @@ config = {
 		this.values.theme = this._global_storage.get("theme", this.values.theme);
 		this.values.autoPlay = this._global_storage.get("auto_play", this.values.autoPlay);
 		this.values.lang = this._global_storage.get("language", this.values.lang)
+		this.values.chordDelay = this._global_storage.get("chordDelay", this.values.chordDelay)
 		try {
 			android.os.Build.VERSION_CODES.R
 			sheetmgr.rootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/sheets/";
@@ -3490,6 +3494,14 @@ gui.dialogs.showProgressDialog(function(o) {
 						config.values.autoPlay = config.save("auto_play", checked);
 					}
 				}, {
+					type: "seekbar",
+					name: config.languages[config.values.lang].page_setting_chord_delay, 
+					value: config.values.chordDelay,
+					range: [0, 1000],
+					onChangeUp: function(value) {
+						config.values.chordDelay = config.save("chordDelay", value);
+					}
+				}, {
 					type: "checkbox",
 					name: config.languages[config.values.lang].page_setting_show_broken_sheet, 
 					check: config.values.showFailedSheets,
@@ -3579,7 +3591,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				try {
 					android.os.Build.VERSION_CODES.R
 				} catch (e) {
-					sList.list.splice(6, 1);
+					sList.list.splice(7, 1);
 				}
 				return sList.list;
 			}()), function self(element) {
@@ -3635,6 +3647,43 @@ gui.dialogs.showProgressDialog(function(o) {
 							},
 						}));
 						element.v_relative.addView(element.v_checkbox);
+					break;
+					case "seekbar": 
+						element.v_title = new android.widget.TextView(ctx);
+						element.v_title.setId(114);
+						element.v_title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+						element.v_title.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+						element.v_title.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 10, dp * 10);
+						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+						element.v_title.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP);
+						element.v_title.setTextSize(14);
+						element.v_title.setTextColor(gui.config.colors[config.values.theme].text);
+						element.v_title.setText(element.name);
+						element.v_relative.addView(element.v_title);
+						element.v_disp = new android.widget.TextView(ctx);
+						element.v_disp.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+						element.v_disp.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
+						element.v_disp.getLayoutParams().setMargins(dp * 10, dp * 10, dp * 25, dp * 10);
+						element.v_disp.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
+						element.v_disp.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP);
+						element.v_disp.setTextSize(12);
+						element.v_disp.setTextColor(gui.config.colors[config.values.theme].sec_text);
+						element.v_disp.setText(String(element.value));
+						element.v_relative.addView(element.v_disp);
+						element.v_seek = android.widget.SeekBar(ctx);
+						element.v_seek.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, -2));
+						element.v_seek.getLayoutParams().addRule(android.widget.RelativeLayout.BELOW, 114);
+						element.v_seek.setMax(100);
+						element.v_seek.setProgress(element.value / (element.range[1] - element.range[0]) * 100);
+						element.v_seek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener({
+							onProgressChanged: function(sb, prog) {
+								element.v_disp.setText(String(sb.getProgress() / 100 * (element.range[1] - element.range[0]) + element.range[0]));
+							},
+							onStopTrackingTouch: function(sb) {
+								element.onChangeUp(sb.getProgress() / 100 * (element.range[1] - element.range[0]) + element.range[0]);
+							},
+						}));
+						element.v_relative.addView(element.v_seek);
 					break;
 				}
 				return element.v_relative;

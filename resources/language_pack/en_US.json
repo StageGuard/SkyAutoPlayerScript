@@ -1,7 +1,7 @@
 {
     "name": "English (US)",
     "code": "en_US",
-    "version": 2,
+    "version": 3,
     "content": {
         "launch_tip_in_content": "If you can't see a diamond popup dialog,<br>make sure that Auto.js is allowed to <u><b>display pop-up window</u></b><br><br><br>Version <b>4.1.1 Alpha2</b> is recommended.<br><b>4.1.1 Alpha2</b> Download: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "FORCE EXIT",
@@ -78,6 +78,7 @@
         "page_setting_changelog_title": "Changelog",
         "page_setting_exit_script": "Exit", 
         "page_setting_language": "Language",
+        "page_setting_chord_delay": "Delay of each chord key",
     
         "gui_player_panel_tip": "Drag the title text of the title bar to move the suspension window of the performance control panel.",
         "gui_player_penel_analyzing": "Parsing...",
