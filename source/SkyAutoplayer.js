@@ -521,7 +521,38 @@ config = {
 			res_download_failed: "以下资源下载失败：{0}",
 			res_download_successful: "资源下载完成",
 			res_error_while_downloading: "资源下载时发生了问题: {0}",
+			res_use_language: "使用语言: {0}",
+			res_language_download_failed: "语言下载失败：{0}",
+			res_language_dialog_tip: "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
+			res_language_failed_fetch_online_list: "无法获取在线语言列表",
+			res_language_dialog_title: "选择语言"
+		},
+	},
+
+	initLocalLang: function(listener) {
+		var langPath = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/";
+		files.ensureDir(langPath);
+		var langs = files.listDir(langPath)
+		for(var i in langs) {
+			var code = files.getNameWithoutExtension(langs[i]);
+			if(code == this.values.lang) {
+				try {
+					var content = JSON.parse(files.read(langPath + langs[i]));
+					this.languages[content.code] = content.content;
+					listener(String.format(this.languages[content.code].res_use_language, content.name));
+					return;
+				} catch (e) {
+					listener(new Error("加载 " + code + " 语言时出错：" + e))
+				}
+
+			}
 		}
+		if(this.values.lang != "zh_CN") {
+			listener("语言 " + this.values.lang + "未找到，使用缺省语言：简体中文.");
+		} else {
+			listener("使用语言：简体中文.");
+		}
+		
 	},
 	
 	init: function() {
@@ -640,31 +671,36 @@ config = {
 		}
 		
 	},
+
 	//jsdelivr cdn需要指定repo版本, gitee和github则不用
 	//fetch顺序为 gitee raw content → jsdelivr cdn → github raw content
 	fetchRepoFile: function(path, gitVersion, successCbk, failCbk) {
 		//就用最蠢的if来判断吧
-		var resp = http.get(encodeURI("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path));
-		if(resp.statusCode >= 200 && resp.statusCode < 300) {
-			successCbk(resp.body);
-			return;
-		} else {
-			var errorCollector = resp.statusCode + ": " + resp.statusMessage + "\n";
-			resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (gitVersion == null ? "" : ("@" + gitVersion)) + "/" + path));
+		try {
+			var resp = http.get(encodeURI("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path));
 			if(resp.statusCode >= 200 && resp.statusCode < 300) {
 				successCbk(resp.body);
 				return;
 			} else {
-				errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
-				resp = http.get(encodeURI("https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path));
+				var errorCollector = resp.statusCode + ": " + resp.statusMessage + "\n";
+				resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (gitVersion == null ? "" : ("@" + gitVersion)) + "/" + path));
 				if(resp.statusCode >= 200 && resp.statusCode < 300) {
 					successCbk(resp.body);
 					return;
 				} else {
 					errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
-					if(failCbk != null) failCbk(errorCollector);
+					resp = http.get(encodeURI("https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path));
+					if(resp.statusCode >= 200 && resp.statusCode < 300) {
+						successCbk(resp.body);
+						return;
+					} else {
+						errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
+						if(failCbk != null) failCbk(errorCollector);
+					}
 				}
 			}
+		} catch(e) {
+			if(failCbk != null) failCbk(e);
 		}
 	},
 
@@ -804,6 +840,13 @@ RhinoListAdapter = (function() {
 				return this.src[i];
 			} else {
 				return this.src;
+			}
+		},
+		getView: function(i) {
+			if (typeof(i) == "number") {
+				return this.views[i];
+			} else {
+				return this.views;
 			}
 		},
 		insert: function(e, i, respawn) {
@@ -953,7 +996,7 @@ gui = {
 			frame.setOnTouchListener(new android.view.View.OnTouchListener({
 				onTouch: function touch(v, e) {
 					try {
-						if (e.getAction() == e.ACTION_DOWN && canExit) {
+						if (e.getAction() == e.ACTION_UP && canExit) {
 							frame.setEnabled(false);
 							frame.setClickable(false);
 							gui.utils.value_animation("Float", 1.0, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
@@ -1200,9 +1243,9 @@ gui = {
 								if (callback) {
 									callback(pos);
 									gui.utils.value_animation("Float", 1, 0, 75, new android.view.animation.DecelerateInterpolator(), function(anim) {
-									dialog.setAlpha(anim.getAnimatedValue());
-									if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
-								});
+										dialog.setAlpha(anim.getAnimatedValue());
+										if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(dialog);
+									});
 								}
 								return true;
 							} catch (e) {
@@ -2167,6 +2210,187 @@ gui = {
 		},
 		
 	},
+
+	languageDialog: function() {
+		var baseLayout = new android.widget.LinearLayout(ctx);
+		baseLayout.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+		baseLayout.setBackgroundColor(gui.config.colors[config.values.theme].background);
+		baseLayout.setOrientation(android.widget.LinearLayout.VERTICAL);
+		baseLayout.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
+		var title = new android.widget.TextView(ctx);
+		title.setText(config.languages[config.values.lang].res_language_dialog_title);
+		title.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+		title.setPadding(0, 0, 0, 10 * dp);
+		title.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		title.setTextColor(gui.config.colors[config.values.theme].text);
+		title.setTextSize(18);
+		title.getLayoutParams().setMargins(0, 0, 0, 7.5 * dp);
+		baseLayout.addView(title);
+
+		var listView = new android.widget.ListView(ctx);
+		var listAdapter = null;
+		listView.setLayoutParams(new android.widget.FrameLayout.LayoutParams(-1, -2));
+		listView.setPadding(10 * dp, 5 * dp, 10 * dp, 5 * dp);
+		listView.setAdapter(listAdapter = new RhinoListAdapter((function sList(){
+			sList.list = [];
+			var langPath = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/";
+			var langs = files.listDir(langPath);
+			for(var i in langs) {
+				var content = JSON.parse(files.read(langPath + langs[i]));
+				sList.list.push({
+					type: "item",
+					name: content.name,
+					code: content.code,
+					local: true,
+					content: content.content
+				});
+			}
+			sList.list.push({type: "loading"})
+			return sList.list;
+		}()), function self(element) {
+			switch(element.type) {
+				case "item": {
+					element.view = new android.widget.LinearLayout(ctx);
+					element.view.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+					element.view.setOrientation(android.widget.LinearLayout.VERTICAL);
+					element.view.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
+
+					element.v_name = new android.widget.TextView(ctx);
+					element.v_name.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+					element.v_name.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+					element.v_name.setPadding(0, 0, 0, 1.5 * dp);
+					element.v_name.setTextSize(14);
+					element.v_name.setTextColor(gui.config.colors[config.values.theme].text);
+					element.v_name.setText(element.name);
+					element.view.addView(element.v_name);
+
+					element.v_code = new android.widget.TextView(ctx);
+					element.v_code.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+					element.v_code.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+					element.v_code.setPadding(1.5 * dp, 0, 0, 0);
+					element.v_code.setTextSize(12);
+					element.v_code.setTextColor(gui.config.colors[config.values.theme].sec_text);
+					element.v_code.setText(element.code);
+					element.view.addView(element.v_code);
+
+					return element.view;
+				}
+				case "loading": {
+					element.view = new android.widget.RelativeLayout(ctx);
+					element.view.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-1, -2));
+					element.v_prog = new android.widget.ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+					element.v_prog.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, dp * 15));
+					element.v_prog.setPadding(10 * dp, 0, 10 * dp, 0);
+					element.v_prog.setProgressDrawable(new android.graphics.drawable.ColorDrawable(gui.config.colors[config.values.theme].background));
+					element.v_prog.setIndeterminate(true);
+					element.v_prog.setAlpha(1);
+					element.view.addView(element.v_prog);
+					element.v_prompt = new android.widget.TextView(ctx);
+					element.v_prompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+					element.v_prompt.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, -2));
+					element.v_prompt.setTextSize(14);
+					element.v_prompt.setPadding(10 * dp, 0, 10 * dp, 0);
+					element.v_prompt.setTextColor(gui.config.colors[config.values.theme].sec_text);
+					element.v_prompt.setText(config.languages[config.values.lang].res_language_failed_fetch_online_list);
+					element.v_prompt.setAlpha(0);
+					element.view.addView(element.v_prompt);
+					return element.view;
+				}
+			}
+			
+		}));
+		var listAdapterController = RhinoListAdapter.getController(listAdapter);
+		listView.setDividerHeight(0);
+		listView.setAdapter(listAdapterController.self);
+		listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+			onItemClick: function(parent, view, pos, id) {
+				var item = listAdapterController.get(pos);
+				if(item.type == "item") {
+					if(item.local) {
+						config.languages[item.code] = item.content;
+						config.values.lang = config.save("language", item.code);
+						toast(String.format(config.languages[config.values.lang].res_use_language, item.name));
+						gui.main.__internal_dismiss();
+						gui.suspension.show();
+						gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
+							langDialog.setAlpha(anim.getAnimatedValue());
+							if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
+						});
+					} else {
+						threads.start(function() {
+							config.fetchRepoFile("resources/language_pack/" + item.code + ".json", null, function(body) {
+								var lf = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/" + item.code + ".json";
+								files.create(lf)
+								files.writeBytes(lf, body.bytes());
+								var lang = JSON.parse(body.string());
+								config.languages[lang.code] = lang.content;
+								config.values.lang = config.save("language", lang.code);
+								toast(String.format(config.languages[config.values.lang].res_use_language, lang.name));
+								gui.main.__internal_dismiss();
+								gui.suspension.show();
+								gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
+									langDialog.setAlpha(anim.getAnimatedValue());
+									if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
+								});
+							}, function(msg) {
+								toast(String.format(config.languages[config.values.lang].res_language_download_failed, msg));
+							});
+						});
+					}
+				}
+			}
+		}));
+		baseLayout.addView(listView);
+
+		var prompt = new android.widget.TextView(ctx);
+		prompt.setText(android.text.Html.fromHtml(config.languages[config.values.lang].res_language_dialog_tip));
+		prompt.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
+		prompt.setPadding(10 * dp, 10 * dp, 10 * dp, 10 * dp);
+		prompt.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+		prompt.setTextColor(gui.config.colors[config.values.theme].sec_text);
+		prompt.setTextSize(12);
+		//prompt.getLayoutParams().setMargins(0, 0, 0, 7.5 * dp);
+		baseLayout.addView(prompt);
+		var langDialog = gui.dialogs.showDialog(baseLayout, -2, -2, null, true);
+
+		threads.start(function() {
+			config.fetchRepoFile("source/language_list.json", null, function(body) {
+				var onlineList = JSON.parse(body.string()).list;
+				gui.run(function() {
+					var __listArray = listAdapterController.getArray();
+					var loadingProgress = __listArray[__listArray.length - 1].v_prog
+					var loadingPrompt = __listArray[__listArray.length - 1].v_prompt
+					gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
+						loadingProgress.setAlpha(anim.getAnimatedValue());
+						if(anim.getAnimatedValue() == 0) {
+							listAdapterController.removeByIndex(listAdapterController.getCount() - 1);
+							for(var i in onlineList) {
+								var exist = false;
+								for(var j in __listArray) if(__listArray[j].code == onlineList[i].code) exist = true;
+								if(!exist) listAdapterController.add({
+									type: "item", 
+									name: onlineList[i].name,
+									code: onlineList[i].code,
+									local: false,
+								});
+							}
+							listAdapterController.notifyChange();
+						}
+					});
+				});
+			}, function(msg) {
+				gui.run(function() {
+					var __listArray = listAdapterController.getArray();
+					var loadingProgress = __listArray[__listArray.length - 1].v_prog
+					var loadingPrompt = __listArray[__listArray.length - 1].v_prompt
+					gui.utils.value_animation("Float", 1.0, 0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
+						loadingProgress.setAlpha(anim.getAnimatedValue());
+						loadingPrompt.setAlpha(1.0 - anim.getAnimatedValue());
+					});
+				});
+			});
+		});
+	}
 	
 };
 
@@ -2174,6 +2398,16 @@ gui.dialogs.showProgressDialog(function(o) {
 	o.setIndeterminate(true);
 	o.setText("加载配置中...");
 	config.init();
+	o.setText("加载语言中...")
+	config.initLocalLang(function(msg) {
+		if(msg instanceof Error) {
+			o.close();
+			error(msg);
+			exit();
+		} else {
+			o.setText(msg);
+		}
+	});
 	config.checkVersion();
 	o.setText(config.languages[config.values.lang].op_loading_resources);
 	config.fetchResources(function(msg) {
@@ -3170,6 +3404,12 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: config.languages[config.values.lang].page_setting_basic, 
 				}, {
 					type: "default",
+					name: "语言", 
+					onClick: function(v) {
+						gui.languageDialog()
+					}
+				}, {
+					type: "default",
 					name: config.languages[config.values.lang].page_setting_set_8key_coordinate, 
 					onClick: function(v) {
 						gui.main.__internal_dismiss();
@@ -3291,7 +3531,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				try {
 					android.os.Build.VERSION_CODES.R
 				} catch (e) {
-					sList.list.splice(5, 1);
+					sList.list.splice(6, 1);
 				}
 				return sList.list;
 			}()), function self(element) {
@@ -3404,9 +3644,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			btn.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, -2));
 			btn.setText(config.languages[config.values.lang].launch_tip_force_exit);
 			btn.setOnClickListener(new android.view.View.OnClickListener({
-				onClick: function() {
-					java.lang.System.exit(0);
-				}
+				onClick: function() { java.lang.System.exit(0); }
 			}));
 			layout.addView(btn);
 			return layout;
