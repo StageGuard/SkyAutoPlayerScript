@@ -6,7 +6,7 @@ It can also fetch online language list [source/language_list.json](https://githu
 
 - Clone this repository.
 - Create a new file in **resources/language_pack/xx_XX.json**, the file name must be standard language code (e.g. zh_CN or en_US).
-- You can refer to **resources/language_pack/en_US.json** to translate.
+- You can refer to [resources/language_pack/en_US.json](https://github.com/StageGuard/SkyAutoPlayerScript/blob/master/resources/language_pack/en_US.json) to translate.
 - Modify **source/language_list.json**: 
 
 ```js
