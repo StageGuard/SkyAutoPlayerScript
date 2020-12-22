@@ -1,9 +1,11 @@
 {
     "list": [{
         "code": "zh_CN",
-        "name": "简体中文"
+        "name": "简体中文",
+        "version": 1
     }, {
         "code": "en_US",
-        "name": "English (US)"
+        "name": "English (US)",
+        "version": 1
     }]
 }
