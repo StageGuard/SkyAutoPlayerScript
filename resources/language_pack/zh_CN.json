@@ -76,6 +76,7 @@
         "page_setting_show_changelog": "查看更新日志", 
         "page_setting_changelog_title": "更新日志",
         "page_setting_exit_script": "结束脚本运行", 
+        "page_setting_language": "语言",
     
         "gui_player_panel_tip": "拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。",
         "gui_player_penel_analyzing": "解析中...",

@@ -72,6 +72,8 @@ String.format = function() {
 
 //Asynchronous load script
 threads.start(function() {
+
+var global_prompt_contentView = null;
 	
 sheetmgr = {
 	rootDir: android.os.Environment.getExternalStorageDirectory() + "/Android/data/com.Maple.SkyStudio/files/Sheet/",
@@ -380,7 +382,7 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		currentVersion: 20,
+		currentVersion: 21,
 		gitVersion: "",
 		
 		key_coordinates15: [],
@@ -499,6 +501,7 @@ config = {
 			page_setting_show_changelog: "查看更新日志", 
 			page_setting_changelog_title: "更新日志",
 			page_setting_exit_script: "结束脚本运行", 
+			page_setting_language: "语言",
 
 			gui_player_panel_tip: "拖动标题栏的标题文字来移动弹奏控制面板悬浮窗。",
 			gui_player_penel_analyzing: "解析中...",
@@ -548,11 +551,25 @@ config = {
 			}
 		}
 		if(this.values.lang != "zh_CN") {
-			listener("语言 " + this.values.lang + "未找到，使用缺省语言：简体中文.");
+			this.values.lang = "zh_CN";
+			listener("语言 " + this.values.lang + " 未找到，使用缺省语言：简体中文.");
 		} else {
 			listener("使用语言：简体中文.");
 		}
 		
+	},
+
+	updateStaticUIText: function() {
+		//一些静态文字的修改(我最会写垃圾代码了.jpg)
+		gui.main.views[0].title = config.languages[config.values.lang].page_lc_title, 
+		gui.main.views[0].navigation_title =  config.languages[config.values.lang].page_lc_navigation_title
+		gui.main.views[1].title = config.languages[config.values.lang].page_sc_title, 
+		gui.main.views[1].navigation_title =  config.languages[config.values.lang].page_sc_navigation_title
+		gui.main.views[2].title = config.languages[config.values.lang].page_lc_title, 
+		gui.main.views[2].navigation_title =  config.languages[config.values.lang].page_setting_navigation_title
+		gui.run(function(){
+			global_prompt_contentView.setText(android.text.Html.fromHtml(config.languages[config.values.lang].launch_tip_in_content));
+		});
 	},
 	
 	init: function() {
@@ -2312,6 +2329,7 @@ gui = {
 						toast(String.format(config.languages[config.values.lang].res_use_language, item.name));
 						gui.main.__internal_dismiss();
 						gui.suspension.show();
+						config.updateStaticUIText();
 						gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
 							langDialog.setAlpha(anim.getAnimatedValue());
 							if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
@@ -2322,12 +2340,13 @@ gui = {
 								var lf = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/" + item.code + ".json";
 								files.create(lf)
 								files.writeBytes(lf, body.bytes());
-								var lang = JSON.parse(body.string());
+								var lang = JSON.parse(files.read(lf));
 								config.languages[lang.code] = lang.content;
 								config.values.lang = config.save("language", lang.code);
 								toast(String.format(config.languages[config.values.lang].res_use_language, lang.name));
 								gui.main.__internal_dismiss();
 								gui.suspension.show();
+								config.updateStaticUIText();
 								gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
 									langDialog.setAlpha(anim.getAnimatedValue());
 									if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
@@ -3404,7 +3423,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: config.languages[config.values.lang].page_setting_basic, 
 				}, {
 					type: "default",
-					name: "语言", 
+					name: config.languages[config.values.lang].page_setting_language, 
 					onClick: function(v) {
 						gui.languageDialog()
 					}
@@ -3634,7 +3653,7 @@ gui.dialogs.showProgressDialog(function(o) {
 			layout.setOrientation(android.widget.LinearLayout.VERTICAL);
 			layout.setPadding(15 * dp, 15 * dp, 15 * dp, 15 * dp);
 			layout.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);
-			var prompt = new android.widget.TextView(ctx);
+			var prompt = global_prompt_contentView = new android.widget.TextView(ctx);
 			prompt.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -2));
 			prompt.getLayoutParams().setMargins(dp * 15, dp * 5, dp * 15, dp * 15);
 			prompt.setGravity(android.view.Gravity.CENTER | android.view.Gravity.CENTER);

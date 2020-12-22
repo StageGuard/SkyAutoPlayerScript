@@ -76,6 +76,7 @@
         "page_setting_show_changelog": "Show changelog", 
         "page_setting_changelog_title": "Changelog",
         "page_setting_exit_script": "Exit", 
+        "page_setting_language": "Language",
     
         "gui_player_panel_tip": "Drag the title text of the title bar to move the suspension window of the performance control panel.",
         "gui_player_penel_analyzing": "Parsing...",
