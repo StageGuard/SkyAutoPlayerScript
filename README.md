@@ -140,7 +140,9 @@ files.removeDir("/storage/emulated/0/Documents/SkyAutoPlayer/");
 
 # 贡献
 
-欢迎任何人贡献本项目，包括但不限于Pull Request，Issue，New feature request
+欢迎任何人贡献本项目，包括但不限于Pull Request，Issue，New feature request 或者 贡献翻译。
+
+
 
 ## 贡献者名单(按照首次贡献时间排序)
 
@@ -170,6 +172,16 @@ Twitter[Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)<br>
 酷安[@cxk的篮球](http://www.coolapk.com/u/1090769)<br>
 酷安[@头条乀](http://www.coolapk.com/u/1192320)<br>
 <br>
+
+## 翻译
+
+SkyAutoplayerScript 在版本 21 已支持多语言并可以在线获取语言列表，你可以查看 [contribute-translation.md](contribute-translation.md) (English) 来了解如何贡献翻译。
+
+SkyAutoplayerScript version 21 has supported multi-language and can also fetch online language list, follow [contribute-translation.md](contribute-translation.md) (English) guide to contribute translation.
+
+### 贡献者：
+
+无
 
 # 图标来源
 
