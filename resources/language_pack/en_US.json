@@ -1,6 +1,7 @@
 {
     "name": "English (US)",
     "code": "en_US",
+    "version": 1,
     "content": {
         "launch_tip_in_content": "If you can't see a diamond popup dialog,<br>make sure that Auto.js is allowed to <u><b>display pop-up window</u></b><br><br><br>Version <b>4.1.1 Alpha2</b> is recommended.<br><b>4.1.1 Alpha2</b> Download: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "FORCE EXIT",
