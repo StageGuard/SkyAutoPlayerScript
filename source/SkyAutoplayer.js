@@ -528,7 +528,8 @@ config = {
 			res_language_download_failed: "语言下载失败：{0}",
 			res_language_dialog_tip: "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
 			res_language_failed_fetch_online_list: "无法获取在线语言列表",
-			res_language_dialog_title: "选择语言"
+			res_language_dialog_title: "选择语言",
+			res_language_update_needed: "语言需要更新，请前往设置界面重新点击当前语言来更新"
 		},
 	},
 
@@ -543,6 +544,19 @@ config = {
 					var content = JSON.parse(files.read(langPath + langs[i]));
 					this.languages[content.code] = content.content;
 					listener(String.format(this.languages[content.code].res_use_language, content.name));
+					threads.start(function() {
+						config.fetchRepoFile("source/language_list.json", null, function(body) {
+							var onlineList = JSON.parse(body.string()).list;
+							for(var i in onlineList) {
+								if(onlineList[i].code == content.code) {
+									if(onlineList[i].version > content.version) {
+										toast(config.languages[config.values.lang].res_language_update_needed);
+										return;
+									}
+								}
+							}
+						}, null);
+					})
 					return;
 				} catch (e) {
 					listener(new Error("加载 " + code + " 语言时出错：" + e))
@@ -561,12 +575,12 @@ config = {
 
 	updateStaticUIText: function() {
 		//一些静态文字的修改(我最会写垃圾代码了.jpg)
-		gui.main.views[0].title = config.languages[config.values.lang].page_lc_title, 
-		gui.main.views[0].navigation_title =  config.languages[config.values.lang].page_lc_navigation_title
-		gui.main.views[1].title = config.languages[config.values.lang].page_sc_title, 
-		gui.main.views[1].navigation_title =  config.languages[config.values.lang].page_sc_navigation_title
-		gui.main.views[2].title = config.languages[config.values.lang].page_lc_title, 
-		gui.main.views[2].navigation_title =  config.languages[config.values.lang].page_setting_navigation_title
+		gui.main.views[0].title = config.languages[config.values.lang].page_lc_title;
+		gui.main.views[0].navigation_title =  config.languages[config.values.lang].page_lc_navigation_title;
+		gui.main.views[1].title = config.languages[config.values.lang].page_sc_title; 
+		gui.main.views[1].navigation_title =  config.languages[config.values.lang].page_sc_navigation_title;
+		gui.main.views[2].title = config.languages[config.values.lang].page_lc_title;
+		gui.main.views[2].navigation_title =  config.languages[config.values.lang].page_setting_navigation_title;
 		gui.run(function(){
 			global_prompt_contentView.setText(android.text.Html.fromHtml(config.languages[config.values.lang].launch_tip_in_content));
 		});
@@ -2258,6 +2272,7 @@ gui = {
 					type: "item",
 					name: content.name,
 					code: content.code,
+					version: content.version,
 					local: true,
 					content: content.content
 				});
@@ -2323,38 +2338,50 @@ gui = {
 			onItemClick: function(parent, view, pos, id) {
 				var item = listAdapterController.get(pos);
 				if(item.type == "item") {
-					if(item.local) {
-						config.languages[item.code] = item.content;
-						config.values.lang = config.save("language", item.code);
-						toast(String.format(config.languages[config.values.lang].res_use_language, item.name));
-						gui.main.__internal_dismiss();
-						gui.suspension.show();
-						config.updateStaticUIText();
-						gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
-							langDialog.setAlpha(anim.getAnimatedValue());
-							if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
-						});
-					} else {
-						threads.start(function() {
-							config.fetchRepoFile("resources/language_pack/" + item.code + ".json", null, function(body) {
-								var lf = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/" + item.code + ".json";
-								files.create(lf)
-								files.writeBytes(lf, body.bytes());
-								var lang = JSON.parse(files.read(lf));
-								config.languages[lang.code] = lang.content;
-								config.values.lang = config.save("language", lang.code);
-								toast(String.format(config.languages[config.values.lang].res_use_language, lang.name));
-								gui.main.__internal_dismiss();
-								gui.suspension.show();
-								config.updateStaticUIText();
-								gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
-									langDialog.setAlpha(anim.getAnimatedValue());
-									if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
-								});
-							}, function(msg) {
-								toast(String.format(config.languages[config.values.lang].res_language_download_failed, msg));
+					var fetchOnline = function() {
+						config.fetchRepoFile("resources/language_pack/" + item.code + ".json", null, function(body) {
+							var lf = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/" + item.code + ".json";
+							files.create(lf)
+							files.writeBytes(lf, body.bytes());
+							var lang = JSON.parse(files.read(lf));
+							config.languages[lang.code] = lang.content;
+							config.values.lang = config.save("language", lang.code);
+							toast(String.format(config.languages[config.values.lang].res_use_language, lang.name));
+							gui.main.__internal_dismiss();
+							gui.suspension.show();
+							config.updateStaticUIText();
+							gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
+								langDialog.setAlpha(anim.getAnimatedValue());
+								if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
 							});
+						}, function(msg) {
+							toast(String.format(config.languages[config.values.lang].res_language_download_failed, msg));
 						});
+					}
+
+					if(item.local) {
+						var isOutdateVersion = false;
+						for(var i in onlineList) {
+							if(onlineList[i].code == item.code) {
+								if(onlineList[i].version > item.version) isOutdateVersion = true;
+							}
+						}
+						if(isOutdateVersion) {
+							threads.start(fetchOnline);
+						} else {
+							config.languages[item.code] = item.content;
+							config.values.lang = config.save("language", item.code);
+							toast(String.format(config.languages[config.values.lang].res_use_language, item.name));
+							gui.main.__internal_dismiss();
+							gui.suspension.show();
+							config.updateStaticUIText();
+							gui.utils.value_animation("Float", 1.0, 0, 125, new android.view.animation.DecelerateInterpolator(), function(anim) {
+								langDialog.setAlpha(anim.getAnimatedValue());
+								if(anim.getAnimatedValue() == 1) gui.winMgr.removeView(langDialog);
+							});
+						}
+					} else {
+						threads.start(fetchOnline);
 					}
 				}
 			}
@@ -2372,9 +2399,10 @@ gui = {
 		baseLayout.addView(prompt);
 		var langDialog = gui.dialogs.showDialog(baseLayout, -2, -2, null, true);
 
+		var onlineList = [];
 		threads.start(function() {
 			config.fetchRepoFile("source/language_list.json", null, function(body) {
-				var onlineList = JSON.parse(body.string()).list;
+				onlineList = JSON.parse(body.string()).list;
 				gui.run(function() {
 					var __listArray = listAdapterController.getArray();
 					var loadingProgress = __listArray[__listArray.length - 1].v_prog
@@ -2390,6 +2418,7 @@ gui = {
 									type: "item", 
 									name: onlineList[i].name,
 									code: onlineList[i].code,
+									version: onlineList[i].version,
 									local: false,
 								});
 							}
