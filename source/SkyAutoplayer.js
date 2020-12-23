@@ -1736,7 +1736,7 @@ gui = {
 			if(!gui.suspension.isShowing) {
 				gui.suspension._global_base = new android.widget.TextView(ctx);
 				gui.suspension._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(gui.suspension.width, gui.suspension.height));
-				gui.suspension._global_base.setText("\u27e1");
+				gui.suspension._global_base.setText("\u2726");
 				gui.suspension._global_base.setTextColor(android.graphics.Color.parseColor("#FFFFD1"));
 				gui.suspension._global_base.setShadowLayer(dp * 3, 0, 0, android.graphics.Color.parseColor("#390c1a"));
 				gui.suspension._global_base.setTextSize(30);
