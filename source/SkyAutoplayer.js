@@ -3677,7 +3677,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_seek.setProgress(element.value / (element.range[1] - element.range[0]) * 100);
 						element.v_seek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener({
 							onProgressChanged: function(sb, prog) {
-								element.v_disp.setText(String(sb.getProgress() / 100 * (element.range[1] - element.range[0]) + element.range[0]));
+								element.v_disp.setText(String(Math.round(sb.getProgress() / 100 * (element.range[1] - element.range[0]) + element.range[0])));
 							},
 							onStopTrackingTouch: function(sb) {
 								element.onChangeUp(sb.getProgress() / 100 * (element.range[1] - element.range[0]) + element.range[0]);
