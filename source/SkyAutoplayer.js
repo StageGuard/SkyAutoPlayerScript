@@ -1729,13 +1729,13 @@ gui = {
 		cx: 0,
 		cy: 0,
 		
-		width: dp * 35,
-		height: dp * 35,
+		width: dp * 40,
+		height: dp * 40,
 		
 		show: function s() { gui.run(function(){
 			if(!gui.suspension.isShowing) {
 				gui.suspension._global_base = new android.widget.TextView(ctx);
-				gui.suspension._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(gui.suspension.width, gui.suspension.height));
+				gui.suspension._global_base.setLayoutParams(new android.widget.LinearLayout.LayoutParams(gui.suspension.width - dp * 5, gui.suspension.height - dp * 5));
 				gui.suspension._global_base.setText("\u2726");
 				gui.suspension._global_base.setTextColor(android.graphics.Color.parseColor("#FFFFD1"));
 				gui.suspension._global_base.setShadowLayer(dp * 3, 0, 0, android.graphics.Color.parseColor("#390c1a"));
