@@ -3497,7 +3497,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					type: "seekbar",
 					name: config.languages[config.values.lang].page_setting_chord_delay, 
 					value: config.values.chordDelay,
-					range: [0, 1000],
+					range: [0, 100],
 					onChangeUp: function(value) {
 						config.values.chordDelay = config.save("chordDelay", value);
 					}
