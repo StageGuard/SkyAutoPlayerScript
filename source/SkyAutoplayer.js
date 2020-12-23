@@ -3668,7 +3668,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.v_disp.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP);
 						element.v_disp.setTextSize(12);
 						element.v_disp.setTextColor(gui.config.colors[config.values.theme].sec_text);
-						element.v_disp.setText(String(element.value));
+						element.v_disp.setText(String(Math.round(element.value)));
 						element.v_relative.addView(element.v_disp);
 						element.v_seek = android.widget.SeekBar(ctx);
 						element.v_seek.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-1, -2));
