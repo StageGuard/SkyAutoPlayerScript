@@ -44,7 +44,7 @@ There are many features in SkyAutoPlayerScript compared to other auto player scr
 * 通过引导自设定键位坐标，避免按压琴键的偏移问题<br>Set key coordinates by yourself with guidence, avoiding key offset when playing.
 * 在线[共享乐谱](https://github.com/StageGuard/SkyAutoPlayerScript/tree/master/shared_sheets)，有许多优质乐谱。</br>~~(甚至有的乐谱复杂到根本无法手弹)~~<br>There are many excellent online [shared sheets](https://github.com/StageGuard/SkyAutoPlayerScript/tree/master/shared_sheets).
 * 自动更新，及时修复BUG，无需担心版本过时问题。<br>Automatically update sheet.
-* 多语言支持<br>Multi-language support.
+* [多语言支持](#翻译--translation)<br>[Multi-language support](#翻译--translation).
 * ...
 
 ## 使用 / Usage
