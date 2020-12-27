@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "仙剑问情",
+      "file": "仙剑问情.txt",
+      "author": "酷安@Alusias",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/808787>@Alusias<a/> 分享乐谱 仙剑问情",
+      "bpm": 282,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 174,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/808787"
+        }
+      ]
+    },
+    {
       "name": "铃儿响叮当",
       "file": "铃儿响叮当.txt",
       "author": "酷安@头条乀",
