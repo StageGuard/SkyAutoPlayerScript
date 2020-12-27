@@ -172,21 +172,33 @@ Just mail your sheet file to beamiscool@qq.com and don't forget the sheet descri
 
 ### 请仔细阅读以下使用须知！<br>Before using this script, you must read the following notes!
 
-1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！<br>SkyAutoplayerScript is not fully tested, if you meet a bug, please PM CoolApk@StageGuard or create a new issue.
+1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！<br>
 
-2. **SkyAutoplayerScript是完全免费且开源的软件/脚本([https://github.com/StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript))，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。**<br>**SkyAutoplayerScript is a free and open source project. If you want to use it for commercial purposes, please add the link refers to this repository.**
+   SkyAutoplayerScript is not fully tested, if you meet a bug, please PM CoolApk@StageGuard or create a new issue.
+
+2. **SkyAutoplayerScript是完全免费且开源的软件/脚本([https://github.com/StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript))，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。**<br>
+
+   **SkyAutoplayerScript is a free and open source project. If you want to use it for commercial purposes, please add the link refers to this repository.**
 
 3. **共享乐谱不遵守LGPL-2.1协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！**<br>
 
    **Shared sheets is not under the protection of LGPL-2.1, if you want to reprint shared sheets to other platforms, please talk to sheet transcriber by your self!**
 
-4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。<br>The script is just for entertainment and it is not suitable to use it in formal occasion.
+4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。<br>
 
-5. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。<br>Script just gives you a short-time sense of satisfaction and do not make you progress.
+   The script is just for entertainment and it is not suitable to use it in formal occasion.
 
-6. 本脚本只是一个"弹奏机"，并不内置曲谱，请在GooglePlay下载 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 编谱。<br>This script is just a "player" and no built-in sheets, you must download [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) to make sheets.
+5. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。<br>
 
-7. 本脚本不会增加解密乐谱功能，包括但不限于**加密的SkyStudio乐谱**，**加密的JS**等，也不接受加密乐谱的共享。<br>The script will not support decrypt sheet, including **SkyStudio encryped sheet** or **encrypted js** etc...<br>And the repository will also not accept encrypted sheet.
+   Script just gives you a short-time sense of satisfaction and do not make you progress.
+
+6. 本脚本只是一个"弹奏机"，并不内置曲谱，请在 GooglePlay 下载 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 编谱。<br>
+
+   This script is just a "player" and no built-in sheets, you must download [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) to make sheets.
+
+7. 本脚本不会增加解密乐谱功能，包括但不限于**加密的SkyStudio乐谱**，**加密的JS**等，也不接受加密乐谱的共享。<br>
+
+   The script will not support decrypt sheet, including **SkyStudio encryped sheet** or **encrypted js** etc...<br>And the repository will also not accept encrypted sheet.
 
 
 
