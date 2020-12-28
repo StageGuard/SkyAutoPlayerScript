@@ -43,7 +43,7 @@ There are many features in SkyAutoPlayerScript compared to other auto player scr
 * 多功能的弹奏控制面板，支持**暂停**， **进度控制**， **倍速控制**等<br>Multi-functional player control panel with **pause**, **progress control** and **speed control**.
 * 通过引导自设定键位坐标，避免按压琴键的偏移问题<br>Set key coordinates by yourself with guidence, avoiding key offset when playing.
 * 在线[共享乐谱](https://github.com/StageGuard/SkyAutoPlayerScript/tree/master/shared_sheets)，有许多优质乐谱。</br>~~(甚至有的乐谱复杂到根本无法手弹)~~<br>There are many excellent online [shared sheets](https://github.com/StageGuard/SkyAutoPlayerScript/tree/master/shared_sheets).
-* 自动更新，及时修复BUG，无需担心版本过时问题。<br>Automatically update sheet.
+* 自动更新，及时修复BUG，无需担心版本过时问题。<br>Automatically update script.
 * [多语言支持](#翻译--translation)<br>[Multi-language support](#翻译--translation).
 * ...
 
@@ -182,7 +182,7 @@ Just mail your sheet file to beamiscool@qq.com and don't forget the sheet descri
 
 3. **共享乐谱不遵守LGPL-2.1协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！**<br>
 
-   **Shared sheets is not under the protection of LGPL-2.1, if you want to reprint shared sheets to other platforms, please talk to sheet transcriber by your self!**
+   **Shared sheets is not under the protection of LGPL-2.1, if you want to reprint shared sheets to other platforms, please contact sheet transcriber by yourself!**
 
 4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。<br>
 
