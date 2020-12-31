@@ -2,7 +2,7 @@
 "use strict";
 /*
     SkyAutoPlayer (Auto.js script)
-	Copyright © 2020 StageGuard
+	Copyright © 2020-2021 StageGuard
 	  Contact : 
 	  (QQ: 1355416608)
 	  (Email: beamiscool@qq.com)
