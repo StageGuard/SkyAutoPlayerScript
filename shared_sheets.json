@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "のみこ/Masayoshi Minoshima - Bad Apple",
+      "file": "Bad_Apple.txt",
+      "author": "酷安@箬枫",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/844564>@箬枫<a/> 分享乐谱 のみこ/Masayoshi Minoshima - Bad Apple",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 563,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/844564"
+        }
+      ]
+    },
+    {
       "name": "新年好",
       "file": "新年好.txt",
       "author": "酷安@头条乀",
