@@ -276,7 +276,7 @@ SkyAutoplayerScript version 21 has supported multi-language and can also fetch o
 
 ```
     SkyAutoPlayer (Auto.js script)
-	  Copyright © 2020 StageGuard
+	  Copyright © 2020-2021 StageGuard
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
