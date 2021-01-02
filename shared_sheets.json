@@ -1,6 +1,42 @@
 {
   "sheets": [
     {
+      "name": "上田麗奈 - リテラチュア",
+      "file": "リテラチュア.txt",
+      "author": "酷安@夏卡卡卡",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/> 分享乐谱 上田麗奈 - リテラチュア\nTV动画《魔女之旅》片头曲",
+      "bpm": 472,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 4,
+      "noteCount": 467,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
+    },
+    {
+      "name": "新闻联播ED",
+      "file": "新闻联播ED.txt",
+      "author": "酷安@夏卡卡卡",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/> 分享乐谱 新闻联播ED",
+      "bpm": 304,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 2,
+      "noteCount": 252,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
+    },
+    {
       "name": "シルエット(Silhouette)",
       "file": "Silhouette.txt",
       "author": "chikin",
