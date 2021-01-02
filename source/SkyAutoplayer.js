@@ -2705,6 +2705,8 @@ gui.dialogs.showProgressDialog(function(o) {
 						} else {
 							app.openUrl(item.social[0].link);
 						}
+						gui.main.__internal_dismiss();
+						gui.suspension.show();
 					}
 				}));
 			} else {
@@ -2724,6 +2726,8 @@ gui.dialogs.showProgressDialog(function(o) {
 							} else {
 								app.openUrl(item.social[view.getId()].link);
 							}
+							gui.main.__internal_dismiss();
+							gui.suspension.show();
 						}
 					}));
 					socialLayout.addView(socialImage);
