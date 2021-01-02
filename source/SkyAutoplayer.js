@@ -644,7 +644,7 @@ config = {
 	
 	fetchResources: function(listener) {
 		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
-		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png", "note.png", "user.png", "piano.png", "clock.png"/*, "filter.png"*/, "coolapk.png", "douyin.png", "github.png", "twitter.png", "bilibili.png"];
+		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png", "note.png", "user.png", "piano.png", "clock.png"/*, "filter.png"*/, "coolapk.png", "douyin.png", "github.png", "twitter.png", "bilibili.png", "mail.png"];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/bitmaps/";
 		var downloadQueue = [];
 		var tryCount = 1;
@@ -2648,6 +2648,13 @@ gui.dialogs.showProgressDialog(function(o) {
 						}
 					}());
 					case "bilibili": return "#FB7299";
+					case "mail": return (function(){
+						if(config.values.theme == "light") {
+							return "#24292E";
+						} else {
+							return "#FFFFFF";
+						}
+					}());
 				}
 			}
 			var filterBitmap = function(bitmap, replacedColor) {
@@ -2684,7 +2691,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				socialImage.setImageBitmap(filterBitmap(config.bitmaps[item.social[0].platform], android.graphics.Color.parseColor(colorPicker(item.social[0].platform))));
 				socialLayout.addView(socialImage);
 				var socialPrompt1 = new android.widget.TextView(ctx);
-				socialPrompt1.setText(android.text.Html.fromHtml(("在 <font color=" + colorPicker(item.social[0].platform) + ">" + item.social[0].name +"</font> 查看作者")));
+				socialPrompt1.setText(android.text.Html.fromHtml(("在 <font color=" + colorPicker(item.social[0].platform) + ">" + item.social[0].name + "</font> 查看作者")));
 				socialPrompt1.setLayoutParams(new android.widget.LinearLayout.LayoutParams(-2, dp * 34));
 				socialPrompt1.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
 				socialPrompt1.setTextColor(gui.config.colors[config.values.theme].text);

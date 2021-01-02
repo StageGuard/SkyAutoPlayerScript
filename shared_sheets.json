@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "シルエット(Silhouette)",
+      "file": "Silhouette.txt",
+      "author": "chikin",
+      "desc": "<a href=mailto:2869826936@qq.com>@chikin<a/> 分享乐谱 シルエット(Silhouette)\n【火影忍者：疾风传】 OP 16 シルエット(Silhouette)",
+      "bpm": 350,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 1631,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "2869826936@qq.com",
+          "link": "mailto:2869826936@qq.com"
+        }
+      ]
+    },
+    {
       "name": "のみこ/Masayoshi Minoshima - Bad Apple",
       "file": "Bad_Apple.txt",
       "author": "酷安@箬枫",

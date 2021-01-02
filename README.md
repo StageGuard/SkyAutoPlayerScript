@@ -164,9 +164,9 @@ After finishing, you need to create a new `pull request` and wait it to be merge
 
 ### 2. 如果你不是很懂 Github...<br>If you are not familiar with Github...
 
-只需要把乐谱发送到邮箱 beamiscool@qq.com 来交给我就行啦！别忘了附带乐谱简介！
+只需要把乐谱发送到邮箱 [beamiscool@qq.com](mailto:beamiscool@qq.com) 来交给我就行啦！别忘了附带乐谱简介！
 
-Just mail your sheet file to beamiscool@qq.com and don't forget the sheet description !
+Just mail your sheet file to [beamiscool@qq.com](mailto:beamiscool@qq.com) and don't forget the sheet description !
 
 # 注意! / Attention!
 
@@ -253,6 +253,8 @@ Twitter[Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)
 酷安[@头条乀](http://www.coolapk.com/u/1192320)
 
 酷安[@Alusias](http://www.coolapk.com/u/808787)
+
+[chikin](mailto:2869826936@qq.com)
 
 ## 翻译 / Translation
 
