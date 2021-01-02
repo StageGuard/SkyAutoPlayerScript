@@ -2700,7 +2700,11 @@ gui.dialogs.showProgressDialog(function(o) {
 				socialLayout.setBackgroundDrawable(gui.utils.ripple_drawable(socialLayout.getMeasuredWidth(), socialLayout.getMeasuredHeight(), "rect"));
 				socialLayout.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
-						app.openUrl(item.social[0].link);
+						if(item.social[0].platform == "mail") {
+							app.sendEmail({email: item.social[0].link})
+						} else {
+							app.openUrl(item.social[0].link);
+						}
 					}
 				}));
 			} else {
@@ -2715,8 +2719,11 @@ gui.dialogs.showProgressDialog(function(o) {
 					socialImage.setBackgroundDrawable(gui.utils.ripple_drawable(socialImage.getMeasuredWidth(), socialImage.getMeasuredHeight(), "rect"));
 					socialImage.setOnClickListener(new android.view.View.OnClickListener({
 						onClick: function(view) {
-							print(view.getId())
-							app.openUrl(item.social[view.getId()].link);
+							if(item.social[view.getId()].platform == "mail") {
+								app.sendEmail({email: item.social[view.getId()].link})
+							} else {
+								app.openUrl(item.social[view.getId()].link);
+							}
 						}
 					}));
 					socialLayout.addView(socialImage);
