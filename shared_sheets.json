@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "周兴哲 - 永不失联的爱",
+      "file": "永不失联的爱.txt",
+      "author": "酷安@温茶予君",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1212499>@温茶予君<a/> 分享乐谱 周兴哲 - 永不失联的爱",
+      "bpm": 340,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 363,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1212499"
+        }
+      ]
+    },
+    {
       "name": "上田麗奈 - リテラチュア",
       "file": "リテラチュア.txt",
       "author": "酷安@夏卡卡卡",

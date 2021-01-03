@@ -256,6 +256,8 @@ Twitter[Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)
 
 [chikin](mailto:2869826936@qq.com)
 
+酷安[@温茶予君](http://www.coolapk.com/u/1212499)
+
 ## 翻译 / Translation
 
 SkyAutoplayerScript 在版本 21 已支持多语言并可以在线获取语言列表，你可以查看 [contribute-translation.md](contribute-translation.md) (English) 来了解如何贡献翻译。
