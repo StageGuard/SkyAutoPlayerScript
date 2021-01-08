@@ -1,32 +1,3 @@
-# 关于脚本倒卖的问题: [#1](https://github.com/StageGuard/SkyAutoPlayerScript/issues/1)
-
-# 耻辱柱
-
-Gitee 用户[嗨游圈(@vipssp)](https://gitee.com/vipssp)在**未经乐谱上传者的同意下私自盗用** SkyAutoplayerScript 于 Gitee 的[同步镜像](https://gitee.com/stageguard/SkyAutoPlayerScript)到它的 [Gitee 仓库](https://gitee.com/vipssp/SkyAutoPlayerScript/)。
-
-在经过[通知](https://gitee.com/vipssp/SkyAutoPlayerScript/commit/197925a71ff9cc6248be682a55406fc5814b12d7#note_3637784)后仍未及时删除盗用的乐谱，在于一些乐谱原作者沟通后，决定将其挂在此 README.md 首部，以告示。
-
-<table>
-<tr>
-    <td align="center" height="200">
-        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-8-40.PNG" />
-    </td>
-    <td align="center" height="200">
-        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-9-57.PNG" />
-    </td>
-    <td align="center" height="200">
-        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-44-4.PNG" />
-    </td>
-    <td align="center" height="200">
-        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/Screenshot_2020-12-19-00-10-12-499_com.coolapk.market.jpg" />
-    </td>
-    <td align="center" height="200">
-        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/Screenshot_2020-12-19-00-11-23-671_com.coolapk.market.jpg" />
-    </td>
-</tr>
-</table>
-
-
 # SkyAutoPlayerScript
 
 使用Auto.js提供的无障碍权限实现在Sky光遇中自动弹奏[SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio)导出的曲谱
@@ -201,6 +172,36 @@ Just mail your sheet file to [beamiscool@qq.com](mailto:beamiscool@qq.com) and d
    The script will not support decrypt sheet, including **SkyStudio encryped sheet** or **encrypted js** etc...<br>And the repository will also not accept encrypted sheet.
 
 
+<details> <summary>针对上述第2, 3条出现的问题：</summary>
+
+# 关于脚本倒卖的问题: [#1](https://github.com/StageGuard/SkyAutoPlayerScript/issues/1)
+
+# 耻辱柱
+
+Gitee 用户[嗨游圈(@vipssp)](https://gitee.com/vipssp)在**未经乐谱上传者的同意下私自盗用** SkyAutoplayerScript 于 Gitee 的[同步镜像](https://gitee.com/stageguard/SkyAutoPlayerScript)到它的 [Gitee 仓库](https://gitee.com/vipssp/SkyAutoPlayerScript/)。
+
+在经过[通知](https://gitee.com/vipssp/SkyAutoPlayerScript/commit/197925a71ff9cc6248be682a55406fc5814b12d7#note_3637784)后仍未及时删除盗用的乐谱，在于一些乐谱原作者沟通后，决定将其挂在此 README.md 首部，以告示。
+
+<table>
+<tr>
+    <td align="center" height="200">
+        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-8-40.PNG" />
+    </td>
+    <td align="center" height="200">
+        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-9-57.PNG" />
+    </td>
+    <td align="center" height="200">
+        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/2020-12-19_0-44-4.PNG" />
+    </td>
+    <td align="center" height="200">
+        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/Screenshot_2020-12-19-00-10-12-499_com.coolapk.market.jpg" />
+    </td>
+    <td align="center" height="200">
+        <img src="https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/resources/static/Screenshot_2020-12-19-00-11-23-671_com.coolapk.market.jpg" />
+    </td>
+</tr>
+</table>
+</details>
 
 # 贡献 / Contribution
 
