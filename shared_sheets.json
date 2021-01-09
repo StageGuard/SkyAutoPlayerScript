@@ -1,6 +1,65 @@
 {
   "sheets": [
     {
+      "name": "金莎 - 星月神话",
+      "file": "星月神话.txt",
+      "author": "酷安@箬枫",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/844564>@箬枫<a/> 分享乐谱 星月神话",
+      "bpm": 220,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 220,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/844564"
+        }
+      ]
+    },
+    {
+      "name": "Rick Astley - Never Gonna Give You Up",
+      "file": "Never_Gonna_Give_You_Up.txt",
+      "author": "StageGuard",
+      "desc": "豪 俊 金 曲 放 送",
+      "bpm": 454,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 1,
+      "noteCount": 330,
+      "social": [
+        {
+          "platform": "github",
+          "name": "GitHub",
+          "link": "https://github.com/StageGuard"
+        }, 
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1790774"
+        }
+      ]
+    },
+    {
+      "name": "上田麗奈 - リテラチュア",
+      "file": "リテラチュア(双手简谱).txt",
+      "author": "酷安@夏卡卡卡",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/> 分享乐谱 上田麗奈 - リテラチュア\nTV动画《魔女之旅》片头曲\n<b>双手简谱版本。</b>",
+      "bpm": 472,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 4,
+      "noteCount": 2422,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
+    },
+    {
       "name": "周兴哲 - 永不失联的爱",
       "file": "永不失联的爱.txt",
       "author": "酷安@温茶予君",
