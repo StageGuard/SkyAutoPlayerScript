@@ -217,47 +217,28 @@ Welcome everyone to contribute this project, including pull request, issue, new 
 
 ### 共享乐谱 / Shared sheets
 
-酷安[@Aex技术总监](http://www.coolapk.com/u/1286879)
-
-酷安[@夏卡卡卡](http://www.coolapk.com/u/2313452)
-
-酷安[@深空失忆か](http://www.coolapk.com/u/3005974)
-
-抖音[@子哲啊🌈(zizhe1880689503)](https://v.douyin.com/J9gUaVE/)
-
-酷安[@你们很有趣呢](http://www.coolapk.com/u/2416229)
-
-酷安[@情如风雪无常](http://www.coolapk.com/u/643670)
-
-酷安[@慕疵](http://www.coolapk.com/u/3286967)
-
-酷安[@社区最弱萌新](http://www.coolapk.com/u/3291313)
-
-酷安[@九方辰](http://www.coolapk.com/u/634078)
-
-酷安[@北极马可罗尼](http://www.coolapk.com/u/463478)
-
-哔哩哔哩[@UTF16](https://space.bilibili.com/623364258)
-
-酷安[@Syngenex](http://www.coolapk.com/u/1093421)
-
-Twitter[Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)
-
-酷安[@终究是错付了](http://www.coolapk.com/u/2293899)
-
-酷安[@DesperatU](http://www.coolapk.com/u/1075889)
-
-酷安[@明明酱](http://www.coolapk.com/u/1706128)
-
-酷安[@cxk的篮球](http://www.coolapk.com/u/1090769)
-
-酷安[@头条乀](http://www.coolapk.com/u/1192320)
-
-酷安[@Alusias](http://www.coolapk.com/u/808787)
-
-[chikin](mailto:2869826936@qq.com)
-
-酷安[@温茶予君](http://www.coolapk.com/u/1212499)
+酷安[@Aex技术总监](http://www.coolapk.com/u/1286879)<br>
+酷安[@夏卡卡卡](http://www.coolapk.com/u/2313452)<br>
+酷安[@深空失忆か](http://www.coolapk.com/u/3005974)<br>
+抖音[@子哲啊🌈(zizhe1880689503)](https://v.douyin.com/J9gUaVE/)<br>
+酷安[@你们很有趣呢](http://www.coolapk.com/u/2416229)<br>
+酷安[@情如风雪无常](http://www.coolapk.com/u/643670)<br>
+酷安[@慕疵](http://www.coolapk.com/u/3286967)<br>
+酷安[@社区最弱萌新](http://www.coolapk.com/u/3291313)<br>
+酷安[@九方辰](http://www.coolapk.com/u/634078)<br>
+酷安[@北极马可罗尼](http://www.coolapk.com/u/463478)<br>
+哔哩哔哩[@UTF16](https://space.bilibili.com/623364258)<br>
+酷安[@Syngenex](http://www.coolapk.com/u/1093421)<br>
+Twitter[Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)<br>
+酷安[@终究是错付了](http://www.coolapk.com/u/2293899)<br>
+酷安[@DesperatU](http://www.coolapk.com/u/1075889)<br>
+酷安[@明明酱](http://www.coolapk.com/u/1706128)<br>
+酷安[@cxk的篮球](http://www.coolapk.com/u/1090769)<br>
+酷安[@头条乀](http://www.coolapk.com/u/1192320)<br>
+酷安[@Alusias](http://www.coolapk.com/u/808787)<br>
+[chikin](mailto:2869826936@qq.com)<br>
+酷安[@温茶予君](http://www.coolapk.com/u/1212499)<br>
+酷安[@落红难相聚](http://www.coolapk.com/u/2082465)<br>
 
 ## 翻译 / Translation
 
