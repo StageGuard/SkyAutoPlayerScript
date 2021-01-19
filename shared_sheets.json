@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "烟斗斜桥",
+      "file": "烟斗斜桥.txt",
+      "author": "酷安@落红难相聚",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2082465>@落红难相聚<a/> 分享原创乐谱 烟斗斜桥",
+      "bpm": 320,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 309,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2082465"
+        }
+      ]
+    },
+    {
       "name": "Cécile Corbel - Arrietty's Song",
       "file": "Arrietty's_Song.txt",
       "author": "酷安@落红难相聚",
