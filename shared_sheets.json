@@ -1,6 +1,42 @@
 {
   "sheets": [
     {
+      "name": "Toby Fox - The World Revolving",
+      "file": "TheWorldRevolving.txt",
+      "author": "酷安@落红难相聚",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2082465>@落红难相聚<a/> 分享原创乐谱 Toby Fox - The World Revolving(天旋地转)\n游戏 《Deltarune》 原声带",
+      "bpm": 720,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 11,
+      "noteCount": 664,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2082465"
+        }
+      ]
+    },
+    {
+      "name": "拜尔 - 踩到猫儿",
+      "file": "踩到猫儿.txt",
+      "author": "酷安@落红难相聚",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2082465>@落红难相聚<a/> 分享原创乐谱 拜尔 - 踩到猫儿",
+      "bpm": 440,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 108,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2082465"
+        }
+      ]
+    },
+    {
       "name": "烟斗斜桥",
       "file": "烟斗斜桥.txt",
       "author": "酷安@落红难相聚",
