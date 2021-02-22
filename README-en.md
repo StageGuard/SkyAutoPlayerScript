@@ -162,6 +162,11 @@ I decide to pin him in README.md after comminucating with some sheet sharer.
 
 Welcome everyone to contribute this project, including pull request, issue, new feature request or translation.
 
+### ⚠️WARNING
+CodeFactor Evaluation: [![CodeFactor](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript/badge)](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript)
+
+Because of the limitation of Auto.js, it is impossible to extract functions and method so all functions are defined in a single file. Also, my coding skill is poor, so it is `a little hard` to understand source code.
+
 ## Contributor
 
 ### SkyAutoPlayerScript

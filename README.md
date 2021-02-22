@@ -165,6 +165,11 @@ Gitee 用户[嗨游圈(@vipssp)](https://gitee.com/vipssp)在**未经乐谱上�
 
 欢迎任何人贡献本项目，包括但不限于 Pull Request，Issue，New feature request 或者 贡献翻译。
 
+### ⚠️警告
+CodeFactor 代码评估: [![CodeFactor](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript/badge)](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript)
+
+由于 Auto.js 的限制，无法将不同的功能分离，所以所有功能都在一个文件实现；再加上我糟糕的代码技能，源码会非常难读。
+
 ## 贡献者
 
 ### SkyAutoPlayerScript
