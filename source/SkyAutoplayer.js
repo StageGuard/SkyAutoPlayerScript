@@ -29,13 +29,13 @@
 
 const user_agreements = 
 	"请仔细阅读以下使用须知！\n\n" + 
-	"未充分测试，若遇到BUG，请酷安私信@StageGuard或在github中的StageGuard/SkyAutoPlayerScript新建Issue来反馈BUG！\n\n" + 
-	"1. SkyAutoPlayer(以下简称\"本脚本\")是完全免费且开源的软件/脚本(https://github.com/StageGuard/SkyAutoPlayerScript)，禁止使用本脚本作为盈利用途！\n若你是从其他渠道购买获得的本脚本，那么就说明你被骗了！\n\n" + 
-	"2. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard(以下简称\"作者\")无关。\n\n" + 
-	"3. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。\n\n" + 
-	"4. 本脚本只是一个\"弹奏机\"，并不内置曲谱，请在GooglePlay下载SkyStudio编谱。\n\n" + 
-	"5. 本脚本不会增加解密乐谱功能，包括但不限于加密的SkyStudio乐谱，加密的JS等，也不接受加密乐谱的共享。\n\n" + 
-	"6. 本脚本的发行遵守LGPL-2.1协议，若你不了解协议内容，请访问 https://www.gnu.org/licenses 查看"
+	"1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！\n\n" + 
+	"2. SkyAutoplayerScript是完全免费且开源的软件/脚本(https://github.com/StageGuard/SkyAutoPlayerScript)，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。\n\n" + 
+	"3. 共享乐谱不遵守LGPL-2.1协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！\n\n" + 
+	"4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。\n\n" + 
+	"5. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。\n\n" + 
+	"6. 本脚本只是一个\"弹奏机\"，并不内置曲谱，请在 GooglePlay 下载 SkyStudio 编谱。\n\n" + 
+	"7. 本脚本的发行遵守LGPL-2.1协议，若你不了解协议内容，请访问 https://www.gnu.org/licenses 查看"
 ;
 
 //Script global scope
