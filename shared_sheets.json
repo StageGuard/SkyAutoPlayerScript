@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "水源小樱 - 白月光与朱砂痣",
+      "file": "白月光与朱砂痣.txt",
+      "author": "酷安@bugjump233",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/3294062>@bugjump233<a/> 分享乐谱 水源小樱 - 白月光与朱砂痣",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 215,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3294062"
+        }
+      ]
+    },
+    {
       "name": "Toby Fox - The World Revolving",
       "file": "TheWorldRevolving.txt",
       "author": "酷安@落红难相聚",

@@ -200,6 +200,7 @@ Twitter [Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)<br>
 [chikin](mailto:2869826936@qq.com)<br>
 酷安[@温茶予君](http://www.coolapk.com/u/1212499)<br>
 酷安[@落红难相聚](http://www.coolapk.com/u/2082465)<br>
+酷安[@bugjump233](http://www.coolapk.com/u/3294062)<br>
 
 ## 翻译
 

@@ -197,6 +197,7 @@ CoolApk [@Alusias](http://www.coolapk.com/u/808787)<br>
 [chikin](mailto:2869826936@qq.com)<br>
 CoolApk [@温茶予君](http://www.coolapk.com/u/1212499)<br>
 CoolApk [@落红难相聚](http://www.coolapk.com/u/2082465)<br>
+CoolApk [@bugjump233](http://www.coolapk.com/u/3294062)<br>
 
 ## Translation
 
