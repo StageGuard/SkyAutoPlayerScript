@@ -105,7 +105,7 @@ sheetmgr = {
 	
 	downloadAndLoad: function(file, extraData, listener) {
 		listener({status:1});
-		config.fetchRepoFile("shared_sheets/" + file, null, function(body) {
+		config.fetchRepoFile("shared_sheets/" + file, config.values.gitVersion, function(body) {
 			var sheet = files.join(sheetmgr.rootDir, files.getNameWithoutExtension(file) + (function(length) {
 				var string = "0123456789abcde";
 				var stringBuffer = new java.lang.StringBuffer();
@@ -548,7 +548,7 @@ config = {
 					this.languages[content.code] = content.content;
 					listener(String.format(this.languages[content.code].res_use_language, content.name));
 					threads.start(function() {
-						config.fetchRepoFile("source/language_list.json", null, function(body) {
+						config.fetchRepoFile("source/language_list.json", config.values.gitVersion, function(body) {
 							var onlineList = JSON.parse(body.string()).list;
 							for(var i in onlineList) {
 								if(onlineList[i].code == content.code) {
@@ -643,7 +643,6 @@ config = {
 	},
 	
 	fetchResources: function(listener) {
-		var remoteHost = "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + this.values.gitVersion + "/resources/";
 		var resourceList = ["local.png", "online.png", "play.png", "pause.png", "refresh.png", "settings.png", "info.png", "download.png", "bin.png", "speedup.png", "search.png", "note.png", "user.png", "piano.png", "clock.png"/*, "filter.png"*/, "coolapk.png", "douyin.png", "github.png", "twitter.png", "bilibili.png", "mail.png"];
 		var localRootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/bitmaps/";
 		var downloadQueue = [];
@@ -712,26 +711,19 @@ config = {
 	fetchRepoFile: function(path, gitVersion, successCbk, failCbk) {
 		//就用最蠢的if来判断吧
 		try {
-			var resp = http.get(encodeURI("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path));
+			var resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (gitVersion == null ? "" : ("@" + gitVersion)) + "/" + path));
 			if(resp.statusCode >= 200 && resp.statusCode < 300) {
 				successCbk(resp.body);
 				return;
 			} else {
 				var errorCollector = resp.statusCode + ": " + resp.statusMessage + "\n";
-				resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (gitVersion == null ? "" : ("@" + gitVersion)) + "/" + path));
+				resp = http.get(encodeURI("https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path));
 				if(resp.statusCode >= 200 && resp.statusCode < 300) {
 					successCbk(resp.body);
 					return;
 				} else {
 					errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
-					resp = http.get(encodeURI("https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path));
-					if(resp.statusCode >= 200 && resp.statusCode < 300) {
-						successCbk(resp.body);
-						return;
-					} else {
-						errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
-						if(failCbk != null) failCbk(errorCollector);
-					}
+					if(failCbk != null) failCbk(errorCollector);
 				}
 			}
 		} catch(e) {
@@ -2343,7 +2335,7 @@ gui = {
 				var item = listAdapterController.get(pos);
 				if(item.type == "item") {
 					var fetchOnline = function() {
-						config.fetchRepoFile("resources/language_pack/" + item.code + ".json", null, function(body) {
+						config.fetchRepoFile("resources/language_pack/" + item.code + ".json", config.values.gitVersion, function(body) {
 							var lf = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/" + item.code + ".json";
 							files.create(lf)
 							files.writeBytes(lf, body.bytes());
@@ -2405,7 +2397,7 @@ gui = {
 
 		var onlineList = [];
 		threads.start(function() {
-			config.fetchRepoFile("source/language_list.json", null, function(body) {
+			config.fetchRepoFile("source/language_list.json", config.values.gitVersion, function(body) {
 				onlineList = JSON.parse(body.string()).list;
 				gui.run(function() {
 					var __listArray = listAdapterController.getArray();
@@ -3570,7 +3562,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: config.languages[config.values.lang].page_setting_show_license, 
 					onClick: function(v) {
 						threads.start(function() {
-							config.fetchRepoFile("LICENSE", null, function(body) {
+							config.fetchRepoFile("LICENSE", config.values.gitVersion, function(body) {
 								gui.dialogs.showConfirmDialog({
 									title: "GNU GENERAL PUBLIC LICENSE",
 									text: body.string(),
@@ -3585,7 +3577,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: config.languages[config.values.lang].page_setting_show_changelog, 
 					onClick: function(v) {
 						threads.start(function() {
-							config.fetchRepoFile("update_log.txt", null, function(body) {
+							config.fetchRepoFile("update_log.txt", config.values.gitVersion, function(body) {
 								gui.dialogs.showConfirmDialog({
 									title: config.languages[config.values.lang].page_setting_changelog_title,
 									text: body.string(),
