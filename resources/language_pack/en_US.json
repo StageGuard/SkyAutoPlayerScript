@@ -1,7 +1,7 @@
 {
     "name": "English (US)",
     "code": "en_US",
-    "version": 3,
+    "version": 4,
     "content": {
         "launch_tip_in_content": "If you can't see a diamond popup dialog,<br>make sure that Auto.js is allowed to <u><b>display pop-up window</u></b><br><br><br>Version <b>4.1.1 Alpha2</b> is recommended.<br><b>4.1.1 Alpha2</b> Download: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "FORCE EXIT",
@@ -41,14 +41,14 @@
         "page_lc_load_failed_r3": "Are any syntax error in this sheet.", 
         "page_lc_loading_sheet": "Loading: {0} total({1} failed)",
     
-        "page_sc_title": "Shared heet",
+        "page_sc_title": "Shared sheet",
         "page_sc_navigation_title": "SHARED",
         "page_sc_downloading": "Downloading...",
         "page_sc_analyzing": "Parsing...",
         "page_sc_download_success": "Download successful: {0}\nPlease press refresh button in local sheet page.",
         "page_sc_download_failed": "Failed to download {0}: {1}",
         "page_sc_upload_title": "How to upload your local sheet",
-        "page_sc_upload_desc": "There are two ways：\n\n①Mail to beamiscool@qq.com with attachment file.\n(Sheet description is optional.)\n\n②Pull request to StageGuard/SkyAutoplayerScript\n\n③PM to @StageGuard in CoolApk with sheet link.\nPut your sheet file to shared_sheets folder and modify shared_sheets.json\n\nWarning: If the sheet is not translated or composed by yourself, you must gain the permission of original composer or translator.\n\nWelcome to expand the shared sheet list!",
+        "page_sc_upload_desc": "There are three ways：\n\n1. Mail to beamiscool@qq.com with attachment file.\n(Sheet description is optional.)\n\n2. Create a pull request to StageGuard/SkyAutoplayerScript\n\n3. PM to @StageGuard in CoolApk with sheet link.\nPut your sheet file to shared_sheets folder and modify shared_sheets.json\n\nWarning: If the sheet is not translated or composed by yourself, you must gain the permission of original composer or translator.\n\nWelcome to expand the shared sheet list!",
         "page_sc_upload_open_coolapk": "Open CoolApk",
         "page_sc_upload_open_github": "Open GitHub",
         "page_sc_upload_ca_not_exist": "Application CookApk is not installed on your device",

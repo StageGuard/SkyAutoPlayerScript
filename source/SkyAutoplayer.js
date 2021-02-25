@@ -462,11 +462,12 @@ config = {
 			page_sc_download_success: "下载完成: {0}\n请在本地曲谱页面刷新",
 			page_sc_download_failed: "下载 {0} 失败: {1}",
 			page_sc_upload_title: "如何上传乐谱",
-			page_sc_upload_desc: "共有两种方式可以上传乐谱：\n\n" + 
-				"①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
-				"②在github fork StageGuard/SkyAutoplayerScript\n" + 
+			page_sc_upload_desc: "共有三种方式可以上传乐谱：\n\n" + 
+				"1. 酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n" + 
+				"2. 在github fork StageGuard/SkyAutoplayerScript\n" + 
 				"在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n" + 
 				"并提出 Pull Request 合并申请\n\n" + 
+				"3. 发送乐谱文件到 beamiscool@qq.com\n\n" + 
 				"注：若是转载转载请注明原作者同意\n\n" + 
 				"如果所有人都白嫖，那么这个列表将永远也不会扩充",
 			page_sc_upload_open_coolapk: "打开酷安",

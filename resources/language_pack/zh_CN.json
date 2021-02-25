@@ -1,7 +1,7 @@
 {
     "name": "简体中文",
     "code": "zh_CN",
-    "version": 3,
+    "version": 4,
     "content": {
         "launch_tip_in_content": "当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "强制退出",
@@ -48,7 +48,7 @@
         "page_sc_download_success": "下载完成: {0}\n请在本地曲谱页面刷新",
         "page_sc_download_failed": "下载 {0} 失败: {1}",
         "page_sc_upload_title": "如何上传乐谱",
-        "page_sc_upload_desc": "共有两种方式可以上传乐谱：\n\n①酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n②在github fork StageGuard/SkyAutoplayerScript\n在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n并提出 Pull Request 合并申请\n\n注：若是转载转载请注明原作者同意\n\n如果所有人都白嫖，那么这个列表将永远也不会扩充",
+        "page_sc_upload_desc": "共有三种方式可以上传乐谱：\n\n1. 酷安私信@StageGuard，发送时请附带简介，曲谱链接(百度云或其他云盘都可)\n2. 在github fork StageGuard/SkyAutoplayerScript\n在shared_sheets文件夹添加你的曲谱，并按照格式修改shared_sheets.json\n并提出 Pull Request 合并申请。\n\n3. 发送乐谱文件到 beamiscool@qq.com\n\n注：若是转载转载请注明原作者同意\n\n如果所有人都白嫖，那么这个列表将永远也不会扩充",
         "page_sc_upload_open_coolapk": "打开酷安",
         "page_sc_upload_open_github": "打开 Github",
         "page_sc_upload_ca_not_exist": "无法打开酷安，应用不存在！",
