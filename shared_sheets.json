@@ -1,6 +1,42 @@
 {
   "sheets": [
     {
+      "name": "两只老虎爱跳舞",
+      "file": "两只老虎爱跳舞.txt",
+      "author": "酷安@夏卡卡卡",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/> 分享乐谱 两只老虎爱跳舞\n\u1f42f\u1f483\u1f3fb\u1f3b6\n嘿！ 吔~",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 117,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安@夏卡卡卡",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
+    },
+    {
+      "name": "わたてん☆５ - 気ままな天使ーたち",
+      "file": "気ままな天使ーたち.txt",
+      "author": "酷安@夏卡卡卡",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/> 分享乐谱 わたてん☆５ - 気ままな天使ーたち",
+      "bpm": 504,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 6,
+      "noteCount": 779,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安@夏卡卡卡",
+          "link": "http://www.coolapk.com/u/2313452"
+        }
+      ]
+    },
+    {
       "name": "水源小樱 - 白月光与朱砂痣",
       "file": "白月光与朱砂痣.txt",
       "author": "酷安@bugjump233",
@@ -159,7 +195,7 @@
           "platform": "github",
           "name": "GitHub",
           "link": "https://github.com/StageGuard"
-        }, 
+        },
         {
           "platform": "coolapk",
           "name": "酷安",
@@ -1478,7 +1514,7 @@
           "platform": "github",
           "name": "GitHub",
           "link": "https://github.com/StageGuard"
-        }, 
+        },
         {
           "platform": "coolapk",
           "name": "酷安",
