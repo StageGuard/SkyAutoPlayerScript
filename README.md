@@ -4,7 +4,7 @@ English: [README-en.md](README-en.md)
 
 使用Auto.js提供的无障碍权限实现在Sky光遇中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
 
-[![shared sheet](https://badgen.net/badge/shared%20sheets/121%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/23/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
+[![shared sheet](https://badgen.net/badge/shared%20sheets/123%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/23/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
 ## 特性
 
