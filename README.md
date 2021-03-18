@@ -4,7 +4,7 @@ English: [README-en.md](README-en.md)
 
 使用Auto.js提供的无障碍权限实现在Sky光遇中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
 
-[![shared sheet](https://badgen.net/badge/shared%20sheets/123%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/23/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
+[![shared sheet](https://badgen.net/badge/shared%20sheets/125%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/24/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
 ## 特性
 
@@ -203,6 +203,7 @@ Twitter [Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)<br>
 酷安[@温茶予君](http://www.coolapk.com/u/1212499)<br>
 酷安[@落红难相聚](http://www.coolapk.com/u/2082465)<br>
 酷安[@bugjump233](http://www.coolapk.com/u/3294062)<br>
+酷安[@阿基米德的船](http://www.coolapk.com/u/3283016)<br>
 
 ## 翻译
 
