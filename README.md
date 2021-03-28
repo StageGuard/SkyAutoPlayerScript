@@ -6,6 +6,8 @@ English: [README-en.md](README-en.md)
 
 [![shared sheet](https://badgen.net/badge/shared%20sheets/125%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/24/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
+~~不会进一步支持原神的21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
+
 ## 特性
 
 相比于其他脚本，SkyAutoPlayerScript 拥有以下优势
