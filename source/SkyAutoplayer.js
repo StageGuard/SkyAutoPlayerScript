@@ -121,7 +121,7 @@ sheetmgr = {
 				listener({status:2});
 				data.author = extraData.author;
 				data.keyCount = extraData.keyCount;
-				data.name = element.name;
+				data.name = extraData.name;
 				return "[" + JSON.stringify(data) + "]";
 			}()), sheetmgr.encoding);
 			parsed = eval(parsed)[0];
@@ -129,7 +129,7 @@ sheetmgr = {
 			sheetmgr.cachedLocalSheetList.push(parsed);
 			listener({status:3});
 		}, function (msg) {
-			listener({status:-1, msg: "获取 " + remoteHost + " 失败，原因：" + resp.statusMessage});
+			listener({status:-1, msg: "获取 " + extraData.name + " 失败，原因：" + resp.statusMessage});
 		});
 	},
 	
