@@ -121,6 +121,7 @@ sheetmgr = {
 				listener({status:2});
 				data.author = extraData.author;
 				data.keyCount = extraData.keyCount;
+				data.name = element.name;
 				return "[" + JSON.stringify(data) + "]";
 			}()), sheetmgr.encoding);
 			parsed = eval(parsed)[0];
@@ -3170,7 +3171,7 @@ gui.dialogs.showProgressDialog(function(o) {
 						element.download.setBackgroundDrawable(gui.utils.ripple_drawable(element.download.getMeasuredWidth(), element.download.getMeasuredHeight(), "rect"));
 						element.download.setOnClickListener(new android.view.View.OnClickListener({
 							onClick: function() { threads.start(function() {
-								if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, {author: element.author, keyCount: element.keyCount}, function(r) {
+								if(!element.isShowingStatusBar) sheetmgr.downloadAndLoad(element.file, {author: element.author, keyCount: element.keyCount, name: element.name}, function(r) {
 									switch(r.status) {
 										case 1: {
 											gui.run(function() {
