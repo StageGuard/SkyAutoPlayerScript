@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "保罗·塞内维尔 - 梦中的婚礼",
+      "file": "梦中的婚礼.txt",
+      "author": "酷安@落红难相聚",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2082465>@落红难相聚<a/> 分享乐谱 保罗·塞内维尔 - 梦中的婚礼(Paul de Senneville - Mariage d'amour)",
+      "bpm": 272,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 10,
+      "noteCount": 342,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安@落红难相聚",
+          "link": "http://www.coolapk.com/u/2082465"
+        }
+      ]
+    },
+    {
       "name": "Lemon（C调）",
       "file": "Lemon(C调).txt",
       "author": "酷安@阿基米德的船",
