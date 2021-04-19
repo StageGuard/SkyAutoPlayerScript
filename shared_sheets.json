@@ -1,6 +1,60 @@
 {
   "sheets": [
     {
+      "name": "灰澈 - 星茶会",
+      "file": "星茶会（高音钢琴C调）.txt",
+      "author": "酷安@阿基米德的船",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/3283016>@阿基米德的船<a/> 分享乐谱 灰澈 - 星茶会\n使用高音钢琴在C调环境弹奏。",
+      "bpm": 870,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 1190,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3283016"
+        }
+      ]
+    },
+    {
+      "name": "いつも何度でも (「千と千尋の神隠し」主題歌)",
+      "file": "いつも何度でも (「千と千尋の神隠し」主題歌)F调.txt",
+      "author": "酷安@阿基米德的船",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/3283016>@阿基米德的船<a/> 分享乐谱 いつも何度でも \n(「千と千尋の神隠し」主題歌) (F调)",
+      "bpm": 470,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 5,
+      "noteCount": 1270,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3283016"
+        }
+      ]
+    },
+    {
+      "name": "old memory",
+      "file": "old memory.txt",
+      "author": "酷安@cxk的篮球",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1090769>@cxk的篮球<a/> 分享乐谱 old memory",
+      "bpm": 400,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 2,
+      "noteCount": 344,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1090769"
+        }
+      ]
+    },
+    {
       "name": "保罗·塞内维尔 - 梦中的婚礼",
       "file": "梦中的婚礼.txt",
       "author": "酷安@落红难相聚",
@@ -75,7 +129,7 @@
     {
       "name": "わたてん☆５ - 気ままな天使ーたち",
       "file": "気ままな天使ーたち.txt",
-      "author": "酷安",
+      "author": "酷安@夏卡卡卡",
       "desc": "酷安 <a href=http://www.coolapk.com/u/2313452>@夏卡卡卡<a/> 分享乐谱 わたてん☆５ - 気ままな天使ーたち",
       "bpm": 504,
       "suggested_instrument": 1,
