@@ -1,4 +1,4 @@
-name: Sync To Gitee
+name: Auto update commit and sync to gitee
 
 on: [ push, delete, create ]
 
@@ -6,8 +6,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        if: github.actor == 'StageGuard'
+        with:
+          persist-credentials: true
+      - name: Update commit hash to gitVersion
+        if: github.actor == 'StageGuard'
+        run: |
+          git show -s --format=%H > gitVersion
+          git add gitVersion
+      - name: Push commit
+        uses: EndBug/add-and-commit@v7.1.2
+        if: github.actor == 'StageGuard'
+        with:
+          add: gitVersion
+          author_name: github-actions[bot]
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: Update git tree hash
+          push: true
       - name: Sync to Gitee
         uses: wearerequired/git-mirror-action@master
+        if: github.actor == 'StageGuard'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
         with:

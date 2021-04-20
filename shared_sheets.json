@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "缘之空-遠い空へ",
+      "file": "-遠い空へ.txt",
+      "author": "酷安@cxk的篮球",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1090769>@cxk的篮球<a/> 分享乐谱 缘之空-遠い空へ",
+      "bpm": 440,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 2,
+      "noteCount": 1087,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1090769"
+        }
+      ]
+    },
+    {
       "name": "灰澈 - 星茶会",
       "file": "星茶会（高音钢琴C调）.txt",
       "author": "酷安@阿基米德的船",
