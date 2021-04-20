@@ -15,7 +15,6 @@ jobs:
         if: github.actor == 'StageGuard'
         run: |
           git show -s --format=%H > gitVersion
-          git add gitVersion
       - name: Push commit
         uses: EndBug/add-and-commit@v7.1.2
         if: github.actor == 'StageGuard'
