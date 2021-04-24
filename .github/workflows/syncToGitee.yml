@@ -36,7 +36,7 @@ jobs:
           remote_folder: ${{ secrets.FTP_MIRROR_ROOT_PATH }}
           local_folder: dist
           cleanup: true
-          exclude: [".git/**", ".github/**", "source/**", "*.md", "gitVersion"]
+          exclude: '[".git/**", ".github/**", "source/**", "*.md", "gitVersion"]'
           pasive: false
       - name: Sync to Gitee repo
         uses: wearerequired/git-mirror-action@master
