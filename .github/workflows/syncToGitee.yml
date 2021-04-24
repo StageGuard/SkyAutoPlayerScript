@@ -8,25 +8,44 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        if: github.actor == 'StageGuard'
+        if: github.actor != 'github-actions[bot]'
         with:
           persist-credentials: true
       - name: Update commit hash to gitVersion
-        if: github.actor == 'StageGuard'
+        if: github.actor != 'github-actions[bot]'
         run: |
           git show -s --format=%H > gitVersion
       - name: Push commit
         uses: EndBug/add-and-commit@v7.1.2
-        if: github.actor == 'StageGuard'
+        if: github.actor != 'github-actions[bot]'
         with:
           add: gitVersion
           author_name: github-actions[bot]
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: Update git tree hash
           push: true
-      - name: Sync to Gitee
+      - name: Sync to mirror file server
+        uses: sand4rt/ftp-deployer@v1.3
+        if: github.actor != 'github-actions[bot]'
+        with:
+          sftp: false
+          host: ${{ secrets.FTP_MIRROR_DESTINATION }}
+          port: ${{ secrets.FTP_MIRROR_PORT }}
+          username: ${{ secrets.FTP_MIRROR_USERNAME }}
+          password: ${{ secrets.FTP_MIRROR_SECRET }}
+          remote_folder: ${{ secrets.FTP_MIRROR_ROOT_PATH }}
+          local_folder: dist
+          cleanup: true
+          exclude:
+            - '.git/**'
+            - '.github/**'
+            - 'source/**'
+            - '*.md'
+            - 'gitVersion'
+          pasive: false
+      - name: Sync to Gitee repo
         uses: wearerequired/git-mirror-action@master
-        if: github.actor == 'StageGuard'
+        if: github.actor != 'github-actions[bot]'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
         with:
