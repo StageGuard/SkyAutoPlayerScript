@@ -31,7 +31,7 @@ jobs:
           ftp_username: ${{ secrets.FTP_MIRROR_USERNAME }}
           ftp_password: ${{ secrets.FTP_MIRROR_SECRET }}
           local_source_dir: "."
-          dist_target_dir: "."
+          dist_target_dir: ${{ secrets.FTP_MIRROR_ROOT_PATH }}
           delete: false
           only_newer: true
           exclude: "'^\\.git' '\\.md$' '^sources/' 'gitVersion'"
