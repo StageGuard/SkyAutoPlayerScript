@@ -24,17 +24,20 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: Update git tree hash
           push: true
-      - name: Sync to mirror ftp server
-        uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
+      - name: Sync to mirror file server
+        uses: sand4rt/ftp-deployer@v1.3
+        if: github.actor != 'github-actions[bot]'
         with:
-          ftp_host: ${{ secrets.FTP_MIRROR_DESTINATION }}
-          ftp_username: ${{ secrets.FTP_MIRROR_USERNAME }}
-          ftp_password: ${{ secrets.FTP_MIRROR_SECRET }}
-          local_source_dir: "."
-          dist_target_dir: ${{ secrets.FTP_MIRROR_ROOT_PATH }}
-          delete: false
-          only_newer: true
-          exclude: "'^\\.git' '\\.md$' '^sources/' 'gitVersion'"
+          sftp: false
+          host: ${{ secrets.FTP_MIRROR_DESTINATION }}
+          port: ${{ secrets.FTP_MIRROR_PORT }}
+          username: ${{ secrets.FTP_MIRROR_USERNAME }}
+          password: ${{ secrets.FTP_MIRROR_SECRET }}
+          remote_folder: ${{ secrets.FTP_MIRROR_ROOT_PATH }}
+          local_folder: .
+          cleanup: true
+          exclude: '[".git/**", ".github/**", "source/**", "*.md", "gitVersion"]'
+          pasive: false
       - name: Sync to Gitee repo
         uses: wearerequired/git-mirror-action@master
         if: github.actor != 'github-actions[bot]'
