@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "ムーンライト伝説(月光传说)",
+      "file": "月光传说.txt",
+      "author": "2087131113@qq.com",
+      "desc": "<a href=mailto:2087131113@qq.com>2087131113@qq.com<a/> 分享乐谱 ムーンライト伝説(月光传说)\n美少女戦士セーラームーン(《美少女战士》)主题曲",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 763,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "2087131113@qq.com",
+          "link": "2087131113@qq.com"
+        }
+      ]
+    },
+    {
       "name": "Pachelbel's Canon（D大调卡农）",
       "file": "Pachelbel's Canon（D大调卡农）.txt",
       "author": "酷安@阿基米德的船",
