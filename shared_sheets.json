@@ -1,6 +1,132 @@
 {
   "sheets": [
     {
+      "name": "晴天",
+      "file": "晴天.txt",
+      "author": "酷安@DoubleGGe",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/7728656>@DoubleGGe<a/> 分享乐谱 晴天",
+      "bpm": 300,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 490,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/7728656"
+        }
+      ]
+    },
+    {
+      "name": "宾克斯的美酒",
+      "file": "宾克斯的美酒.txt",
+      "author": "酷安@DoubleGGe",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/7728656>@DoubleGGe<a/> 分享乐谱 宾克斯的美酒",
+      "bpm": 330,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 298,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/7728656"
+        }
+      ]
+    },
+    {
+      "name": "江南",
+      "file": "江南.txt",
+      "author": "酷安@皮皮小猪猪",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/5352224>@皮皮小猪猪<a/> 分享乐谱 江南",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 10,
+      "noteCount": 90,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/5352224"
+        }
+      ]
+    },
+    {
+      "name": "她说",
+      "file": "她说.txt",
+      "author": "酷安@皮皮小猪猪",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/5352224>@皮皮小猪猪<a/> 分享乐谱 她说",
+      "bpm": 318,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 187,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/5352224"
+        }
+      ]
+    },
+    {
+      "name": "北京东路的日子",
+      "file": "北京东路的日子.txt",
+      "author": "酷安@皮皮小猪猪",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/5352224>@皮皮小猪猪<a/> 分享乐谱 北京东路的日子",
+      "bpm": 368,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 391,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/5352224"
+        }
+      ]
+    },
+    {
+      "name": "修炼爱情",
+      "file": "修炼爱情.txt",
+      "author": "酷安@皮皮小猪猪",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/5352224>@皮皮小猪猪<a/> 分享乐谱 修炼爱情",
+      "bpm": 250,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 121,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/5352224"
+        }
+      ]
+    },
+    {
+      "name": "不能说的秘密",
+      "file": "不能说的秘密.txt",
+      "author": "酷安@皮皮小猪猪",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/5352224>@皮皮小猪猪<a/> 分享乐谱 不能说的秘密",
+      "bpm": 288,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 7,
+      "noteCount": 173,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/5352224"
+        }
+      ]
+    },
+    {
       "name": "ムーンライト伝説(月光传说)",
       "file": "月光传说.txt",
       "author": "2087131113@qq.com",

@@ -4,7 +4,7 @@ English: [README-en.md](README-en.md)
 
 使用Auto.js提供的无障碍权限实现在Sky光遇中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
 
-[![shared sheet](https://badgen.net/badge/shared%20sheets/130%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/24/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
+[![shared sheet](https://badgen.net/badge/shared%20sheets/137%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/27/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
 ~~不会进一步支持原神的21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
 
@@ -207,6 +207,8 @@ Twitter [Phoebe@huunhut1217](https://mobile.twitter.com/huunhut1217)<br>
 酷安[@bugjump233](http://www.coolapk.com/u/3294062)<br>
 酷安[@阿基米德的船](http://www.coolapk.com/u/3283016)<br>
 [2087131113@qq.com](mailto:2087131113@qq.com)<br>
+酷安[@皮皮小猪猪](http://www.coolapk.com/u/5352224)<br>
+酷安[@DoubleGGe](http://www.coolapk.com/u/7728656)<br>
 
 ## 翻译
 
