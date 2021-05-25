@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "雨之歌",
+      "file": "雨之歌.txt",
+      "author": "恋上猫的鱼~",
+      "desc": "<a href=mailto:shi1177121232@foxmail.com>@恋上猫的鱼~<a/> 分享乐谱 雨之歌\n动画《少女终末旅行》插曲",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 349,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "shi1177121232@foxmail.com",
+          "link": "shi1177121232@foxmail.com"
+        }
+      ]
+    },
+    {
       "name": "青花瓷",
       "file": "青花瓷.txt",
       "author": "酷安@皮皮小猪猪",
