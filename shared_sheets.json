@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "浪流连",
+      "file": "浪流连.txt",
+      "author": "依稀（濒死动物）",
+      "desc": "<a href=mailto:3423451308@qq.com>@依稀（濒死动物）<a/> 分享乐谱 浪流连",
+      "bpm": 500,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 267,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "3423451308@qq.com",
+          "link": "3423451308@qq.com"
+        }
+      ]
+    },
+    {
       "name": "雨之歌",
       "file": "雨之歌.txt",
       "author": "恋上猫的鱼~",
