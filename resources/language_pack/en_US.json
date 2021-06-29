@@ -1,7 +1,7 @@
 {
     "name": "English (US)",
     "code": "en_US",
-    "version": 4,
+    "version": 5,
     "content": {
         "launch_tip_in_content": "If you can't see a diamond popup dialog,<br>make sure that Auto.js is allowed to <u><b>display pop-up window</u></b><br><br><br>Version <b>4.1.1 Alpha2</b> is recommended.<br><b>4.1.1 Alpha2</b> Download: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "FORCE EXIT",
@@ -106,6 +106,12 @@
         "res_language_download_failed": "Failed to download language pack: {0}",
         "res_language_dialog_tip": "Your language is not on the list?<br>Welcome to translate the script:<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript/blob/master/contribute-translation.md</a>",
         "res_language_failed_fetch_online_list": "Failed to fetch online language list",
-        "res_language_update_needed": "Language pack need to be updated, please go to setting->language and click current language again to upgrade."
+        "res_language_update_needed": "Language pack need to be updated, please go to setting->language and click current language again to upgrade.",
+
+        "page_setting_no_popup_play": "Close panel in playing",
+        "page_setting_no_popup_play_interval": "Interval to play when close panel",
+        "no_popup_play_warning_title": "WARNING",
+        "no_popup_play_warning": "You have enabled \"Close panel in playing\" opinion!\nPlay without control panel is <b>extremely dangerous</b>.\n\nWhen popup notification or bubble chat appears, script may touch these popup window by mistake. At this time, script is still running(or playing) and is <b>uninterrupted</b>. You have no way to stop playing but wait.\n<b>Script touch in other pages may causes irreparable harm.</b>\n\nBesides, record play process is uesless and doesn't give you sense of satisfaction.\n\nI have already warned you that if there is any loss or dispute caused by using this function, it has nothing to do with the SkyAutoplayer script and the script author StageGuard.\nIf continue, please click the confirm button, or otherwise click the Cancel button.\n\nps. \"Random and continuate play\" will not work.",
+        "no_popup_play_tip": "Script will start playing in {0} seconds."
     }
 }

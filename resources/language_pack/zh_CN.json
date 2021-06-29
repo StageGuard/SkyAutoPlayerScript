@@ -1,7 +1,7 @@
 {
     "name": "简体中文",
     "code": "zh_CN",
-    "version": 4,
+    "version": 5,
     "content": {
         "launch_tip_in_content": "当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
         "launch_tip_force_exit": "强制退出",
@@ -106,6 +106,12 @@
         "res_language_download_failed": "语言下载失败：{0}",
         "res_language_dialog_tip": "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript/blob/master/contribute-translation.md</a>",
         "res_language_failed_fetch_online_list": "无法获取在线语言列表",
-        "res_language_update_needed": "语言需要更新，请前往设置界面重新点击当前语言来更新"
+        "res_language_update_needed": "语言需要更新，请前往设置界面重新点击当前语言来更新",
+
+        "page_setting_no_popup_play": "弹奏不显示悬浮窗",
+        "page_setting_no_popup_play_interval": "无悬浮窗弹奏开始间隔",
+        "no_popup_play_warning_title": "警告",
+        "no_popup_play_warning": "您已经开启\"弹奏不显示悬浮窗\"选项！\n弹奏不受弹奏面板控制是<b>非常危险的</b>。\n\n当出现顶部悬浮通知(例如QQ消息)或气泡对话时，脚本可能会误触消息并开启其他软件，此时脚本依旧在运行中(弹奏中)且<b>无法被打断</b>。也就是说除了等待弹奏完成以外，没有任何办法终止弹奏。\n<b>脚本在其他界面的误触可能会对您造成不可挽回的损失！</b>\n\n另外，使用此功能且录屏不会使你获得任何成就感。\n\n我已经警告过你了，若因使用此功能造成了损失或纠纷，与 SkyAutoPlayer 脚本和脚本作者 StageGuard 无关，请悉知。\n若继续使用，请点击确认按钮，否则请点击取消按钮。\n\n注意：使用此功能时，\"连续随机播放\"功能将不会生效。",
+        "no_popup_play_tip": "将在 {0} 秒后开始弹奏。"
     }
 }

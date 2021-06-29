@@ -105,7 +105,7 @@ sheetmgr = {
 	
 	downloadAndLoad: function(file, extraData, listener) {
 		listener({status:1});
-		config.fetchRepoFile("shared_sheets/" + file, config.values.gitVersion, function(body) {
+		config.fetchRepoFile("shared_sheets/" + file, function(body) {
 			var sheet = files.join(sheetmgr.rootDir, files.getNameWithoutExtension(file) + (function(length) {
 				var string = "0123456789abcde";
 				var stringBuffer = new java.lang.StringBuffer();
@@ -162,7 +162,7 @@ sheetmgr = {
 		}
 	},
 	__internal_fetchOnlineSharedSheets: function() {
-		config.fetchRepoFile("shared_sheets.json", config.values.gitVersion, function(body) {
+		config.fetchRepoFile("shared_sheets.json", function(body) {
 			sheetmgr.cachedOnlineSharedSheetInfoList = body.json().sheets;
 		});
 	},
@@ -301,25 +301,30 @@ sheetplayer = {
 			// 播放完自动下一首
 
 			if(!(sheetplayer.currentNote < sheetplayer.noteCount)) {
-				if(config.values.autoPlay && gui.player_panel.isShowing) {
-					gui.player_panel.__internal_dismiss();
-					sheetplayer.stop();
-					// gui.main.show(0);
-					if(sheetmgr.cachedLocalSheetList.length>0){
-						setTimeout(function(){
-							let sheet = sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
-							if(!sheet.keyCount){
-								sheet.keyCount = 15 //默认键位
-							}
-							gui.player_panel.__internal_showPanel(sheet);
-							// sheetplayer.stop();
+				if(!config.values.noPopupPlay) {
+					if(config.values.autoPlay && gui.player_panel.isShowing) {
+						gui.player_panel.__internal_dismiss();
+						sheetplayer.stop();
+						// gui.main.show(0);
+						if(sheetmgr.cachedLocalSheetList.length>0){
 							setTimeout(function(){
-								sheetplayer.play(gui.player_panel.refreshStatus);
-							}, 1500)
-						}, 500)
+								let sheet = sheetmgr.cachedLocalSheetList[random(0, sheetmgr.cachedLocalSheetList.length-1)]
+								if(!sheet.keyCount){
+									sheet.keyCount = 15 //默认键位
+								}
+								gui.player_panel.__internal_showPanel(sheet);
+								// sheetplayer.stop();
+								setTimeout(function(){
+									sheetplayer.play(gui.player_panel.refreshStatus);
+								}, 1500)
+							}, 500)
+						}
+					} else {
+						sheetplayer.stop();
 					}
 				} else {
 					sheetplayer.stop();
+					gui.main.show(0);
 				}
 			}
 		});
@@ -384,7 +389,7 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		currentVersion: 22,
+		currentVersion: 23,
 		gitVersion: "",
 		
 		key_coordinates15: [],
@@ -402,6 +407,9 @@ config = {
 		autoPlay: false,
 		lang: "zh_CN",
 		chordDelay: 0,
+		noPopupPlay: false,
+		noPopupPlayWarning: true,
+		intervalSecondsPlayInNoPopupMode: 5,
 	},
 	
 	bitmaps: {},
@@ -493,6 +501,8 @@ config = {
 			page_setting_set_15key_coordinate: "设置15键盘键位坐标",
 			page_setting_key_coordinate_saved: "坐标设置已保存至存储！",
 			page_setting_random_and_continuate_play: "连续随机播放",
+			page_setting_no_popup_play: "弹奏不显示悬浮窗",
+			page_setting_no_popup_play_interval: "无悬浮窗弹奏开始间隔",
 			page_setting_show_broken_sheet: "显示加载失败的乐谱",
 			page_setting_show_storage_tip_on_android11: "启动脚本时显示存储提示",
 			page_setting_set_theme: "设置主题色",
@@ -534,7 +544,18 @@ config = {
 			res_language_dialog_tip: "找不到你的语言？欢迎贡献翻译：<br><a href=>https://github.com/StageGuard/SkyAutoPlayerScript</a>",
 			res_language_failed_fetch_online_list: "无法获取在线语言列表",
 			res_language_dialog_title: "选择语言",
-			res_language_update_needed: "语言需要更新，请前往设置界面重新点击当前语言来更新"
+			res_language_update_needed: "语言需要更新，请前往设置界面重新点击当前语言来更新",
+
+			no_popup_play_warning_title: "警告",
+			no_popup_play_warning: "您已经开启\"弹奏不显示悬浮窗\"选项！\n" + 
+				"弹奏不受弹奏面板控制是<b>非常危险的</b>。\n\n" + 
+				"当出现顶部悬浮通知(例如QQ消息)或气泡对话时，脚本可能会误触消息并开启其他软件，此时脚本依旧在运行中(弹奏中)且<b>无法被打断</b>。也就是说除了等待弹奏完成以外，没有任何办法终止弹奏。\n" + 
+				"<b>脚本在其他界面的误触可能会对您造成不可挽回的损失！</b>\n\n" + 
+				"另外，使用此功能且录屏不会使你获得任何成就感。\n\n" + 
+				"我已经警告过你了，若因使用此功能造成了损失或纠纷，与 SkyAutoPlayer 脚本和脚本作者 StageGuard 无关，请悉知。\n" + 
+				"若继续使用，请点击确认按钮，否则请点击取消按钮。\n\n" + 
+				"注意：使用此功能时，\"连续随机播放\"功能将不会生效。",
+			no_popup_play_tip: "将在 {0} 秒后开始弹奏。"
 		},
 	},
 
@@ -550,7 +571,7 @@ config = {
 					this.languages[content.code] = content.content;
 					listener(String.format(this.languages[content.code].res_use_language, content.name));
 					threads.start(function() {
-						config.fetchRepoFile("source/language_list.json", config.values.gitVersion, function(body) {
+						config.fetchRepoFile("source/language_list.json", function(body) {
 							var onlineList = JSON.parse(body.string()).list;
 							for(var i in onlineList) {
 								if(onlineList[i].code == content.code) {
@@ -609,6 +630,9 @@ config = {
 		this.values.autoPlay = this._global_storage.get("auto_play", this.values.autoPlay);
 		this.values.lang = this._global_storage.get("language", this.values.lang)
 		this.values.chordDelay = this._global_storage.get("chordDelay", this.values.chordDelay)
+		this.values.noPopupPlay = this._global_storage.get("no_popup_play", this.values.noPopupPlay)
+		this.values.noPopupPlayWarning = this._global_storage.get("no_popup_play_warning", this.values.noPopupPlayWarning)
+		this.values.intervalSecondsPlayInNoPopupMode = this._global_storage.get("interval_seconds_play", this.values.intervalSecondsPlayInNoPopupMode)
 		try {
 			android.os.Build.VERSION_CODES.R
 			sheetmgr.rootDir = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/sheets/";
@@ -630,7 +654,7 @@ config = {
 		var periodVersion = this._global_storage.get("version", this.values.currentVersion);
 		var currentVersion = this.values.currentVersion;
 		if(periodVersion < currentVersion) {
-			config.fetchRepoFile("update_log.txt", this.values.gitVersion, function(body) {
+			config.fetchRepoFile("update_log.txt", function(body) {
 				gui.dialogs.showConfirmDialog({
 					title: config.languages[config.values.lang].res_updated,
 					text: String.format(config.languages[config.values.lang].res_updated_detail, currentVersion, periodVersion, body.string()),
@@ -658,7 +682,7 @@ config = {
 					try {
 						listener(String.format(config.languages[config.values.lang].res_loading_detail, element));
 						config.bitmaps[files.getNameWithoutExtension(absolutePath)] = android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeFile(absolutePath));
-					} catch(e) {
+					} catch (e) {
 						listener(String.format(config.languages[config.values.lang].res_loading_error, element));
 						downloadQueue.push(element);
 					}
@@ -680,7 +704,7 @@ config = {
 				var iterator = 0;
 				tmpQueue.map(function(element, i) {
 					listener(String.format(config.languages[config.values.lang].res_downloading, element));
-					config.fetchRepoFile("resources/" + element, config.values.gitVersion, function(body) {
+					config.fetchRepoFile("resources/" + element, function(body) {
 						var absolutePath = files.join(localRootDir, element);
 						files.create(absolutePath);
 						files.writeBytes(absolutePath, body.bytes());
@@ -702,35 +726,30 @@ config = {
 				listener(config.languages[config.values.lang].res_download_successful);
 				java.lang.Thread.sleep(1000); //为了方便看清
 			}
-		} catch(error) {
-			listener(new Error(String.format(config.languages[config.values.lang].res_error_while_downloading, error)));
+		} catch (e) {
+			listener(new Error(String.format(config.languages[config.values.lang].res_error_while_downloading, e)));
 		}
 		
 	},
 
-	//jsdelivr cdn需要指定repo版本, gitee和github则不用
-	//fetch顺序为 gitee raw content → jsdelivr cdn → github raw content
-	fetchRepoFile: function(path, gitVersion, successCbk, failCbk) {
-		//就用最蠢的if来判断吧
-		try {
-			var resp = http.get(encodeURI("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript" + (gitVersion == null ? "" : ("@" + gitVersion)) + "/" + path));
-			if(resp.statusCode >= 200 && resp.statusCode < 300) {
-				successCbk(resp.body);
-				return;
-			} else {
-				var errorCollector = resp.statusCode + ": " + resp.statusMessage + "\n";
-				resp = http.get(encodeURI("https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path));
+	fetchRepoFile: function(path, successCbk, failCbk) {
+		var repos = [
+			"https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + config.values.gitVersion + "/" + path,
+			"https://dl.skyautoplayerscript.stageguard.top/" + path,
+			"https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path,
+			"https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/" + path
+		];
+		var errorCollector = new String();
+		for(var i in repos) {
+			try {
+				var resp = http.get(encodeURI(repos[i]));
 				if(resp.statusCode >= 200 && resp.statusCode < 300) {
 					successCbk(resp.body);
 					return;
-				} else {
-					errorCollector += resp.statusCode + ": " + resp.statusMessage + "\n";
-					if(failCbk != null) failCbk(errorCollector);
-				}
-			}
-		} catch(e) {
-			if(failCbk != null) failCbk(e);
+				} else errorCollector += "Failed on " + repo[i] + ": " + resp.statusCode + ": " + resp.statusMessage + "\n";
+			} catch (e) { errorCollector += "Failed on " + repo[i] + ": " + e + "\n"; }
 		}
+		if(failCbk != null) failCbk(errorCollector);
 	},
 
 	updateBitmapTheme: function() {
@@ -2087,7 +2106,31 @@ gui = {
 				s.play.setBackgroundDrawable(gui.utils.ripple_drawable(s.play.getMeasuredWidth(), s.play.getMeasuredHeight(), "rect"));
 				s.play.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function() {
-						sheetplayer.play(gui.player_panel.refreshStatus);
+						if(config.values.noPopupPlay) {
+							if(!config.values.noPopupPlayWarning) {
+								gui.player_panel.noPopupPlayClick()
+							} else {
+								gui.dialogs.showConfirmDialog({
+									title: config.languages[config.values.lang].no_popup_play_warning_title,
+									text: android.text.Html.fromHtml(config.languages[config.values.lang].no_popup_play_warning.replace(new RegExp("\x0a", "gi"), "<br>")),
+									canExit: false,
+									buttons: [
+										config.languages[config.values.lang].button_confirm,
+										config.languages[config.values.lang].button_cancel
+									],
+									skip: function(checked) {
+										config.values.noPopupPlayWarning = config.save("no_popup_play_warning", !checked);
+									},
+									callback: function(id) {
+										if(id == 0) {
+											gui.player_panel.noPopupPlayClick()
+										}
+									}
+								});
+							}
+						} else {
+							sheetplayer.play(gui.player_panel.refreshStatus);
+						}
 					}
 				}));
 				s.play.setEnabled(false);
@@ -2221,6 +2264,13 @@ gui = {
 			});
 			
 		});},
+		noPopupPlayClick: function() { 
+			gui.player_panel.__internal_dismiss();
+			toast(String.format(config.languages[config.values.lang].no_popup_play_tip, config.values.intervalSecondsPlayInNoPopupMode));
+			(new android.os.Handler()).postDelayed(function() {
+				sheetplayer.play();
+			}, config.values.intervalSecondsPlayInNoPopupMode * 1000);
+		},
 		__internal_dismiss: function() { gui.run(function(){
 			if (gui.player_panel.isShowing) {
 				gui.player_panel.isShowing = false;
@@ -2337,7 +2387,7 @@ gui = {
 				var item = listAdapterController.get(pos);
 				if(item.type == "item") {
 					var fetchOnline = function() {
-						config.fetchRepoFile("resources/language_pack/" + item.code + ".json", config.values.gitVersion, function(body) {
+						config.fetchRepoFile("resources/language_pack/" + item.code + ".json", function(body) {
 							var lf = android.os.Environment.getExternalStorageDirectory() + "/Documents/SkyAutoPlayer/lang/" + item.code + ".json";
 							files.create(lf)
 							files.writeBytes(lf, body.bytes());
@@ -2399,7 +2449,7 @@ gui = {
 
 		var onlineList = [];
 		threads.start(function() {
-			config.fetchRepoFile("source/language_list.json", config.values.gitVersion, function(body) {
+			config.fetchRepoFile("source/language_list.json", function(body) {
 				onlineList = JSON.parse(body.string()).list;
 				gui.run(function() {
 					var __listArray = listAdapterController.getArray();
@@ -3506,6 +3556,21 @@ gui.dialogs.showProgressDialog(function(o) {
 						config.values.autoPlay = config.save("auto_play", checked);
 					}
 				}, {
+					type: "checkbox",
+					name: config.languages[config.values.lang].page_setting_no_popup_play, 
+					check: config.values.noPopupPlay,
+					onClick: function(checked) {
+						config.values.noPopupPlay = config.save("no_popup_play", checked);
+					}
+				}, {
+					type: "seekbar",
+					name: config.languages[config.values.lang].page_setting_no_popup_play_interval, 
+					value: config.values.intervalSecondsPlayInNoPopupMode,
+					range: [3, 15],
+					onChangeUp: function(value) {
+						config.values.intervalSecondsPlayInNoPopupMode = config.save("interval_seconds_play", value);
+					}
+				}, {
 					type: "seekbar",
 					name: config.languages[config.values.lang].page_setting_chord_delay, 
 					value: config.values.chordDelay,
@@ -3564,7 +3629,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: config.languages[config.values.lang].page_setting_show_license, 
 					onClick: function(v) {
 						threads.start(function() {
-							config.fetchRepoFile("LICENSE", config.values.gitVersion, function(body) {
+							config.fetchRepoFile("LICENSE", function(body) {
 								gui.dialogs.showConfirmDialog({
 									title: "GNU GENERAL PUBLIC LICENSE",
 									text: body.string(),
@@ -3579,7 +3644,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					name: config.languages[config.values.lang].page_setting_show_changelog, 
 					onClick: function(v) {
 						threads.start(function() {
-							config.fetchRepoFile("update_log.txt", config.values.gitVersion, function(body) {
+							config.fetchRepoFile("update_log.txt", function(body) {
 								gui.dialogs.showConfirmDialog({
 									title: config.languages[config.values.lang].page_setting_changelog_title,
 									text: body.string(),
@@ -3603,7 +3668,7 @@ gui.dialogs.showProgressDialog(function(o) {
 				try {
 					android.os.Build.VERSION_CODES.R
 				} catch (e) {
-					sList.list.splice(7, 1);
+					sList.list.splice(9, 1);
 				}
 				return sList.list;
 			}()), function self(element) {
