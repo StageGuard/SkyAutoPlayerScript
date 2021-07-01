@@ -1,5 +1,3 @@
-// noinspection JSUnresolvedVariable
-
 "ui";
 "use strict";
 /*
