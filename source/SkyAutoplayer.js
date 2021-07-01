@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 "ui";
 "use strict";
 /*
@@ -283,8 +285,7 @@ sheetplayer = {
 						delay += config.values.chordDelay;
 						gestureMap.push([delay, 25, keyCoordinates, keyCoordinates]);
 					});
-					gestureMap = sheetplayer.toSource(gestureMap);
-					eval("gestures(" + gestureMap.slice(1, gestureMap.length - 1) + ");");
+					gestures.apply(null, gestureMap);
 				}
 			});
 			while(sheetplayer.playing && sheetplayer.currentNote < sheetplayer.noteCount) {
@@ -364,24 +365,7 @@ sheetplayer = {
 		this.bpm = j.bpm;
 		this.noteCount = this.notes.length;
 		this.keyCount = j.keyCount;
-	},
-	
-	toSource: function(obj) {
-		var _toJSON = function toJSON(x, lev) {
-			var p = "", r, i;
-			if (typeof x == "string") {
-				return x;
-			} else if (Array.isArray(x)) {
-				r = new Array();
-				for (i = 0; i < x.length; i++) r.push(toJSON(x[i], lev - 1));
-				p = "[" + r.join(",") + "]";
-			}  else {
-				p = String(x);
-			}
-			return p;
-		}
-		return _toJSON(obj, 32);
-	},
+	}
 }
 
 config = {
