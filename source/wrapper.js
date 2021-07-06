@@ -1,16 +1,8 @@
 "ui";
 "use strict";
-
 /*
     SkyAutoPlayer (Auto.js script)
   	Copyright © 2020-2021 StageGuard
-	  Contact : 
-	  (QQ: 1355416608)
-	  (Email: beamiscool@qq.com)
-	  (BaiduTieba@拐角处_等你)
-	  (Weibo@StageGuard)
-	  (CoolApk@StageGuard)
-	  (Twiter@stageguardcn)
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -27,23 +19,26 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
   USA
 */
-
-var emitter = events.emitter(threads.currentThread());
-threads.start(function() {
-  emitter.emit("evaluate", (function(){
-    var resp = http.get("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/source/SkyAutoplayer.js");
-    if(resp.statusCode >= 200 && resp.statusCode < 300) {
-      return resp.body.string();
-    } else {
-      resp = http.get("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + http.get("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/gitVersion").body.string() + "/source/SkyAutoplayer.js");
-      if(resp.statusCode >= 200 && resp.statusCode < 300) {
-        return resp.body.string();
-      } else {
-        return "console.show();console.log(\"Failed to load script\")";
+(function(emitter) {
+  threads.start(function () {
+    emitter.emit("evaluate", (function () {
+      //Many sources 
+      let sources = [
+        "http://cdn.stagex.top:8090/StageGuard/SkyAutoPlayerScript/raw/master/source/SkyAutoplayer.js",
+        "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript/source/SkyAutoplayer.js",
+        "https://dl.skyautoplayerscript.stageguard.top/source/SkyAutoplayer.js",
+        "https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/source/SkyAutoplayer.js"
+      ];
+      for (let i in sources) {
+        let resp = http.get(sources[i]);
+        if (resp.statusCode >= 200 && resp.statusCode < 300) {
+          return resp.body.string();
+        }
       }
-	}
-  }()));
-});
-emitter.on('evaluate', function(s){
-  eval(s);
-});
+      return "console.show();console.log(\"Failed to load script\")";
+    }()));
+  });
+  emitter.on('evaluate', function (s) {
+    eval(s);
+  });
+}(events.emitter(threads.currentThread())));
