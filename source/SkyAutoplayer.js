@@ -323,7 +323,9 @@ sheetplayer = {
 					}
 				} else {
 					sheetplayer.stop();
-					gui.main.show(0);
+					setTimeout(function(){
+						gui.main.show(0);
+					}, config.values.intervalSecondsPlayInNoPopupMode * 1000);
 				}
 			}
 		});
@@ -632,7 +634,7 @@ config = {
 	},
 	
 	checkVersion: function() {
-		this.values.gitVersion = http.get("https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/gitVersion").body.string();
+		this.values.gitVersion = http.get("http://vps.stageguard.top:8090/StageGuard/SkyAutoPlayerScript/raw/master/gitVersion").body.string();
 		var periodVersion = this._global_storage.get("version", this.values.currentVersion);
 		var currentVersion = this.values.currentVersion;
 		if(periodVersion < currentVersion) {
@@ -716,6 +718,7 @@ config = {
 
 	fetchRepoFile: function(path, successCbk, failCbk) {
 		var repos = [
+			"http://cdn.stagex.top:8090/StageGuard/SkyAutoPlayerScript/raw/master/" + path,
 			"https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + config.values.gitVersion + "/" + path,
 			"https://dl.skyautoplayerscript.stageguard.top/" + path,
 			"https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path,
@@ -729,7 +732,7 @@ config = {
 					successCbk(resp.body);
 					return;
 				} else errorCollector += "Failed on " + repo[i] + ": " + resp.statusCode + ": " + resp.statusMessage + "\n";
-			} catch (e) { errorCollector += "Failed on " + repo[i] + ": " + e + "\n"; }
+			} catch (e) { errorCollector += "Failed on " + repos[i] + ": " + e + "\n"; }
 		}
 		if(failCbk != null) failCbk(errorCollector);
 	},
@@ -2154,7 +2157,7 @@ gui = {
 				s.lp = gui.player_panel._global_base.getLayoutParams();
 				if(gui.player_panel.cx == null) {
 					gui.player_panel.cx = 0;
-					gui.player_panel.cy = context.getResources().getDisplayMetrics().heightPixels / 2 - gui.player_panel._global_base.getMeasuredHeight() - dp * 2;
+					gui.player_panel.cy = context.getResources().getDisplayMetrics().heightPixels / 2 - gui.player_panel._global_base.getMeasuredHeight();
 				}
 				s.lp.x = s.x = gui.player_panel.cx;
 				s.lp.y = s.y = gui.player_panel.cy;
@@ -3390,7 +3393,8 @@ gui.dialogs.showProgressDialog(function(o) {
 				onKey: function(view, keycode, event) {
 					if (keycode == android.view.KeyEvent.KEYCODE_ENTER && event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
 						selfContent.getOnlineSheetList(s, false, function(item) {
-							return (new RegExp(view.getText(), "gi")).test(item.name);
+							var regExp = new RegExp(view.getText(), "gi");
+							return regExp.test(item.name) || regExp.test(item.author) || regExp.test(item.desc);
 						});
 						return true;
 					}
