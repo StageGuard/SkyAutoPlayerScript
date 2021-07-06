@@ -1,4 +1,4 @@
-name: Auto update commit and sync to gitee
+name: Sync
 
 on: [ push ]
 
