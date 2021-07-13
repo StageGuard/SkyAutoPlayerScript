@@ -2157,7 +2157,7 @@ gui = {
 				s.lp = gui.player_panel._global_base.getLayoutParams();
 				if(gui.player_panel.cx == null) {
 					gui.player_panel.cx = 0;
-					gui.player_panel.cy = context.getResources().getDisplayMetrics().heightPixels / 2 - gui.player_panel._global_base.getMeasuredHeight();
+					gui.player_panel.cy = context.getResources().getDisplayMetrics().heightPixels / 2;
 				}
 				s.lp.x = s.x = gui.player_panel.cx;
 				s.lp.y = s.y = gui.player_panel.cy;
