@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "Happy Birthday to You",
+      "file": "Happy Birthday to You.txt",
+      "author": "酷安@阿基米德的船",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/3283016>@阿基米德的船<a/> 分享乐谱 Happy Birthday to You",
+      "bpm": 220,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 126,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/3283016"
+        }
+      ]
+    },
+    {
       "name": "浪流连",
       "file": "浪流连.txt",
       "author": "依稀（濒死动物）",
