@@ -2742,23 +2742,23 @@
           "link": "http://www.coolapk.com/u/1286879"
         }
       ]
- },
- {
-  "name": "所念皆星河",
-  "file": "所念皆星河(和弦版).txt",
-  "author": "大锤",
-  "desc": "bilibli用户(次卡安)上传乐谱 第一次做，可能有点瑕疵",
-  "bpm": 240,
-  "keyCount": 15,
-  "pitchLevel": 3,
-  "noteCount": 384,
-  "social": [
+    },
     {
-      "platform": "哔哩哔哩",
-      "name": "浮生",
-      "link": "https://space.bilibili.com/68420360"
-      }
-    ]
+      "name": "所念皆星河",
+      "file": "所念皆星河(和弦版).txt",
+      "author": "大锤",
+      "desc": "bilibli用户(次卡安)上传乐谱 第一次做，可能有点瑕疵",
+      "bpm": 240,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 384,
+      "social": [
+        {
+          "platform": "哔哩哔哩",
+          "name": "浮生",
+          "link": "https://space.bilibili.com/68420360"
+        }
+      ]
     }
   ]
 }
