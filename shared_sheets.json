@@ -2744,33 +2744,19 @@
       ]
     },
     {
-  //乐谱名称
   "name": "所念皆星河",
-  //文件名
   "file": "所念皆星河(和弦版).txt",
-  //乐谱作者
   "author": "大锤",
-  //乐谱简介
-  "desc": "SkyStudio钢琴版。第一次做，可能有点瑕疵",
-  //乐谱文件中的BPM
+  "desc": "bilibli用户(次卡安)上传乐谱 第一次做，可能有点瑕疵",
   "bpm": 240,
-  //乐谱的键位数目(它是一个 15 键位乐谱还是 8 键位乐谱)
   "keyCount": 15,
-  //乐谱文件中的音高
   "pitchLevel": 3,
-  //键的数目
-  //乐谱文件中数组 songNotes 的长度
   "noteCount": 384,
-  //你的社交链接
-  //你可以添加多个
   "social": [
     {
-      //社交平台名称代号，现在支持 github, twitter, douyin(tiktok) and coolapk
-      "platform": "douyin",
-      //社交平台名称
+      "platform": "哔哩哔哩",
       "name": "浮生",
-      //社交连接
-      "link": "https://github.com/bowen99/"
+      "link": "https://space.bilibili.com/68420360"
     }
   ]
 },
