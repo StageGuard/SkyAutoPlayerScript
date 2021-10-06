@@ -1,10 +1,27 @@
 {
   "sheets": [
+     {
+      "name": "莫失莫忘",
+      "file": "莫失莫忘.txt",
+      "author": "大锤",
+      "desc": "<a href=https://space.bilibili.com/68420360>bilibli用户(次卡安)<a/>共享乐谱 莫失莫忘\n 回忆仙剑，我们原来都这么老了",
+      "bpm": 120,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 160,
+      "social": [
+        {
+          "platform": "bilibili",
+          "name": "次卡安",
+          "link": "https://space.bilibili.com/68420360"
+        }
+      ]
+    },
     {
       "name": "所念皆星河",
       "file": "所念皆星河(和弦版).txt",
       "author": "大锤",
-      "desc": "<a href=https://space.bilibili.com/68420360>bilibli用户(次卡安)<a/>上传乐谱 所念皆星河(和弦版)\n 第一次做，可能有点瑕疵",
+      "desc": "<a href=https://space.bilibili.com/68420360>bilibli用户(次卡安)<a/>共享乐谱 所念皆星河(和弦版)\n 第一次做，可能有点瑕疵",
       "bpm": 240,
       "keyCount": 15,
       "pitchLevel": 3,
