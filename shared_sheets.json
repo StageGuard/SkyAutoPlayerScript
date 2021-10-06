@@ -1,6 +1,23 @@
 {
   "sheets": [
     {
+      "name": "所念皆星河",
+      "file": "所念皆星河(和弦版).txt",
+      "author": "大锤",
+      "desc": "bilibli用户(次卡安)上传乐谱 第一次做，可能有点瑕疵",
+      "bpm": 240,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 384,
+      "social": [
+        {
+          "platform": "bilibili",
+          "name": "次卡安",
+          "link": "https://space.bilibili.com/68420360"
+        }
+      ]
+    },
+    {
       "name": "Take me hand",
       "file": "Take me hand.txt",
       "author": "zhangjinteng",
