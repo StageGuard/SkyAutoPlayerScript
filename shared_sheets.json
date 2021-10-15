@@ -1,5 +1,22 @@
 {
   "sheets": [
+  {
+      "name": "李香兰(和弦版)",
+      "file": "李香兰(和弦版).txt",
+      "author": "大锤",
+      "desc": "<a href=https://space.bilibili.com/68420360>bilibli用户(次卡安)<a/>共享乐谱 李香兰 \n 星爷在国产凌凌漆电影中弹奏",
+      "bpm": 150,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 226,
+      "social": [
+        {
+          "platform": "bilibili",
+          "name": "哔哩哔哩",
+          "link": "https://space.bilibili.com/68420360"
+        }
+      ]
+    },
     {
       "name": "所念皆星河（无和弦）",
       "file": "所念皆星河（无和弦）.txt",
