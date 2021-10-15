@@ -1,6 +1,42 @@
 {
   "sheets": [
     {
+      "name": "所念皆星河（无和弦）",
+      "file": "所念皆星河（无和弦）.txt",
+      "author": "酷安@ZyaIreZ",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1376183>@ZyaIreZ<a/> 分享乐谱 所念皆星河（无和弦）\n只有半首，后面的不想弄了累…",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 312,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1376183"
+        }
+      ]
+    },
+    {
+      "name": "所念皆星河（和弦）",
+      "file": "所念皆星河（和弦）.txt",
+      "author": "酷安@ZyaIreZ",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1376183>@ZyaIreZ<a/> 分享乐谱 所念皆星河（和弦）\n只有半首，后面的不想弄了累…",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 563,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1376183"
+        }
+      ]
+    },
+    {
       "name": "我和我的祖国",
       "file": "我和我的祖国.txt",
       "author": "酷安@ZyaIreZ",
