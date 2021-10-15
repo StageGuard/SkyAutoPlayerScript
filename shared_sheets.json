@@ -1,5 +1,22 @@
 {
   "sheets": [
+    {
+      "name": "花海",
+      "file": "花海.txt",
+      "author": "大锤",
+      "desc": "<a href=https://space.bilibili.com/68420360>bilibli用户(次卡安)<a/>共享乐谱 花海",
+      "bpm": 120,
+      "keyCount": 15,
+      "pitchLevel": 3,
+      "noteCount": 478,
+      "social": [
+        {
+          "platform": "bilibili",
+          "name": "哔哩哔哩",
+          "link": "https://space.bilibili.com/68420360"
+        }
+      ]
+    },
   {
       "name": "李香兰(和弦版)",
       "file": "李香兰(和弦版).txt",
