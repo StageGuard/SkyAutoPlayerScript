@@ -2,21 +2,21 @@
 
 English: [README-en.md](README-en.md)
 
-使用Auto.js提供的无障碍权限实现在Sky光遇中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
+使用 Auto.js 提供的无障碍权限实现在 Sky光遇 中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
 
 [![shared sheet](https://badgen.net/badge/shared%20sheets/158%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/29/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
-~~不会进一步支持原神的21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
+~~不会进一步支持原神的 m21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
 
 ## 特性
 
 相比于其他脚本，SkyAutoPlayerScript 拥有以下优势
 
-* 全GUI操作，无需编辑任何代码，流畅的UI动画。
+* 全 GUI 操作，无需编辑任何代码，流畅的UI动画。
 * 多功能的弹奏控制面板，支持**暂停**， **进度控制**， **倍速控制**等。
 * 通过引导自设定键位坐标，避免按压琴键的偏移问题。
 * 在线[共享乐谱](https://github.com/StageGuard/SkyAutoPlayerScript/tree/master/shared_sheets)，有许多优质乐谱。
-* 自动更新，及时修复BUG，无需担心版本过时问题。
+* 自动更新，及时修复 BUG，无需担心版本过时问题。
 * [多语言支持](#翻译)。
 * ...
 
@@ -24,9 +24,9 @@ English: [README-en.md](README-en.md)
 
 1. Auto.js `4.1.1 Alpha2 (461) -> armeabi-v7a` 版本下载: [`Ericwyn/Auto.js/releases@V4.1.1.Alpha2`](https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2)
 
-2. 为Auto.js开启**无障碍服务**和**悬浮窗权限**。
+2. 为 Auto.js 开启**无障碍服务**和**悬浮窗权限**。
 
-3. 在Auto.js中新建一个脚本并粘贴以下代码并运行：
+3. 在 Auto.js 中新建一个脚本并粘贴以下代码并运行：
 
 ```javascript
 "ui";
@@ -75,11 +75,11 @@ English: [README-en.md](README-en.md)
 }(events.emitter(threads.currentThread())));
 ```
 
-在Auto.js版本 `4.1.1 Alpha2 (461)` 中测试通过，**不保证其他版本的兼容性**(取决于其他版本相对于此版本的API是否有`breaking changes`)
+在 Auto.js 版本 `4.1.1 Alpha2 (461)` 中测试通过，**不保证其他版本的兼容性**(取决于其他版本相对于此版本的API是否有 `breaking changes`)
 
 ## 清除数据
 
-`SkyAutoPlayerScript` 在使用过程中会产生本地数据存储，若想全部删除，请使用Auto.js执行以下代码
+`SkyAutoPlayerScript` 在使用过程中会产生本地数据存储，若想全部删除，请使用 Auto.js 执行以下代码
 
 ```
 storages.remove("StageGuard:SkyAutoPlayer:Config");
@@ -142,19 +142,19 @@ SkyAutoplayerScript 可以从这个仓库中的 `shared_sheets.json` 读取在�
 
 ### 请仔细阅读以下使用须知！
 
-1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！
+1. 未充分测试，若遇到 BUG ，请酷安私信 [@StageGuard](http://www.coolapk.com/u/1790774) 或新建 Issue 来反馈 BUG！
 
-2. **SkyAutoplayerScript是完全免费且开源的软件/脚本([https://github.com/StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript))，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。**
+2. **SkyAutoplayerScript 是完全免费且开源的软件/脚本([https://github.com/StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript))，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。**
 
-3. **共享乐谱不遵守LGPL-2.1协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！**
+3. **共享乐谱不遵守 LGPL-2.1 协议，如您想在 SkyAutoPlayer 以外使用这些乐谱，请自行找乐谱作者授权！**
 
-4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。
+4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者 StageGuard 无关。
 
 5. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。
 
 6. 本脚本只是一个"弹奏机"，并不内置曲谱，请在 GooglePlay 下载 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 编谱。
 
-7. 本脚本不会增加解密乐谱功能，包括但不限于**加密的SkyStudio乐谱**，**加密的JS**等，也不接受加密乐谱的共享。
+7. 本脚本不会增加解密乐谱功能，包括但不限于**加密的 SkyStudio 乐谱**，**加密的 JS **等，也不接受加密乐谱的共享。
 
 
 <details> <summary>针对上述第2, 3条出现的问题：</summary>
@@ -190,7 +190,7 @@ Gitee 用户[嗨游圈(@vipssp)](https://gitee.com/vipssp)在**未经乐谱上�
 
 # 贡献
 
-欢迎任何人贡献本项目，包括但不限于 Pull Request，Issue，New feature request 或者 贡献翻译。
+欢迎任何人贡献本项目，包括但不限于 Pull Request，Issue，New feature request 或者贡献翻译。
 
 ### ⚠️警告
 CodeFactor 代码评估: [![CodeFactor](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript/badge)](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript)
