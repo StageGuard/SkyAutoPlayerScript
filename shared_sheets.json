@@ -1,6 +1,42 @@
 {
   "sheets": [
     {
+      "name": "穿越时空的思念",
+      "file": "穿越时空的思念-ZyaIreZ.txt",
+      "author": "酷安@ZyaIreZ",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1376183>@ZyaIreZ<a/> 分享乐谱 穿越时空的思念\n犬夜叉",
+      "bpm": 440,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 496,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1376183"
+        }
+      ]
+    },
+    {
+      "name": "琴师",
+      "file": "琴师.txt",
+      "author": "酷安@ZyaIreZ",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1376183>@ZyaIreZ<a/> 分享乐谱 琴师\n音频怪物 - 琴师",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 285,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1376183"
+        }
+      ]
+    },
+    {
       "name": "花海",
       "file": "花海.txt",
       "author": "大锤",
@@ -17,7 +53,7 @@
         }
       ]
     },
-  {
+    {
       "name": "李香兰(和弦版)",
       "file": "李香兰(和弦版).txt",
       "author": "大锤",
