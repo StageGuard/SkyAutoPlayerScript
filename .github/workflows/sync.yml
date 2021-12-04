@@ -3,7 +3,7 @@ name: Sync
 on: [ push ]
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,6 +24,14 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: Update git tree hash
           push: true
+  sync-to-gitea:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        if: github.actor != 'github-actions[bot]'
+        with:
+          persist-credentials: true
       - name: Sync to Private Git Service
         uses: wearerequired/git-mirror-action@master
         if: github.actor != 'github-actions[bot]'
@@ -32,6 +40,14 @@ jobs:
         with:
           source-repo: git@github.com:StageGuard/SkyAutoPlayerScript.git
           destination-repo: ubuntu@cdn.stagex.top:StageGuard/SkyAutoPlayerScript.git
+  sync-to-gitee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        if: github.actor != 'github-actions[bot]'
+        with:
+          persist-credentials: true
       - name: Sync to Gitee
         uses: wearerequired/git-mirror-action@master
         if: github.actor != 'github-actions[bot]'
