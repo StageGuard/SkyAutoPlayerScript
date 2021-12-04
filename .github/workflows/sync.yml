@@ -31,7 +31,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
           source-repo: git@github.com:StageGuard/SkyAutoPlayerScript.git
-          destination-repo: ubuntu@vps.stageguard.top:StageGuard/SkyAutoPlayerScript.git
+          destination-repo: ubuntu@cdn.stagex.top:StageGuard/SkyAutoPlayerScript.git
       - name: Sync to Gitee
         uses: wearerequired/git-mirror-action@master
         if: github.actor != 'github-actions[bot]'
