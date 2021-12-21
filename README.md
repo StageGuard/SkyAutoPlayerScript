@@ -154,7 +154,7 @@ SkyAutoplayerScript 可以从这个仓库中的 `shared_sheets.json` 读取在�
 
 6. 本脚本只是一个"弹奏机"，并不内置曲谱，请在 GooglePlay 下载 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 编谱。
 
-7. 本脚本不会增加解密乐谱功能，包括但不限于**加密的 SkyStudio 乐谱**，**加密的 JS **等，也不接受加密乐谱的共享。
+7. 本脚本不会增加解密乐谱功能，包括但不限于**加密的 SkyStudio 乐谱**，**加密的 JS** 等，也不接受加密乐谱的共享。
 
 
 <details> <summary>针对上述第2, 3条出现的问题：</summary>
