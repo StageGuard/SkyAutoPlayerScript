@@ -8,6 +8,8 @@ English: [README-en.md](README-en.md)
 
 ~~不会进一步支持原神的 m21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
 
+## [暂时解决 `Syntax error script.js#44(eval)#100` 的方法](https://github.com/StageGuard/SkyAutoPlayerScript/issues/17#issuecomment-1002640892)
+
 ## 特性
 
 相比于其他脚本，SkyAutoPlayerScript 拥有以下优势
