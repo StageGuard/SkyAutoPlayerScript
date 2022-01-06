@@ -634,7 +634,7 @@ config = {
 	},
 	
 	checkVersion: function() {
-		this.values.gitVersion = http.get("http://cdn.stagex.top:8090/StageGuard/SkyAutoPlayerScript/raw/branch/master/gitVersion").body.string();
+		this.values.gitVersion = http.get("http://81.70.194.140:8090/StageGuard/SkyAutoPlayerScript/raw/branch/master/gitVersion").body.string();
 		var periodVersion = this._global_storage.get("version", this.values.currentVersion);
 		var currentVersion = this.values.currentVersion;
 		if(periodVersion < currentVersion) {
@@ -718,7 +718,7 @@ config = {
 
 	fetchRepoFile: function(path, successCbk, failCbk) {
 		var repos = [
-			"http://cdn.stagex.top:8090/StageGuard/SkyAutoPlayerScript/raw/branch/master/" + path,
+			"http://81.70.194.140:8090/StageGuard/SkyAutoPlayerScript/raw/branch/master/" + path,
 			"https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript@" + config.values.gitVersion + "/" + path,
 			"https://dl.skyautoplayerscript.stageguard.top/" + path,
 			"https://gitee.com/stageguard/SkyAutoPlayerScript/raw/master/" + path,
