@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "李玉刚 - 万疆",
+      "file": "万疆.txt",
+      "author": "酷安@ZyaIreZ",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1376183>@ZyaIreZ<a/> 分享乐谱 李玉刚 - 万疆",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 509,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1376183"
+        }
+      ]
+    },
+    {
       "name": "穿越时空的思念",
       "file": "穿越时空的思念-ZyaIreZ.txt",
       "author": "酷安@ZyaIreZ",
