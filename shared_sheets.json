@@ -1,6 +1,60 @@
 {
   "sheets": [
     {
+      "name": "阿拉斯加海湾",
+      "file": "阿拉斯加海湾.txt",
+      "author": "酷安@星释槐",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2168596>@星释槐<a/> 分享乐谱 阿拉斯加海湾",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 1086,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2168596"
+        }
+      ]
+    },
+    {
+      "name": "冬眠",
+      "file": "冬眠.txt",
+      "author": "酷安@星释槐",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2168596>@星释槐<a/> 分享乐谱 冬眠",
+      "bpm": 240,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 294,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2168596"
+        }
+      ]
+    },
+    {
+      "name": "Jason Huang - 高洁的教皇",
+      "file": "高洁的教皇.txt",
+      "author": "酷安@ZyaIreZ",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/1376183>@ZyaIreZ<a/> 分享乐谱 Jason Huang - 高洁的教皇\nJOJO的奇妙冒险 花京院处刑曲",
+      "bpm": 584,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 818,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/1376183"
+        }
+      ]
+    },
+    {
       "name": "李玉刚 - 万疆",
       "file": "万疆.txt",
       "author": "酷安@ZyaIreZ",
