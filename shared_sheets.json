@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "冬日恋歌(My Memory)",
+      "file": "冬日恋歌(My Memory).txt",
+      "author": "酷安@你们很有趣呢",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2416229>@你们很有趣呢<a/> 分享乐谱 冬日恋歌(My Memory)",
+      "bpm": 312,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 7,
+      "noteCount": 733,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2416229"
+        }
+      ]
+    },
+    {
       "name": "阿拉斯加海湾",
       "file": "阿拉斯加海湾.txt",
       "author": "酷安@星释槐",
