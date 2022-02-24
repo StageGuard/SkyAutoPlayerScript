@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "多情种",
+      "file": "多情种.txt",
+      "author": "酷安@Leotoast",
+      "desc": "酷安 <a href=http://www.coolapk.com/u/2260385>@Leotoast<a/> 分享乐谱 多情种",
+      "bpm": 227,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 544,
+      "social": [
+        {
+          "platform": "coolapk",
+          "name": "酷安",
+          "link": "http://www.coolapk.com/u/2260385"
+        }
+      ]
+    },
+    {
       "name": "莫文蔚 - 这世界那么多人",
       "file": "这世界那么多人.txt",
       "author": "酷安@ZyaIreZ",
