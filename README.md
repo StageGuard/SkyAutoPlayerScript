@@ -57,8 +57,8 @@ English: [README-en.md](README-en.md)
     emitter.emit("evaluate", (function () {
       //Many sources 
       let sources = [
-        "http://cdn.stagex.top:8090/StageGuard/SkyAutoPlayerScript/raw/master/source/SkyAutoplayer.js",
         "https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript/source/SkyAutoplayer.js",
+        "http://cdn.stagex.top:8090/StageGuard/SkyAutoPlayerScript/raw/master/source/SkyAutoplayer.js",
         "https://dl.skyautoplayerscript.stageguard.top/source/SkyAutoplayer.js",
         "https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/source/SkyAutoplayer.js"
       ];
