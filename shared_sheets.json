@@ -1,6 +1,23 @@
 {
   "sheets": [
     {
+      "name": "夜空中最亮的星",
+      "file": "夜空中最亮的星.txt",
+      "author": "Hxina",
+      "desc": "<a href=mailto:xicisw@gmail.com>@Hxina<a/>15键简易钢琴版《夜空中最亮的星》",
+      "bpm": 240,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 268,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "xicisw@gmail.com",
+          "link": "xicisw@gmail.com"
+        }
+      ]
+    },
+    {
       "name": "多情种",
       "file": "多情种.txt",
       "author": "酷安@Leotoast",
