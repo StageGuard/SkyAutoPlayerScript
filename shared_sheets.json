@@ -1,6 +1,23 @@
 {
   "sheets": [
     {
+      "name": "相思（无和弦）",
+      "file": "相思（无和弦）.txt",
+      "author": "Hxina",
+      "desc": "<a href=mailto:xicisw@gmail.com>@Hxina<a/>简易《相思（无和弦）》",
+      "bpm": 160,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 230,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "xicisw@gmail.com",
+          "link": "xicisw@gmail.com"
+        }
+      ]
+    },
+    {
       "name": "夜空中最亮的星",
       "file": "夜空中最亮的星.txt",
       "author": "Hxina",
