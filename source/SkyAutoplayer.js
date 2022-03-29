@@ -88,6 +88,15 @@ sheetmgr = {
 		}
 		return this.cachedLocalSheetList;
 	},
+
+	filterLocalSheet: function(filterBlock, listener) {
+		var resultList = [];
+		this.getLocalSheetList(listener).map(function(element, index) {
+			if(filterBlock(element)) resultList.push(element);
+		});
+		return resultList;
+	},
+
 	getOnlineSharedSheetInfoList: function(forceRefresh) {
 		if(this.cachedOnlineSharedSheetInfoList.length == 0 || forceRefresh) {
 			this.__internal_fetchOnlineSharedSheets();
@@ -373,7 +382,7 @@ config = {
 	_global_storage: null,
 	
 	values: {
-		currentVersion: 23,
+		currentVersion: 24,
 		gitVersion: "",
 		
 		key_coordinates15: [],
@@ -1415,7 +1424,8 @@ gui = {
 		
 		//internal methods
 		__internal_show: function s(content) { gui.run(function(){
-			s.index = gui.main.current = content.index;
+			s.index = content.index;
+			gui.main.current = content.index;
 			s.initial = false;
 			if(!gui.main.isShowing) { //create a new window and show content view
 				gui.main._global_base = new android.widget.LinearLayout(ctx);
@@ -1641,7 +1651,9 @@ gui = {
 				}
 				s["navigationBtn" + i].setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function(view) { if(gui.main.current_navigation_selection != Number(view.getId())) {
-						if(typeof(gui.main.currentPageChangeListener) == "function") gui.main.currentPageChangeListener(s, content);
+						if(typeof(gui.main.currentPageChangeListener) == "function") {
+							gui.main.currentPageChangeListener(s, content);
+						}
 						gui.main.__internal_show(gui.main.views[Number(view.getId())]);
 						gui.main.current_navigation_selection = Number(view.getId());
 					}}
@@ -2776,7 +2788,17 @@ gui.dialogs.showProgressDialog(function(o) {
 		func: [{
 			icon: "refresh",
 			onClick: function(s, selfContent) {
+				if(s.ns0_isShowingSearchEditTextView) selfContent.removeSearchEditTextView(s, selfContent);
 				selfContent.getSheetList(s, true);
+			},
+		}, {
+			icon: "search",
+			onClick: function(s, selfContent) {
+				if(s.ns0_isShowingSearchEditTextView) {
+					selfContent.removeSearchEditTextView(s, selfContent);
+				} else {
+					selfContent.showSearchEditTextView(s, selfContent);
+				}
 			},
 		}],
 		view: function(s) {
@@ -3036,12 +3058,83 @@ gui.dialogs.showProgressDialog(function(o) {
 		update: function(s) {
 			if(s.initial) this.getSheetList(s, false);
 		},
-		getSheetList: function(s, isForce) {
+
+		onPageChanged: function(s, selfContent) {
+			if(s.ns0_isShowingSearchEditTextView) {
+				selfContent.removeSearchEditTextView(s);
+			}
+		},
+
+		showSearchEditTextView: function(s, selfContent) {
+			gui.main.setFuncClickable(s.index, false);
+			s.ns0_isShowingSearchEditTextView = true;
+			s.ns0_searchEditText = new android.widget.EditText(ctx);
+			s.ns0_searchEditText.setGravity(android.view.Gravity.LEFT | android.view.Gravity.CENTER);
+			s.ns0_searchEditText.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(-2, -1));
+			s.ns0_searchEditText.setPadding(dp * 5, dp * 5, dp * 5, dp * 5);
+			s.ns0_searchEditText.getLayoutParams().addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT);
+			s.ns0_searchEditText.setTextSize(15);
+			s.ns0_searchEditText.setTextColor(gui.config.colors[config.values.theme].text);
+			s.ns0_searchEditText.setHintTextColor(gui.config.colors[config.values.theme].sec_text);
+			s.ns0_searchEditText.setHint(config.languages[config.values.lang].page_sc_search_hint);
+			s.ns0_searchEditText.setAlpha(0);
+			s.ns0_searchEditText.setOnClickListener(new android.view.View.OnClickListener({
+				onClick: function(view) {
+					view.setFocusable(true);
+					view.setFocusableInTouchMode(true);
+					view.requestFocus();
+					ctx.getSystemService(android.content.Context.INPUT_METHOD_SERVICE).showSoftInput(view, 0);
+				}
+			}));
+			s.ns0_searchEditText.setOnKeyListener(new android.view.View.OnKeyListener({
+				onKey: function(view, keycode, event) {
+					if (keycode == android.view.KeyEvent.KEYCODE_ENTER && event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
+						selfContent.getSheetList(s, false, function(item) {
+							var regExp = new RegExp(view.getText(), "gi");
+							return regExp.test(item.fileName) || regExp.test(item.name);
+						});
+						return true;
+					}
+					return false;
+				},
+			}));
+			gui.main._global_statusbar.addView(s.ns0_searchEditText);
+			s.ns0_searchEditText.setFocusable(true);
+			s.ns0_searchEditText.setFocusableInTouchMode(true);
+			s.ns0_searchEditText.requestFocus();
+			ctx.getSystemService(android.content.Context.INPUT_METHOD_SERVICE).showSoftInput(s.ns0_searchEditText, 0);
+			gui.main._global_title.setEnabled(false);
+			gui.main._global_title.setClickable(false);
+			gui.utils.value_animation("Float", 0, 1.0, 300 , new android.view.animation.DecelerateInterpolator(), function(anim) {
+				s.ns0_searchEditText.setAlpha(anim.getAnimatedValue());
+				gui.main._global_title.setAlpha(1.0 - anim.getAnimatedValue());
+				if(anim.getAnimatedValue() == 1.0) gui.main.setFuncClickable(s.index, true);
+			});
+		},
+		
+		removeSearchEditTextView: function(s, selfContent) { try {
+			s.ns0_isShowingSearchEditTextView = false;
+			gui.main.setFuncClickable(s.index, false);
+			s.ns0_searchEditText.setEnabled(false);
+			s.ns0_searchEditText.setClickable(false);
+			gui.main._global_title.setEnabled(true);
+			gui.main._global_title.setClickable(true);
+			gui.utils.value_animation("Float", 0, 1.0, 300 , new android.view.animation.DecelerateInterpolator(), function(anim) {
+				s.ns0_searchEditText.setAlpha(1.0 - anim.getAnimatedValue());
+				gui.main._global_title.setAlpha(anim.getAnimatedValue());
+				if(anim.getAnimatedValue() == 1.0) {
+					gui.main._global_statusbar.removeView(s.ns0_searchEditText);
+					gui.main.setFuncClickable(s.index, true);
+				}
+			});
+		} catch (e) { error(e); }},
+
+		getSheetList: function(s, isForce, filterBlock) {
 			gui.run(function() {
 				s.ns0_progress.setIndeterminate(true);
 				s.ns0_listAdapterController.removeAll();
 				gui.main.setFuncClickable(s.index, false);
-				gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
+				if(typeof(filterBlock) != "function") gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
 					gui.main._global_title.setAlpha(anim.getAnimatedValue());
 				});
 				gui.utils.value_animation("Float", 1.0, 0, 100, new android.view.animation.DecelerateInterpolator(), function(anim) {
@@ -3061,11 +3154,17 @@ gui.dialogs.showProgressDialog(function(o) {
 						});//修改乐谱键位提示
 						s.ns0_listAdapterController.notifyChange();
 						threads.start(function() {
-							sheetmgr.getLocalSheetList(isForce, function(successCount, failedCount) {
-								gui.run(function(){
-									gui.main._global_title.setText(String.format(config.languages[config.values.lang].page_lc_loading_sheet, successCount, failedCount));
+							var list;
+							if(typeof(filterBlock) != "function") {
+								list = sheetmgr.getLocalSheetList(isForce, function(successCount, failedCount) {
+									gui.run(function(){
+										gui.main._global_title.setText(String.format(config.languages[config.values.lang].page_lc_loading_sheet, successCount, failedCount));
+									});
 								});
-							}).map(function(e, i) {
+							} else {
+								list = sheetmgr.filterLocalSheet(filterBlock);
+							}
+							list.map(function(e, i) {
 								gui.run(function(){
 									if(!e.failed || config.values.showFailedSheets) {
 										s.ns0_listAdapterController.add((function(item) {
@@ -3080,11 +3179,15 @@ gui.dialogs.showProgressDialog(function(o) {
 								s.ns0_listAdapterController.notifyChange();
 								gui.main._global_title.setText(gui.main.getPageInfo(s.index).title);
 								gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
-									gui.main._global_title.setAlpha(anim.getAnimatedValue());
 									s.ns0_listView.setAlpha(anim.getAnimatedValue());
 									s.ns0_progress.setAlpha(1 - anim.getAnimatedValue());
 									if(anim.getAnimatedValue() == 1.0) s.ns0_progress.setIndeterminate(false);
 								});
+								if(typeof(filterBlock) != "function") {
+									gui.utils.value_animation("Float", 0, 1.0, 200, new android.view.animation.DecelerateInterpolator(), function(anim) {
+										gui.main._global_title.setAlpha(anim.getAnimatedValue());
+									});
+								}
 							});
 						});
 					}
@@ -3430,7 +3533,7 @@ gui.dialogs.showProgressDialog(function(o) {
 					gui.main.setFuncClickable(s.index, true);
 				}
 			});
-		} catch (e) {}},
+		} catch (e) { error(e); }},
 
 		update: function(s) {
 			if(s.initial) this.getOnlineSheetList(s, false);
