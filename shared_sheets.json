@@ -1,6 +1,23 @@
 {
   "sheets": [
     {
+      "name": "那女孩对我说(完整版)",
+      "file": "那女孩对我说(完整版).txt",
+      "author": "Hxina",
+      "desc": "<a href=mailto:xicisw@gmail.com>@Hxina<a/>完整版《那女孩对我说》",
+      "bpm": 320,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 610,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "xicisw@gmail.com",
+          "link": "xicisw@gmail.com"
+        }
+      ]
+    },
+    {
       "name": "相思（无和弦）",
       "file": "相思（无和弦）.txt",
       "author": "Hxina",
