@@ -6,7 +6,7 @@ English: [README-en.md](README-en.md)
 
 [![shared sheet](https://badgen.net/badge/shared%20sheets/169%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/29/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
-~~不会进一步支持原神的 m21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
+~~不会进一步支持原神的21键琴和上传21键位的共享乐谱，反正15键又不是不能弹。~~
 
 ## [暂时解决 `Syntax error script.js#44(eval)#100` 的方法](https://github.com/StageGuard/SkyAutoPlayerScript/issues/17#issuecomment-1002640892)
 
@@ -33,26 +33,13 @@ English: [README-en.md](README-en.md)
 ```javascript
 "ui";
 "use strict";
-/*
-    SkyAutoPlayer (Auto.js script)
-  	Copyright © 2020-2021 StageGuard
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
-  USA
-*/
+const okhttp3 = Packages["okhttp3"];
 (function(emitter) {
+  const client = (new okhttp3.OkHttpClient.Builder())
+    .connectTimeout(3, java.util.concurrent.TimeUnit.SECONDS)
+    .writeTimeout(3, java.util.concurrent.TimeUnit.SECONDS)
+    .readTimeout(3, java.util.concurrent.TimeUnit.SECONDS)
+    .build();
   threads.start(function () {
     emitter.emit("evaluate", (function () {
       //Many sources 
@@ -63,17 +50,21 @@ English: [README-en.md](README-en.md)
         "https://raw.githubusercontent.com/StageGuard/SkyAutoPlayerScript/master/source/SkyAutoplayer.js"
       ];
       for (let i in sources) {
-        let resp = http.get(sources[i]);
-        if (resp.statusCode >= 200 && resp.statusCode < 300) {
-          return resp.body.string();
+        try {
+          let resp = client.newCall(
+            (new okhttp3.Request.Builder()).url(sources[i]).build()
+          ).execute();
+          if (resp.code() == 200) return resp.body().string();
+        } catch(e) {
+          let err = "Failed on source " + sources[i] + " : " + e;
+          console.log(err); toast(err);
         }
       }
-      return "console.show();console.log(\"Failed to load script\")";
+      console.show();
+      return null;
     }()));
   });
-  emitter.on('evaluate', function (s) {
-    eval(s);
-  });
+  emitter.on('evaluate', s => { if(s != null) eval(s); });
 }(events.emitter(threads.currentThread())));
 ```
 
