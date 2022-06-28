@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "rush e",
+      "file": "rush e.txt",
+      "author": "小柒不会玩红石",
+      "desc": "<a href=mailto:2126859202@qq.com>@小柒不会玩红石<a/> 分享乐谱 rush e",
+      "bpm": 1024,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 2465,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "2126859202@qq.com",
+          "link": "2126859202@qq.com"
+        }
+      ]
+    },
+    {
       "name": "那女孩对我说(完整版)",
       "file": "那女孩对我说(完整版).txt",
       "author": "Hxina",
