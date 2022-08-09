@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "漠河舞厅.",
+      "file": "漠河舞厅.txt",
+      "author": "柳爽",
+      "desc": "<a href=mailto:31610766@qq.com>@我睡着的时候不困0v0<a/> 分享乐谱 漠河舞厅.",
+      "bpm": 280,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 0,
+      "noteCount": 878,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "31610766@qq.com",
+          "link": "31610766@qq.com"
+        }
+      ]
+    },
+    {
       "name": "rush e",
       "file": "rush e.txt",
       "author": "小柒不会玩红石",
