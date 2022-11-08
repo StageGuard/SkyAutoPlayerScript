@@ -1,6 +1,24 @@
 {
   "sheets": [
     {
+      "name": "人鱼的眼泪",
+      "file": "人鱼的眼泪.txt",
+      "author": "心酸的邂逅",
+      "desc": "<a href=mailto:3200546245@qq.com>@心酸的邂逅<a/> 分享乐谱 人鱼的眼泪",
+      "bpm": 552,
+      "suggested_instrument": 1,
+      "keyCount": 15,
+      "pitchLevel": 5,
+      "noteCount": 1254,
+      "social": [
+        {
+          "platform": "mail",
+          "name": "3200546245@qq.com",
+          "link": "3200546245@qq.com"
+        }
+      ]
+    },
+    {
       "name": "漠河舞厅.",
       "file": "漠河舞厅.txt",
       "author": "柳爽",
