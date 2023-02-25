@@ -2,10 +2,10 @@
     "list": [{
         "code": "zh_CN",
         "name": "简体中文",
-        "version": 5
+        "version": 6
     }, {
         "code": "en_US",
         "name": "English (US)",
-        "version": 5
+        "version": 6
     }]
 }

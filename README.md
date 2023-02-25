@@ -2,7 +2,7 @@
 
 English: [README-en.md](README-en.md)
 
-使用 Auto.js 提供的无障碍权限实现在 Sky光遇 中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
+使用 [AutoX](https://github.com/kkevsekk1/AutoX) 提供的无障碍权限实现在 Sky光遇 中自动弹奏 [SkyStudio](https://play.google.com/store/apps/details?id=com.Maple.SkyStudio) 导出的曲谱
 
 [![shared sheet](https://badgen.net/badge/shared%20sheets/175%20in%20total/green)](shared_sheets/) [![sheet contributors](https://badgen.net/badge/sheet%20contributors/36/pink)](#共享乐谱) [![Hosted in](https://badgen.net/badge/CDN/jsDelivr?icon=jsdelivr)](https://www.jsdelivr.com/)
 
@@ -24,11 +24,13 @@ English: [README-en.md](README-en.md)
 
 ## 使用
 
-1. Auto.js `4.1.1 Alpha2 (461) -> armeabi-v7a` 版本下载: [`Ericwyn/Auto.js/releases@V4.1.1.Alpha2`](https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2)
+1. 在 [Releases · kkevsekk1/AutoX](https://github.com/kkevsekk1/AutoX/releases) 中下载 AutoX。
 
-2. 为 Auto.js 开启**无障碍服务**和**悬浮窗权限**。
+> 注意：请提前悉知设备架构选择 `arm64-v8a` 或 `armeabi-v7a`，否则选择 `universal`。
 
-3. 在 Auto.js 中新建一个脚本并粘贴以下代码并运行：
+2. 为 AutoX 开启**无障碍服务**和**悬浮窗权限**。
+
+3. 在 AutoX 中新建一个脚本并粘贴以下代码并运行：
 
 ```javascript
 "ui";
@@ -68,11 +70,13 @@ const okhttp3 = Packages["okhttp3"];
 }(events.emitter(threads.currentThread())));
 ```
 
-在 Auto.js 版本 `4.1.1 Alpha2 (461)` 中测试通过，**不保证其他版本的兼容性**(取决于其他版本相对于此版本的API是否有 `breaking changes`)
+## 兼容性
+
+在 AutoX 版本 `6.3.6` 中测试通过。
 
 ## 清除数据
 
-`SkyAutoPlayerScript` 在使用过程中会产生本地数据存储，若想全部删除，请使用 Auto.js 执行以下代码
+`SkyAutoPlayerScript` 在使用过程中会产生本地数据存储，若想全部删除，请使用 AutoX 执行以下代码
 
 ```
 storages.remove("StageGuard:SkyAutoPlayer:Config");
@@ -188,7 +192,7 @@ Gitee 用户[嗨游圈(@vipssp)](https://gitee.com/vipssp)在**未经乐谱上�
 ### ⚠️警告
 CodeFactor 代码评估: [![CodeFactor](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript/badge)](https://www.codefactor.io/repository/github/stageguard/skyautoplayerscript)
 
-由于 Auto.js 的限制，无法将不同的功能分离，所以所有功能都在一个文件实现；再加上我糟糕的代码技能，源码会非常难读。
+由于项目为单脚本文件，未将不同模块分离至文件，即所有功能均在一个文件实现；再加上我糟糕的代码技能，源码会非常难读。
 
 ## 贡献者
 
@@ -256,7 +260,7 @@ SkyAutoplayerScript 在版本 21 已支持多语言并可以在线获取语言�
 # 许可证协议
 
 ```
-    SkyAutoPlayer (Auto.js script)
+    SkyAutoPlayer (AutoX script)
 	  Copyright © 2020-2021 StageGuard
 
   This library is free software; you can redistribute it and/or

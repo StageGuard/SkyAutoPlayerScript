@@ -1,7 +1,7 @@
 "ui";
 "use strict";
 /*
-    SkyAutoPlayer (Auto.js script)
+    SkyAutoPlayer (AutoX script)
 	Copyright © 2020-2021 StageGuard
 	  Contact : 
 	  (QQ: 1355416608)
@@ -29,13 +29,13 @@
 
 const user_agreements = 
 	"请仔细阅读以下使用须知！\n\n" + 
-	"1. 未充分测试，若遇到BUG，请酷安私信@StageGuard或新建Issue来反馈BUG！\n\n" + 
-	"2. SkyAutoplayerScript是完全免费且开源的软件/脚本(https://github.com/StageGuard/SkyAutoPlayerScript)，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。\n\n" + 
-	"3. 共享乐谱不遵守LGPL-2.1协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！\n\n" + 
-	"4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者StageGuard无关。\n\n" + 
+	"1. 未充分测试，若遇到 BUG，请酷安私信 @StageGuard 或新建 Issue 来反馈 BUG！\n\n" + 
+	"2. SkyAutoplayerScript 是完全免费且开源的软件/脚本(https://github.com/StageGuard/SkyAutoPlayerScript)，使用 SkyAutoplayerScript 盈利的同时请标注源项目链接。\n\n" + 
+	"3. 共享乐谱不遵守 LGPL-2.1 协议，如您想在SkyAutoPlayer以外使用这些乐谱，请自行找乐谱作者授权！\n\n" + 
+	"4. 本脚本仅可用作娱乐用途，请不要在正规场合使用本脚本(请自行体会\"正规场合\"是什么意思)，若因使用本脚本所出现了一些不友好的问题，与脚本作者 StageGuard 无关。\n\n" + 
 	"5. 脚本只能给你一时满足感而不能使你进步，请适当使用，只有真正的技术才是王道，才能使你感到快乐。\n\n" + 
 	"6. 本脚本只是一个\"弹奏机\"，并不内置曲谱，请在 GooglePlay 下载 SkyStudio 编谱。\n\n" + 
-	"7. 本脚本的发行遵守LGPL-2.1协议，若你不了解协议内容，请访问 https://www.gnu.org/licenses 查看"
+	"7. 本脚本的发行遵守 LGPL-2.1 协议，若你不了解协议内容，请访问 https://www.gnu.org/licenses 查看"
 ;
 
 //Script global scope
@@ -58,7 +58,7 @@ scope.dp = context.getResources().getDisplayMetrics().density;
 //show error;
 const error = function(text) {
 	console.show();
-	console.error("SkyAutoPlayer发生了一个错误，请酷安私信@StageGuard或在github中的StageGuard/SkyAutoPlayerScript新建Issue来反馈这个BUG！\n详细信息：" + text);
+	console.error("SkyAutoPlayer发生了一个错误，请酷安私信 @StageGuard 或在 Github 中的 StageGuard/SkyAutoPlayerScript 新建 Issue 来反馈这个 BUG！\n详细信息：" + text);
 };
 
 String.format = function() {
@@ -409,7 +409,7 @@ config = {
 
 	languages: {
 		zh_CN: {
-			launch_tip_in_content: "当你发现什么事情都没有发生时<br>也许你应该看看是否授予了Auto.js<u><b>悬浮窗权限</u></b><br><br><br>建议使用 <b>4.1.1 Alpha2</b> 版本！<br><b>4.1.1 Alpha2</b> 版本下载: <a href=https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2>https://github.com/Ericwyn/Auto.js/releases/tag/V4.1.1.Alpha2</a>",
+			launch_tip_in_content: "当你发现什么事情都没有发生时<br>也许你应该看看是否授予了 AutoX <u><b>悬浮窗权限</u></b>",
 			launch_tip_force_exit: "强制退出",
 			launch_tip_storage_on_android11: "安卓11不允许外部应用读取应用私有文件夹，乐谱文件夹移至 {0}",
 
