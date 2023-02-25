@@ -24,11 +24,15 @@ English: [README-en.md](README-en.md)
 
 ## 使用
 
+以下两种方式仅需选择一种
+
+<details> <summary>拷贝脚本（推荐）</summary>
+
 1. 在 [Releases · kkevsekk1/AutoX](https://github.com/kkevsekk1/AutoX/releases) 中下载 AutoX。
 
 > 注意：请提前悉知设备架构选择 `arm64-v8a` 或 `armeabi-v7a`，否则选择 `universal`。
 
-2. 为 AutoX 开启**无障碍服务**和**悬浮窗权限**。
+2. 为 AutoX 开启**无障碍服务**和**悬浮窗权限**和**存储权限**。
 
 3. 在 AutoX 中新建一个脚本并粘贴以下代码并运行：
 
@@ -69,6 +73,18 @@ const okhttp3 = Packages["okhttp3"];
   emitter.on('evaluate', s => { if(s != null) eval(s); });
 }(events.emitter(threads.currentThread())));
 ```
+
+</details>
+
+<details> <summary>安装独立程序（仅 <code>arm64-v8a</code> 可用）</summary>
+
+在 [Releases · StageGuard/SkyAutoPlayerScript](https://github.com/StageGuard/SkyAutoPlayerScript/releases) 中下载脚本独立打包程序，安装后即可使用。
+
+首次启动时请同意程序申请的权限：**无障碍服务**和**悬浮窗权限**和**存储权限**。
+
+> 注意：本程序申请的权限为 AutoX 打包程序自动控制，且仅申请使脚本运行的必要权限。
+
+</details>
 
 ## 兼容性
 
