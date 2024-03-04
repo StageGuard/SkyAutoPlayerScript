@@ -643,7 +643,7 @@ config = {
 	},
 	
 	checkVersion: function() {
-		this.values.gitVersion = http.get("http://81.70.194.140:8090/StageGuard/SkyAutoPlayerScript/raw/branch/master/gitVersion").body.string();
+		this.values.gitVersion = http.get("https://cdn.jsdelivr.net/gh/StageGuard/SkyAutoPlayerScript/gitVersion").body.string();
 		var periodVersion = this._global_storage.get("version", this.values.currentVersion);
 		var currentVersion = this.values.currentVersion;
 		if(periodVersion < currentVersion) {
