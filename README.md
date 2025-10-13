@@ -28,9 +28,11 @@ English: [README-en.md](README-en.md)
 
 <details> <summary>拷贝脚本（推荐）</summary>
 
-1. 在 [Releases · kkevsekk1/AutoX](https://github.com/kkevsekk1/AutoX/releases) 中下载 AutoX。
+1. 在 [Releases · aiselp/AutoX](https://github.com/aiselp/AutoX/releases) 中下载 AutoX。
 
-> 注意：请提前悉知设备架构选择 `arm64-v8a` 或 `armeabi-v7a`，否则选择 `universal`。
+> 注意：AutoX (aka AutoX.js) 由 Auto.js 开发而来，Auto.js [源仓库](https://github.com/clearw5/Auto.js) 由于一些原因已删除源码。
+> 
+> 你可以在 [autox-community](https://github.com/autox-community) 查看其他 AutoX 分支。
 
 2. 为 AutoX 开启**无障碍服务**和**悬浮窗权限**和**存储权限**。
 
